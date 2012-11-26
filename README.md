@@ -9,6 +9,6 @@ The primary reference for this port was the Java implementation, found here: htt
 
 The project includes a very simple demonstration application. CMD-N to make a new image. It is document-based, but save/load not supported.
 
-The project includes some classes and code from a some separate, private libraries, but are considered to have the same license as the rest of the project when used for this project or in projects derived from this projectx.
+The project includes code from other, private libraries, but are considered to have the same license as the rest of the project when used for this project or in projects derived from this project.
 
-The contents of this project is released under a BSD-style license. Use it as you see fit. No warranty explicit or implied. No promises, no guarantees. Use at your own risk.
+The content of this project is released under a BSD-style license. Use it as you see fit. No warranty explicit or implied. No promises, no guarantees. Use at your own risk.
