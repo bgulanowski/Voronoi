@@ -1,0 +1,10 @@
+//
+// Prefix header for all source files of the 'voronoi' target in the 'voronoi' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+
+#define NO_METHOD_IMP [NSException raise:NSInternalInconsistencyException format:@"Method %@ is not implemented.", NSStringFromSelector(_cmd)]
+
+#endif

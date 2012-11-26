@@ -1,0 +1,823 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		847F31D316497C120068A102 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F31D216497C120068A102 /* Cocoa.framework */; };
+		847F31DD16497C120068A102 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 847F31DB16497C120068A102 /* InfoPlist.strings */; };
+		847F31DF16497C120068A102 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847F31DE16497C120068A102 /* main.m */; };
+		847F31E316497C120068A102 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 847F31E116497C120068A102 /* Credits.rtf */; };
+		847F31E616497C120068A102 /* Document.m in Sources */ = {isa = PBXBuildFile; fileRef = 847F31E516497C120068A102 /* Document.m */; };
+		847F31E916497C120068A102 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847F31E716497C120068A102 /* Document.xib */; };
+		847F31EC16497C120068A102 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847F31EA16497C120068A102 /* MainMenu.xib */; };
+		847F31F416497C670068A102 /* VDemoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847F31F316497C670068A102 /* VDemoView.m */; };
+		847F321E1649800C0068A102 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F321D1649800B0068A102 /* OpenGL.framework */; };
+		84AD32F2164C3DBD00E37EDE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F31D216497C120068A102 /* Cocoa.framework */; };
+		84AD3300164C3DBE00E37EDE /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AD32FF164C3DBE00E37EDE /* SenTestingKit.framework */; };
+		84AD3301164C3DBE00E37EDE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F31D216497C120068A102 /* Cocoa.framework */; };
+		84AD3304164C3DBE00E37EDE /* libvoronoi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AD32F1164C3DBD00E37EDE /* libvoronoi.a */; };
+		84AD330A164C3DBE00E37EDE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84AD3308164C3DBE00E37EDE /* InfoPlist.strings */; };
+		84AD330D164C3DBE00E37EDE /* VoronoiTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD330C164C3DBE00E37EDE /* VoronoiTester.m */; };
+		84AD332A164C3E8100E37EDE /* DCircle.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD3316164C3E8100E37EDE /* DCircle.h */; };
+		84AD332B164C3E8100E37EDE /* DCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3317164C3E8100E37EDE /* DCircle.m */; };
+		84AD332C164C3E8100E37EDE /* DHull.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD3318164C3E8100E37EDE /* DHull.h */; };
+		84AD332D164C3E8100E37EDE /* DHull.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3319164C3E8100E37EDE /* DHull.m */; };
+		84AD332E164C3E8100E37EDE /* DPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD331A164C3E8100E37EDE /* DPoint.h */; };
+		84AD332F164C3E8100E37EDE /* DPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD331B164C3E8100E37EDE /* DPoint.m */; };
+		84AD3330164C3E8100E37EDE /* DRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD331C164C3E8100E37EDE /* DRange.h */; };
+		84AD3331164C3E8100E37EDE /* DRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD331D164C3E8100E37EDE /* DRange.m */; };
+		84AD3332164C3E8100E37EDE /* DRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD331E164C3E8100E37EDE /* DRegion.h */; };
+		84AD3333164C3E8100E37EDE /* DRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD331F164C3E8100E37EDE /* DRegion.m */; };
+		84AD3334164C3E8100E37EDE /* DSegment.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD3320164C3E8100E37EDE /* DSegment.h */; };
+		84AD3335164C3E8100E37EDE /* DSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3321164C3E8100E37EDE /* DSegment.m */; };
+		84AD3336164C3E8100E37EDE /* DTriad.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD3322164C3E8100E37EDE /* DTriad.h */; };
+		84AD3337164C3E8100E37EDE /* DTriad.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3323164C3E8100E37EDE /* DTriad.m */; };
+		84AD3338164C3E8100E37EDE /* NSArray+Voronoi.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD3324164C3E8100E37EDE /* NSArray+Voronoi.h */; };
+		84AD3339164C3E8100E37EDE /* NSArray+Voronoi.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3325164C3E8100E37EDE /* NSArray+Voronoi.m */; };
+		84AD333A164C3E8100E37EDE /* Voronoi.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD3326164C3E8100E37EDE /* Voronoi.h */; };
+		84AD333B164C3E8100E37EDE /* Voronoi.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3327164C3E8100E37EDE /* Voronoi.m */; };
+		84AD333E164C3EA600E37EDE /* libvoronoi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AD32F1164C3DBD00E37EDE /* libvoronoi.a */; };
+		84AD3341164C445C00E37EDE /* CircleTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3340164C445C00E37EDE /* CircleTester.m */; };
+		84AD3348164C494300E37EDE /* PointTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3347164C494300E37EDE /* PointTester.m */; };
+		84AD334C164C494D00E37EDE /* RangeTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD334B164C494D00E37EDE /* RangeTester.m */; };
+		84AD334F164C5C8400E37EDE /* SegmentTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD334E164C5C8400E37EDE /* SegmentTester.m */; };
+		84AD3352164C6E9C00E37EDE /* TriangulationTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3351164C6E9C00E37EDE /* TriangulationTester.m */; };
+		84AD3355164DB72A00E37EDE /* DBoundary.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD3353164DB72A00E37EDE /* DBoundary.h */; };
+		84AD3356164DB72A00E37EDE /* DBoundary.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3354164DB72A00E37EDE /* DBoundary.m */; };
+		84D3FAF616642B3500A05727 /* BABitArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D3FAF416642B3500A05727 /* BABitArray.h */; };
+		84D3FAF716642B3500A05727 /* BABitArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3FAF516642B3500A05727 /* BABitArray.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		84D3FB0E16642CD700A05727 /* BASceneConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3FB0916642CD700A05727 /* BASceneConstants.m */; };
+		84D3FB0F16642CD700A05727 /* BASceneTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3FB0B16642CD700A05727 /* BASceneTypes.m */; };
+		84D3FB1016642CD700A05727 /* BASceneUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3FB0D16642CD700A05727 /* BASceneUtilities.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		84AD3302164C3DBE00E37EDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 847F31C516497C120068A102 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84AD32F0164C3DBD00E37EDE;
+			remoteInfo = voronoi;
+		};
+		84AD333C164C3E9900E37EDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 847F31C516497C120068A102 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84AD32F0164C3DBD00E37EDE;
+			remoteInfo = voronoi;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		847F31CE16497C120068A102 /* VoronoiDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoronoiDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		847F31D216497C120068A102 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		847F31D516497C120068A102 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		847F31D616497C120068A102 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		847F31D716497C120068A102 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		847F31DA16497C120068A102 /* Voronoi-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Voronoi-Info.plist"; sourceTree = "<group>"; };
+		847F31DC16497C120068A102 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		847F31DE16497C120068A102 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		847F31E016497C120068A102 /* Voronoi-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Voronoi-Prefix.pch"; sourceTree = "<group>"; };
+		847F31E216497C120068A102 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		847F31E416497C120068A102 /* Document.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Document.h; sourceTree = "<group>"; };
+		847F31E516497C120068A102 /* Document.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Document.m; sourceTree = "<group>"; };
+		847F31E816497C120068A102 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Document.xib; sourceTree = "<group>"; };
+		847F31EB16497C120068A102 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		847F31F216497C670068A102 /* VDemoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDemoView.h; sourceTree = "<group>"; };
+		847F31F316497C670068A102 /* VDemoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDemoView.m; sourceTree = "<group>"; };
+		847F321D1649800B0068A102 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		84AD32DC164B72D700E37EDE /* BoundingPolygon.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = BoundingPolygon.java; path = "Reference/S-hull Java/BoundingPolygon.java"; sourceTree = SOURCE_ROOT; };
+		84AD32DD164B72D700E37EDE /* Hull.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Hull.java; path = "Reference/S-hull Java/Hull.java"; sourceTree = SOURCE_ROOT; };
+		84AD32DE164B72D700E37EDE /* Line.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Line.java; path = "Reference/S-hull Java/Line.java"; sourceTree = SOURCE_ROOT; };
+		84AD32DF164B72D700E37EDE /* Point.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Point.java; path = "Reference/S-hull Java/Point.java"; sourceTree = SOURCE_ROOT; };
+		84AD32E0164B72D700E37EDE /* Range.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Range.java; path = "Reference/S-hull Java/Range.java"; sourceTree = SOURCE_ROOT; };
+		84AD32E1164B72D700E37EDE /* Region.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Region.java; path = "Reference/S-hull Java/Region.java"; sourceTree = SOURCE_ROOT; };
+		84AD32E2164B72D700E37EDE /* Segment.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Segment.java; path = "Reference/S-hull Java/Segment.java"; sourceTree = SOURCE_ROOT; };
+		84AD32E3164B72D700E37EDE /* SegmentSuccession.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = SegmentSuccession.java; path = "Reference/S-hull Java/SegmentSuccession.java"; sourceTree = SOURCE_ROOT; };
+		84AD32E4164B72D700E37EDE /* Triad.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Triad.java; path = "Reference/S-hull Java/Triad.java"; sourceTree = SOURCE_ROOT; };
+		84AD32E5164B72D700E37EDE /* Triangulator.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Triangulator.java; path = "Reference/S-hull Java/Triangulator.java"; sourceTree = SOURCE_ROOT; };
+		84AD32E6164B72D700E37EDE /* Utils.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Utils.java; path = "Reference/S-hull Java/Utils.java"; sourceTree = SOURCE_ROOT; };
+		84AD32E7164B72D700E37EDE /* Voronoi.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Voronoi.java; path = "Reference/S-hull Java/Voronoi.java"; sourceTree = SOURCE_ROOT; };
+		84AD32F1164C3DBD00E37EDE /* libvoronoi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoronoi.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		84AD32F5164C3DBE00E37EDE /* voronoi-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "voronoi-Prefix.pch"; sourceTree = "<group>"; };
+		84AD32FE164C3DBE00E37EDE /* voronoiTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = voronoiTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84AD32FF164C3DBE00E37EDE /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		84AD3307164C3DBE00E37EDE /* voronoiTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "voronoiTests-Info.plist"; sourceTree = "<group>"; };
+		84AD3309164C3DBE00E37EDE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		84AD330B164C3DBE00E37EDE /* VoronoiTester.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoronoiTester.h; sourceTree = "<group>"; };
+		84AD330C164C3DBE00E37EDE /* VoronoiTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VoronoiTester.m; sourceTree = "<group>"; };
+		84AD3316164C3E8100E37EDE /* DCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCircle.h; sourceTree = "<group>"; };
+		84AD3317164C3E8100E37EDE /* DCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCircle.m; sourceTree = "<group>"; };
+		84AD3318164C3E8100E37EDE /* DHull.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHull.h; sourceTree = "<group>"; };
+		84AD3319164C3E8100E37EDE /* DHull.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHull.m; sourceTree = "<group>"; };
+		84AD331A164C3E8100E37EDE /* DPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPoint.h; sourceTree = "<group>"; };
+		84AD331B164C3E8100E37EDE /* DPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPoint.m; sourceTree = "<group>"; };
+		84AD331C164C3E8100E37EDE /* DRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRange.h; sourceTree = "<group>"; };
+		84AD331D164C3E8100E37EDE /* DRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRange.m; sourceTree = "<group>"; };
+		84AD331E164C3E8100E37EDE /* DRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRegion.h; sourceTree = "<group>"; };
+		84AD331F164C3E8100E37EDE /* DRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRegion.m; sourceTree = "<group>"; };
+		84AD3320164C3E8100E37EDE /* DSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSegment.h; sourceTree = "<group>"; };
+		84AD3321164C3E8100E37EDE /* DSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSegment.m; sourceTree = "<group>"; };
+		84AD3322164C3E8100E37EDE /* DTriad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTriad.h; sourceTree = "<group>"; };
+		84AD3323164C3E8100E37EDE /* DTriad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTriad.m; sourceTree = "<group>"; };
+		84AD3324164C3E8100E37EDE /* NSArray+Voronoi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Voronoi.h"; sourceTree = "<group>"; };
+		84AD3325164C3E8100E37EDE /* NSArray+Voronoi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Voronoi.m"; sourceTree = "<group>"; };
+		84AD3326164C3E8100E37EDE /* Voronoi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voronoi.h; sourceTree = "<group>"; };
+		84AD3327164C3E8100E37EDE /* Voronoi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voronoi.m; sourceTree = "<group>"; };
+		84AD333F164C445C00E37EDE /* CircleTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleTester.h; sourceTree = "<group>"; };
+		84AD3340164C445C00E37EDE /* CircleTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleTester.m; sourceTree = "<group>"; };
+		84AD3346164C494300E37EDE /* PointTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointTester.h; sourceTree = "<group>"; };
+		84AD3347164C494300E37EDE /* PointTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointTester.m; sourceTree = "<group>"; };
+		84AD334A164C494D00E37EDE /* RangeTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RangeTester.h; sourceTree = "<group>"; };
+		84AD334B164C494D00E37EDE /* RangeTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RangeTester.m; sourceTree = "<group>"; };
+		84AD334D164C5C8400E37EDE /* SegmentTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentTester.h; sourceTree = "<group>"; };
+		84AD334E164C5C8400E37EDE /* SegmentTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentTester.m; sourceTree = "<group>"; };
+		84AD3350164C6E9C00E37EDE /* TriangulationTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriangulationTester.h; sourceTree = "<group>"; };
+		84AD3351164C6E9C00E37EDE /* TriangulationTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TriangulationTester.m; sourceTree = "<group>"; };
+		84AD3353164DB72A00E37EDE /* DBoundary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBoundary.h; sourceTree = "<group>"; };
+		84AD3354164DB72A00E37EDE /* DBoundary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBoundary.m; sourceTree = "<group>"; };
+		84B7561F1649C58800E045FD /* s_hull.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = s_hull.cpp; path = "../Reference/S-hull C++/s_hull.cpp"; sourceTree = "<group>"; };
+		84B756201649C58800E045FD /* s_hull.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = s_hull.h; path = "../Reference/S-hull C++/s_hull.h"; sourceTree = "<group>"; };
+		84D3FAF416642B3500A05727 /* BABitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BABitArray.h; sourceTree = "<group>"; };
+		84D3FAF516642B3500A05727 /* BABitArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BABitArray.m; sourceTree = "<group>"; };
+		84D3FB0816642CD700A05727 /* BASceneConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BASceneConstants.h; sourceTree = "<group>"; };
+		84D3FB0916642CD700A05727 /* BASceneConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BASceneConstants.m; sourceTree = "<group>"; };
+		84D3FB0A16642CD700A05727 /* BASceneTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BASceneTypes.h; sourceTree = "<group>"; };
+		84D3FB0B16642CD700A05727 /* BASceneTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BASceneTypes.m; sourceTree = "<group>"; };
+		84D3FB0C16642CD700A05727 /* BASceneUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BASceneUtilities.h; sourceTree = "<group>"; };
+		84D3FB0D16642CD700A05727 /* BASceneUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BASceneUtilities.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		847F31CB16497C120068A102 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AD333E164C3EA600E37EDE /* libvoronoi.a in Frameworks */,
+				847F321E1649800C0068A102 /* OpenGL.framework in Frameworks */,
+				847F31D316497C120068A102 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84AD32EE164C3DBD00E37EDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AD32F2164C3DBD00E37EDE /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84AD32FA164C3DBE00E37EDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AD3300164C3DBE00E37EDE /* SenTestingKit.framework in Frameworks */,
+				84AD3301164C3DBE00E37EDE /* Cocoa.framework in Frameworks */,
+				84AD3304164C3DBE00E37EDE /* libvoronoi.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		847F31C316497C120068A102 = {
+			isa = PBXGroup;
+			children = (
+				847F31D816497C120068A102 /* VoronoiDemo */,
+				84AD32F3164C3DBD00E37EDE /* voronoi */,
+				84AD3305164C3DBE00E37EDE /* voronoiTests */,
+				84D3FB0716642CD700A05727 /* BAScene */,
+				84AD32A4164B049B00E37EDE /* Reference */,
+				847F31D116497C120068A102 /* Frameworks */,
+				847F31CF16497C120068A102 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		847F31CF16497C120068A102 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				847F31CE16497C120068A102 /* VoronoiDemo.app */,
+				84AD32F1164C3DBD00E37EDE /* libvoronoi.a */,
+				84AD32FE164C3DBE00E37EDE /* voronoiTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		847F31D116497C120068A102 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				847F321D1649800B0068A102 /* OpenGL.framework */,
+				847F31D216497C120068A102 /* Cocoa.framework */,
+				84AD32FF164C3DBE00E37EDE /* SenTestingKit.framework */,
+				847F31D416497C120068A102 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		847F31D416497C120068A102 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				847F31D516497C120068A102 /* AppKit.framework */,
+				847F31D616497C120068A102 /* CoreData.framework */,
+				847F31D716497C120068A102 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		847F31D816497C120068A102 /* VoronoiDemo */ = {
+			isa = PBXGroup;
+			children = (
+				847F31E416497C120068A102 /* Document.h */,
+				847F31E516497C120068A102 /* Document.m */,
+				847F31F216497C670068A102 /* VDemoView.h */,
+				847F31F316497C670068A102 /* VDemoView.m */,
+				847F31E716497C120068A102 /* Document.xib */,
+				847F31EA16497C120068A102 /* MainMenu.xib */,
+				847F31D916497C120068A102 /* Supporting Files */,
+			);
+			path = VoronoiDemo;
+			sourceTree = "<group>";
+		};
+		847F31D916497C120068A102 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				847F31DA16497C120068A102 /* Voronoi-Info.plist */,
+				847F31DB16497C120068A102 /* InfoPlist.strings */,
+				847F31DE16497C120068A102 /* main.m */,
+				847F31E016497C120068A102 /* Voronoi-Prefix.pch */,
+				847F31E116497C120068A102 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84AD32A4164B049B00E37EDE /* Reference */ = {
+			isa = PBXGroup;
+			children = (
+				84AD32B3164B04CF00E37EDE /* S-hull in C++ */,
+				84AD32A5164B04BE00E37EDE /* S-hull in Java */,
+			);
+			name = Reference;
+			path = Meter;
+			sourceTree = "<group>";
+		};
+		84AD32A5164B04BE00E37EDE /* S-hull in Java */ = {
+			isa = PBXGroup;
+			children = (
+				84AD32DC164B72D700E37EDE /* BoundingPolygon.java */,
+				84AD32DD164B72D700E37EDE /* Hull.java */,
+				84AD32DE164B72D700E37EDE /* Line.java */,
+				84AD32DF164B72D700E37EDE /* Point.java */,
+				84AD32E0164B72D700E37EDE /* Range.java */,
+				84AD32E1164B72D700E37EDE /* Region.java */,
+				84AD32E2164B72D700E37EDE /* Segment.java */,
+				84AD32E3164B72D700E37EDE /* SegmentSuccession.java */,
+				84AD32E4164B72D700E37EDE /* Triad.java */,
+				84AD32E5164B72D700E37EDE /* Triangulator.java */,
+				84AD32E6164B72D700E37EDE /* Utils.java */,
+				84AD32E7164B72D700E37EDE /* Voronoi.java */,
+			);
+			name = "S-hull in Java";
+			path = graph;
+			sourceTree = "<group>";
+		};
+		84AD32B3164B04CF00E37EDE /* S-hull in C++ */ = {
+			isa = PBXGroup;
+			children = (
+				84B7561F1649C58800E045FD /* s_hull.cpp */,
+				84B756201649C58800E045FD /* s_hull.h */,
+			);
+			name = "S-hull in C++";
+			sourceTree = "<group>";
+		};
+		84AD32F3164C3DBD00E37EDE /* voronoi */ = {
+			isa = PBXGroup;
+			children = (
+				84D3FAF316642B3500A05727 /* BAFoundation */,
+				84AD3353164DB72A00E37EDE /* DBoundary.h */,
+				84AD3354164DB72A00E37EDE /* DBoundary.m */,
+				84AD3316164C3E8100E37EDE /* DCircle.h */,
+				84AD3317164C3E8100E37EDE /* DCircle.m */,
+				84AD3318164C3E8100E37EDE /* DHull.h */,
+				84AD3319164C3E8100E37EDE /* DHull.m */,
+				84AD331A164C3E8100E37EDE /* DPoint.h */,
+				84AD331B164C3E8100E37EDE /* DPoint.m */,
+				84AD331C164C3E8100E37EDE /* DRange.h */,
+				84AD331D164C3E8100E37EDE /* DRange.m */,
+				84AD331E164C3E8100E37EDE /* DRegion.h */,
+				84AD331F164C3E8100E37EDE /* DRegion.m */,
+				84AD3320164C3E8100E37EDE /* DSegment.h */,
+				84AD3321164C3E8100E37EDE /* DSegment.m */,
+				84AD3322164C3E8100E37EDE /* DTriad.h */,
+				84AD3323164C3E8100E37EDE /* DTriad.m */,
+				84AD3324164C3E8100E37EDE /* NSArray+Voronoi.h */,
+				84AD3325164C3E8100E37EDE /* NSArray+Voronoi.m */,
+				84AD3326164C3E8100E37EDE /* Voronoi.h */,
+				84AD3327164C3E8100E37EDE /* Voronoi.m */,
+				84AD32F4164C3DBE00E37EDE /* Supporting Files */,
+			);
+			path = voronoi;
+			sourceTree = "<group>";
+		};
+		84AD32F4164C3DBE00E37EDE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84AD32F5164C3DBE00E37EDE /* voronoi-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84AD3305164C3DBE00E37EDE /* voronoiTests */ = {
+			isa = PBXGroup;
+			children = (
+				84AD333F164C445C00E37EDE /* CircleTester.h */,
+				84AD3340164C445C00E37EDE /* CircleTester.m */,
+				84AD3346164C494300E37EDE /* PointTester.h */,
+				84AD3347164C494300E37EDE /* PointTester.m */,
+				84AD334A164C494D00E37EDE /* RangeTester.h */,
+				84AD334B164C494D00E37EDE /* RangeTester.m */,
+				84AD334D164C5C8400E37EDE /* SegmentTester.h */,
+				84AD334E164C5C8400E37EDE /* SegmentTester.m */,
+				84AD3350164C6E9C00E37EDE /* TriangulationTester.h */,
+				84AD3351164C6E9C00E37EDE /* TriangulationTester.m */,
+				84AD330B164C3DBE00E37EDE /* VoronoiTester.h */,
+				84AD330C164C3DBE00E37EDE /* VoronoiTester.m */,
+				84AD3306164C3DBE00E37EDE /* Supporting Files */,
+			);
+			path = voronoiTests;
+			sourceTree = "<group>";
+		};
+		84AD3306164C3DBE00E37EDE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84AD3307164C3DBE00E37EDE /* voronoiTests-Info.plist */,
+				84AD3308164C3DBE00E37EDE /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84D3FAF316642B3500A05727 /* BAFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				84D3FAF416642B3500A05727 /* BABitArray.h */,
+				84D3FAF516642B3500A05727 /* BABitArray.m */,
+			);
+			path = BAFoundation;
+			sourceTree = "<group>";
+		};
+		84D3FB0716642CD700A05727 /* BAScene */ = {
+			isa = PBXGroup;
+			children = (
+				84D3FB0816642CD700A05727 /* BASceneConstants.h */,
+				84D3FB0916642CD700A05727 /* BASceneConstants.m */,
+				84D3FB0A16642CD700A05727 /* BASceneTypes.h */,
+				84D3FB0B16642CD700A05727 /* BASceneTypes.m */,
+				84D3FB0C16642CD700A05727 /* BASceneUtilities.h */,
+				84D3FB0D16642CD700A05727 /* BASceneUtilities.m */,
+			);
+			path = BAScene;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		84AD32EF164C3DBD00E37EDE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AD332A164C3E8100E37EDE /* DCircle.h in Headers */,
+				84AD332C164C3E8100E37EDE /* DHull.h in Headers */,
+				84AD332E164C3E8100E37EDE /* DPoint.h in Headers */,
+				84AD3330164C3E8100E37EDE /* DRange.h in Headers */,
+				84AD3332164C3E8100E37EDE /* DRegion.h in Headers */,
+				84AD3334164C3E8100E37EDE /* DSegment.h in Headers */,
+				84AD3336164C3E8100E37EDE /* DTriad.h in Headers */,
+				84AD3338164C3E8100E37EDE /* NSArray+Voronoi.h in Headers */,
+				84AD333A164C3E8100E37EDE /* Voronoi.h in Headers */,
+				84AD3355164DB72A00E37EDE /* DBoundary.h in Headers */,
+				84D3FAF616642B3500A05727 /* BABitArray.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		847F31CD16497C120068A102 /* VoronoiDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 847F31EF16497C120068A102 /* Build configuration list for PBXNativeTarget "VoronoiDemo" */;
+			buildPhases = (
+				847F31CA16497C120068A102 /* Sources */,
+				847F31CB16497C120068A102 /* Frameworks */,
+				847F31CC16497C120068A102 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84AD333D164C3E9900E37EDE /* PBXTargetDependency */,
+			);
+			name = VoronoiDemo;
+			productName = Meter;
+			productReference = 847F31CE16497C120068A102 /* VoronoiDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		84AD32F0164C3DBD00E37EDE /* voronoi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84AD330E164C3DBE00E37EDE /* Build configuration list for PBXNativeTarget "voronoi" */;
+			buildPhases = (
+				84AD32ED164C3DBD00E37EDE /* Sources */,
+				84AD32EE164C3DBD00E37EDE /* Frameworks */,
+				84AD32EF164C3DBD00E37EDE /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = voronoi;
+			productName = voronoi;
+			productReference = 84AD32F1164C3DBD00E37EDE /* libvoronoi.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		84AD32FD164C3DBE00E37EDE /* voronoiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84AD3311164C3DBE00E37EDE /* Build configuration list for PBXNativeTarget "voronoiTests" */;
+			buildPhases = (
+				84AD32F9164C3DBE00E37EDE /* Sources */,
+				84AD32FA164C3DBE00E37EDE /* Frameworks */,
+				84AD32FB164C3DBE00E37EDE /* Resources */,
+				84AD32FC164C3DBE00E37EDE /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84AD3303164C3DBE00E37EDE /* PBXTargetDependency */,
+			);
+			name = voronoiTests;
+			productName = voronoiTests;
+			productReference = 84AD32FE164C3DBE00E37EDE /* voronoiTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		847F31C516497C120068A102 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = "Lichen Labs";
+			};
+			buildConfigurationList = 847F31C816497C120068A102 /* Build configuration list for PBXProject "Voronoi" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 847F31C316497C120068A102;
+			productRefGroup = 847F31CF16497C120068A102 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				847F31CD16497C120068A102 /* VoronoiDemo */,
+				84AD32F0164C3DBD00E37EDE /* voronoi */,
+				84AD32FD164C3DBE00E37EDE /* voronoiTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		847F31CC16497C120068A102 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				847F31DD16497C120068A102 /* InfoPlist.strings in Resources */,
+				847F31E316497C120068A102 /* Credits.rtf in Resources */,
+				847F31E916497C120068A102 /* Document.xib in Resources */,
+				847F31EC16497C120068A102 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84AD32FB164C3DBE00E37EDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AD330A164C3DBE00E37EDE /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		84AD32FC164C3DBE00E37EDE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		847F31CA16497C120068A102 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				847F31DF16497C120068A102 /* main.m in Sources */,
+				847F31E616497C120068A102 /* Document.m in Sources */,
+				847F31F416497C670068A102 /* VDemoView.m in Sources */,
+				84D3FB0E16642CD700A05727 /* BASceneConstants.m in Sources */,
+				84D3FB0F16642CD700A05727 /* BASceneTypes.m in Sources */,
+				84D3FB1016642CD700A05727 /* BASceneUtilities.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84AD32ED164C3DBD00E37EDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AD332B164C3E8100E37EDE /* DCircle.m in Sources */,
+				84AD332D164C3E8100E37EDE /* DHull.m in Sources */,
+				84AD332F164C3E8100E37EDE /* DPoint.m in Sources */,
+				84AD3331164C3E8100E37EDE /* DRange.m in Sources */,
+				84AD3333164C3E8100E37EDE /* DRegion.m in Sources */,
+				84AD3335164C3E8100E37EDE /* DSegment.m in Sources */,
+				84AD3337164C3E8100E37EDE /* DTriad.m in Sources */,
+				84AD3339164C3E8100E37EDE /* NSArray+Voronoi.m in Sources */,
+				84AD333B164C3E8100E37EDE /* Voronoi.m in Sources */,
+				84AD3356164DB72A00E37EDE /* DBoundary.m in Sources */,
+				84D3FAF716642B3500A05727 /* BABitArray.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84AD32F9164C3DBE00E37EDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AD330D164C3DBE00E37EDE /* VoronoiTester.m in Sources */,
+				84AD3341164C445C00E37EDE /* CircleTester.m in Sources */,
+				84AD3348164C494300E37EDE /* PointTester.m in Sources */,
+				84AD334C164C494D00E37EDE /* RangeTester.m in Sources */,
+				84AD334F164C5C8400E37EDE /* SegmentTester.m in Sources */,
+				84AD3352164C6E9C00E37EDE /* TriangulationTester.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		84AD3303164C3DBE00E37EDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84AD32F0164C3DBD00E37EDE /* voronoi */;
+			targetProxy = 84AD3302164C3DBE00E37EDE /* PBXContainerItemProxy */;
+		};
+		84AD333D164C3E9900E37EDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84AD32F0164C3DBD00E37EDE /* voronoi */;
+			targetProxy = 84AD333C164C3E9900E37EDE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		847F31DB16497C120068A102 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				847F31DC16497C120068A102 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		847F31E116497C120068A102 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				847F31E216497C120068A102 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		847F31E716497C120068A102 /* Document.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				847F31E816497C120068A102 /* en */,
+			);
+			name = Document.xib;
+			sourceTree = "<group>";
+		};
+		847F31EA16497C120068A102 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				847F31EB16497C120068A102 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		84AD3308164C3DBE00E37EDE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84AD3309164C3DBE00E37EDE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		847F31ED16497C120068A102 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		847F31EE16497C120068A102 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+			};
+			name = Release;
+		};
+		847F31F016497C120068A102 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VoronoiDemo/Voronoi-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/..",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "VoronoiDemo/Voronoi-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-objc",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		847F31F116497C120068A102 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VoronoiDemo/Voronoi-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/..",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "VoronoiDemo/Voronoi-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-objc",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		84AD330F164C3DBE00E37EDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "voronoi/voronoi-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		84AD3310164C3DBE00E37EDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "voronoi/voronoi-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		84AD3312164C3DBE00E37EDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "voronoi/voronoi-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)";
+				INFOPLIST_FILE = "voronoiTests/voronoiTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-objc",
+				);
+				OTHER_TEST_FLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		84AD3313164C3DBE00E37EDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "voronoi/voronoi-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)";
+				INFOPLIST_FILE = "voronoiTests/voronoiTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-objc",
+				);
+				OTHER_TEST_FLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		847F31C816497C120068A102 /* Build configuration list for PBXProject "Voronoi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				847F31ED16497C120068A102 /* Debug */,
+				847F31EE16497C120068A102 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		847F31EF16497C120068A102 /* Build configuration list for PBXNativeTarget "VoronoiDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				847F31F016497C120068A102 /* Debug */,
+				847F31F116497C120068A102 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84AD330E164C3DBE00E37EDE /* Build configuration list for PBXNativeTarget "voronoi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84AD330F164C3DBE00E37EDE /* Debug */,
+				84AD3310164C3DBE00E37EDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84AD3311164C3DBE00E37EDE /* Build configuration list for PBXNativeTarget "voronoiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84AD3312164C3DBE00E37EDE /* Debug */,
+				84AD3313164C3DBE00E37EDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 847F31C516497C120068A102 /* Project object */;
+}
