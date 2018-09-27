@@ -292,7 +292,7 @@ static __strong NSBezierPath *hatch;
  
     DCircle *circle = self.circumcircle;
     CGPoint p = circle.centre.CGPoint;
-    Float64 r = circle.radius;
+    double r = circle.radius;
     NSRect rect = NSMakeRect(p.x-r, p.y-r, 2*r, 2*r);
 
     return [NSBezierPath bezierPathWithOvalInRect:rect];

@@ -13,19 +13,19 @@
 @class DPoint;
 
 @interface DSegment : DRange {
-    Float64 _a;
-    Float64 _b;
-    Float64 _c;
+    double _a;
+    double _b;
+    double _c;
 }
 
-@property Float64 a;
-@property Float64 b;
-@property Float64 c;
+@property double a;
+@property double b;
+@property double c;
 
 - (DSegment *)projectToPoint:(DPoint *)point;
 - (DPoint *)intersection:(DSegment *)segment restrictToRange:(BOOL)flag;
 - (DPoint *)intersection:(DSegment *)segment;
-- (NSArray *)perpendicularsThroughPoint:(DPoint *)point scale:(Float64)scale;
+- (NSArray *)perpendicularsThroughPoint:(DPoint *)point scale:(double)scale;
 
 + (DSegment *)segmentWithPoint:(DPoint *)p0 point:(DPoint *)p1;
 

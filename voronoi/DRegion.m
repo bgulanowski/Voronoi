@@ -105,7 +105,7 @@ static __strong NSNumber *notfound;
         
     
     NSArray *segments = nil;
-    Float64 scale = _boundary.minSizeFactor;
+    double scale = _boundary.minSizeFactor;
     
     if([_triads count] == 1 && !orInRange) {
         [_triads removeAllObjects];

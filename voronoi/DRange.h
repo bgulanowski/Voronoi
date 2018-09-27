@@ -15,24 +15,24 @@
     DPoint *_p0;
     DPoint *_p1;
     
-    Float64 _xMin, _xMax, _yMin, _yMax;
+    double _xMin, _xMax, _yMin, _yMax;
 }
 
 @property DPoint *p0;
 @property DPoint *p1;
 
-@property (readonly) Float64 xMin;
-@property (readonly) Float64 xMax;
-@property (readonly) Float64 yMin;
-@property (readonly) Float64 yMax;
+@property (readonly) double xMin;
+@property (readonly) double xMax;
+@property (readonly) double yMin;
+@property (readonly) double yMax;
 
 @property (readonly) DPoint *min;
 @property (readonly) DPoint *max;
 
-@property (readonly) Float64 lengthSquared;
-@property (readonly) Float64 length;
-@property (readonly) Float64 width;
-@property (readonly) Float64 height;
+@property (readonly) double lengthSquared;
+@property (readonly) double length;
+@property (readonly) double width;
+@property (readonly) double height;
 
 - (id)initWithPoint:(DPoint *)p0 point:(DPoint *)p1;
 

@@ -35,7 +35,7 @@
 
 - (NSArray *)pointsForVertices;
 
-- (BOOL)visibleFromX:(Float64)x y:(Float64)y index:(NSUInteger)index;
+- (BOOL)visibleFromX:(double)x y:(double)y index:(NSUInteger)index;
 - (BOOL)visibleFromPoint:(DPoint *)point index:(NSUInteger)index;
 
 + (DHull *)hullWithPoints:(NSArray *)points;

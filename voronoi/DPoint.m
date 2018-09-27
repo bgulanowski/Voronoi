@@ -31,7 +31,7 @@
 
 
 #pragma mark - DPoint
-- (id)initWithX:(Float64)x y:(Float64)y {
+- (id)initWithX:(double)x y:(double)y {
     self = [self init];
     if(self) {
         _x = x;
@@ -52,17 +52,17 @@
     return [DPoint pointWithX:_x - other->_x y:_y - other->_y];
 }
 
-- (Float64)distanceTo:(DPoint *)other {
-    Float64 dx = other->_x-_x, dy = other->_y-_y;
+- (double)distanceTo:(DPoint *)other {
+    double dx = other->_x-_x, dy = other->_y-_y;
     return sqrt(dx*dx + dy*dy);
 }
 
-- (Float64)distanceSquaredTo:(DPoint *)other {
-    Float64 dx = other->_x-_x, dy = other->_y-_y;
+- (double)distanceSquaredTo:(DPoint *)other {
+    double dx = other->_x-_x, dy = other->_y-_y;
     return dx*dx + dy*dy;
 }
 
-- (Float64)distanceFromOrigin {
+- (double)distanceFromOrigin {
     return sqrt(_x*_x + _y*_y);
 }
 
@@ -70,7 +70,7 @@
     return CGPointMake(_x, _y);
 }
 
-+ (DPoint *)pointWithX:(Float64)x y:(Float64)y {
++ (DPoint *)pointWithX:(double)x y:(double)y {
     return [[self alloc] initWithX:x y:y];
 }
 

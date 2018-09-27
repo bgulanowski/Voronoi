@@ -19,7 +19,7 @@
 - (NSArray *)triangulationFilterDuplicates:(BOOL)filter;
 - (NSArray *)triangulation; // filter == NO
 
-- (Float64 *)rawPoints;
+- (double *)rawPoints;
 
 @end
 

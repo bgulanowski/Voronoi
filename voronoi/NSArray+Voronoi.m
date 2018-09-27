@@ -20,7 +20,7 @@
 
 @implementation NSArray (Triangulation)
 
-- (DCircle *)findBestPointForTriangleIndices:(NSUInteger *)indices distances:(Float64 *)distances {
+- (DCircle *)findBestPointForTriangleIndices:(NSUInteger *)indices distances:(double *)distances {
     
     NSUInteger mid = NSNotFound;
     NSUInteger count = [self count];
@@ -28,7 +28,7 @@
     
     DCircle *circle = nil;
     
-    Float64 romin2 = CGFLOAT_MAX;
+    double romin2 = CGFLOAT_MAX;
     
     triangleIndices[0] = indices[0];
     triangleIndices[1] = indices[1];
@@ -64,7 +64,7 @@
         
     NSUInteger count = [self count];
     
-    Float64  *distances = malloc(sizeof(Float64)*count); // distances are actually distances^2
+    double  *distances = malloc(sizeof(double)*count); // distances are actually distances^2
     NSUInteger *indices = malloc(sizeof(NSUInteger)*count);
     DPoint *p0 = [self objectAtIndex:0];
     
@@ -78,7 +78,7 @@
     
     int(^sortBlock)(const void *, const void *) = ^int(const void *pIndex1, const void *pIndex2) {
         NSUInteger index1 = *(NSUInteger*)pIndex1, index2 = *(NSUInteger*)pIndex2;
-        Float64 d1 = distances[index1], d2 = distances[index2];
+        double d1 = distances[index1], d2 = distances[index2];
         if(fabs(d1 - d2) < DBL_EPSILON) return 0;
         if(d1 < d2) return -1;
         return 1;
@@ -123,8 +123,8 @@
 
         DPoint *px = [self objectAtIndex:index];
         DPoint *p0 = [self objectAtIndex:hp0.index];
-        Float64 dx = px.x - p0.x;
-        Float64 dy = px.y - p0.y;
+        double dx = px.x - p0.x;
+        double dy = px.y - p0.y;
         
         NSUInteger numh = [hull countOfVertices];
         
@@ -310,9 +310,9 @@
     return [self triangulationFilterDuplicates:NO];
 }
 
-- (Float64 *)rawPoints {
+- (double *)rawPoints {
     
-    Float64 *rawPoints = malloc(sizeof(Float64)*2*[self count]);
+    double *rawPoints = malloc(sizeof(double)*2*[self count]);
     NSUInteger i=0;
     
     for (DPoint *point in self) {

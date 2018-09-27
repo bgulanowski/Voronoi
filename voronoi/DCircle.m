@@ -18,7 +18,7 @@
     return [NSString stringWithFormat:@"C: %@ - %.2f (%.0f)", _centre, _radius, _r2];
 }
 
-- (id)initWithCentre:(DPoint *)p radius:(Float64)r {
+- (id)initWithCentre:(DPoint *)p radius:(double)r {
     self = [super init];
     if(self) {
         _centre = p;
@@ -33,7 +33,7 @@
 }
 
 
-+ (DCircle *)circleWithCentre:(DPoint *)p radius:(Float64)r {
++ (DCircle *)circleWithCentre:(DPoint *)p radius:(double)r {
     return [[self alloc] initWithCentre:p radius:r];
 }
 

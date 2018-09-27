@@ -156,7 +156,7 @@
     DPoint *p1 = [points objectAtIndex:i1], *p2 = [points objectAtIndex:i2];
     
     DPoint *edgeVector = [p2 subtract:p1];
-    Float64 temp = edgeVector.x;
+    double temp = edgeVector.x;
     
     scale /= [edgeVector distanceFromOrigin];
 
@@ -261,7 +261,7 @@
     return result;
 }
 
-- (NSArray *)perpendicularsForTriad:(DTriad *)start points:(NSArray *)points pivot:(Pivot)pivot scale:(Float64)scale {
+- (NSArray *)perpendicularsForTriad:(DTriad *)start points:(NSArray *)points pivot:(Pivot)pivot scale:(double)scale {
     
     NSArray *result = nil;
     
@@ -278,9 +278,9 @@
         pOpp2 = [points objectAtIndex:[end indexForPivot:PrevPivot(commonPivot)]];
     }
         
-    Float64 longitude1 = [pPivot distanceTo:pOpp1];
-    Float64 longitude2 = [pPivot distanceTo:pCommon];
-    Float64 longitude3 = longitude2;
+    double longitude1 = [pPivot distanceTo:pOpp1];
+    double longitude2 = [pPivot distanceTo:pCommon];
+    double longitude3 = longitude2;
     
     if(end)
         longitude3 = [pPivot distanceTo:pOpp2];
@@ -355,21 +355,21 @@
     DPoint *pb = [points objectAtIndex:1];
     DPoint *pc = [points objectAtIndex:2];
 
-    Float64 pax = pa.x;
-    Float64 pay = pa.y;
-    Float64 pbx = pb.x;
-    Float64 pby = pb.y;
-    Float64 pcx = pc.x;
-    Float64 pcy = pc.y;
-    Float64 centroidX = (pax + pbx + pcx) / 3.0;
-    Float64 centroidY = (pay + pby + pcy) / 3.0;
+    double pax = pa.x;
+    double pay = pa.y;
+    double pbx = pb.x;
+    double pby = pb.y;
+    double pcx = pc.x;
+    double pcy = pc.y;
+    double centroidX = (pax + pbx + pcx) / 3.0;
+    double centroidY = (pay + pby + pcy) / 3.0;
     
-    Float64 dr0 = pax - centroidX;
-    Float64 dc0 = pay - centroidY;
-    Float64 dx01 = pbx - pax;
-    Float64 dy01 = pby - pay;
+    double dr0 = pax - centroidX;
+    double dc0 = pay - centroidY;
+    double dx01 = pbx - pax;
+    double dy01 = pby - pay;
     
-    Float64 df = -dx01 * dc0 + dy01 * dr0;
+    double df = -dx01 * dc0 + dy01 * dr0;
     
     return df > 0 ? kWindingCounterCW : kWindingClockwise;
 }
@@ -402,15 +402,15 @@
     DPoint *pb = [self objectAtIndex:indices[1]];
     DPoint *pc = [self objectAtIndex:indices[2]];
     
-    Float64 x1 = pa.x;
-    Float64 y1 = pa.y;
-    Float64 x2 = pb.x;
-    Float64 y2 = pb.y;
-    Float64 x3 = pc.x;
-    Float64 y3 = pc.y;
-    Float64 m1, m2, mx1, mx2, my1, my2;
-    Float64 dx, dy;
-    Float64 xc, yc;
+    double x1 = pa.x;
+    double y1 = pa.y;
+    double x2 = pb.x;
+    double y2 = pb.y;
+    double x3 = pc.x;
+    double y3 = pc.y;
+    double m1, m2, mx1, mx2, my1, my2;
+    double dx, dy;
+    double xc, yc;
     
     if (fabs(y2 - y1) < DBL_EPSILON) {
         m2 = -(x3 - x2) / (y3 - y2);

@@ -46,19 +46,19 @@
     return self;
 }
 
-- (Float64)lengthSquared {
+- (double)lengthSquared {
     return [_p1 distanceSquaredTo:_p0];
 }
 
-- (Float64)length {
+- (double)length {
     return [_p1 distanceTo:_p0];
 }
 
-- (Float64)width {
+- (double)width {
     return fabs(_xMax - _xMin);
 }
 
-- (Float64)height {
+- (double)height {
     return fabs(_yMax - _yMin);
 }
 
@@ -90,7 +90,7 @@
 }
 
 - (BOOL)containsPoint:(DPoint *)point {
-    Float64 x = (float)point.x, y = (float)point.y;
+    double x = (float)point.x, y = (float)point.y;
     return x >= _xMin && x <= _xMax && y >= _yMin && y <= _yMax;
 }
 

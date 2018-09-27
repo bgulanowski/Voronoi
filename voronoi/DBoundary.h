@@ -14,11 +14,11 @@
 @interface DBoundary : NSObject {
     DRange *_range;
     NSMutableArray *_segments;
-    Float64 _minSizeFactor;
+    double _minSizeFactor;
 }
 
 @property DRange *range;
-@property Float64 minSizeFactor;
+@property double minSizeFactor;
 
 @property (readonly) NSArray *segments;
 

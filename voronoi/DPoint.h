@@ -12,26 +12,26 @@
 
 @interface DPoint : NSObject<NSCopying> {
 @public
-    Float64 _x;
-    Float64 _y;
+    double _x;
+    double _y;
 }
 
-@property Float64 x;
-@property Float64 y;
+@property double x;
+@property double y;
 
-- (id)initWithX:(Float64)x y:(Float64)y;
+- (id)initWithX:(double)x y:(double)y;
 - (id)initWithCGPoint:(CGPoint)point;
 
 - (DPoint *)add:(DPoint *)other;
 - (DPoint *)subtract:(DPoint *)other;
 
-- (Float64)distanceTo:(DPoint *)other;
-- (Float64)distanceSquaredTo:(DPoint *)other;
-- (Float64)distanceFromOrigin;
+- (double)distanceTo:(DPoint *)other;
+- (double)distanceSquaredTo:(DPoint *)other;
+- (double)distanceFromOrigin;
 
 - (CGPoint)CGPoint;
 
-+ (DPoint *)pointWithX:(Float64)x y:(Float64)y;
++ (DPoint *)pointWithX:(double)x y:(double)y;
 + (DPoint *)pointWithCGPoint:(CGPoint)point;
 
 @end

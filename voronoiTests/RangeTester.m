@@ -26,8 +26,8 @@
 
 - (void)test01 {
     
-    Float64 e = 2.0 * sqrt(2.0);
-    Float64 a = [_range length];
+    double e = 2.0 * sqrt(2.0);
+    double a = [_range length];
     
     STAssertEquals(e, a, @"%.5d != %.5d", e, a);
     

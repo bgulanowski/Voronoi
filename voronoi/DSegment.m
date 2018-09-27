@@ -51,12 +51,12 @@
 
 - (DPoint *)intersection:(DSegment *)segment restrictToRange:(BOOL)flag {
     
-    Float64 det = _a * segment->_b - _b * segment->_a;
+    double det = _a * segment->_b - _b * segment->_a;
     
     if(!det) return nil;
     
-    Float64 x = (_c * segment->_a - _a * segment->_c) / det;
-    Float64 y = (_c * segment->_b - _b * segment->_c) / det;
+    double x = (_c * segment->_a - _a * segment->_c) / det;
+    double y = (_c * segment->_b - _b * segment->_c) / det;
     
     DPoint *intersection = [DPoint pointWithX:x y:y];
     
@@ -70,13 +70,13 @@
     return [self intersection:segment restrictToRange:YES];
 }
 
-- (NSArray *)perpendicularsThroughPoint:(DPoint *)point scale:(Float64)scale {
+- (NSArray *)perpendicularsThroughPoint:(DPoint *)point scale:(double)scale {
     
     DSegment *projection = [self projectToPoint:point];
     DPoint *projectedPoint = [self intersection:projection restrictToRange:NO];
     DPoint *edgeVector = [_p1 subtract:_p0];
     
-    Float64 temp = edgeVector.x;
+    double temp = edgeVector.x;
 
     scale /= [edgeVector distanceFromOrigin];
     edgeVector.x = -edgeVector.y * scale;

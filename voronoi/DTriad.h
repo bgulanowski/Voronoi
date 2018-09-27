@@ -65,7 +65,7 @@ typedef enum {
 @property NSUInteger bc;
 @property NSUInteger ca;
 
-@property (readonly) Float64 r2; // circumcircle.radius^2
+@property (readonly) double r2; // circumcircle.radius^2
 
 - (id)initWithIndex:(NSUInteger)a index:(NSUInteger)b index:(NSUInteger)c;
 
@@ -102,7 +102,7 @@ typedef enum {
 - (DTriad *)firstForIndex:(NSUInteger)index pivot:(Pivot)pivot;
 - (NSMutableArray *)triadsAdjacentToIndex:(NSUInteger)index pivot:(Pivot)pivot;
 
-- (NSArray *)perpendicularsForTriad:(DTriad *)triad points:(NSArray *)points pivot:(Pivot)pivot scale:(Float64)scale;
+- (NSArray *)perpendicularsForTriad:(DTriad *)triad points:(NSArray *)points pivot:(Pivot)pivot scale:(double)scale;
 
 // Debugging
 - (BOOL)validateTriad:(DTriad *)triad index:(NSUInteger)index;

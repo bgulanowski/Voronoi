@@ -74,7 +74,7 @@
     return [next subtract:curr];
 }
 
-- (BOOL)visibleFromX:(Float64)dx y:(Float64)dy index:(NSUInteger)index {
+- (BOOL)visibleFromX:(double)dx y:(double)dy index:(NSUInteger)index {
 
     DPoint *vector = [self vectorToNext:index];
     
@@ -86,8 +86,8 @@
     NSUInteger pIndex = [[_vertices objectAtIndex:index] index];
     DPoint *curr = [_points objectAtIndex:pIndex];
 
-    Float64 dx = point.x - curr.x;
-    Float64 dy = point.y - curr.y;
+    double dx = point.x - curr.x;
+    double dy = point.y - curr.y;
     
     return [self visibleFromX:dx y:dy index:index];
 }
