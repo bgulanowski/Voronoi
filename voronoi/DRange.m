@@ -90,6 +90,8 @@
 }
 
 - (BOOL)containsPoint:(DPoint *)point {
+    // This rounds the point coordinates slightly
+    // Many things fail if we don't do this
     double x = (float)point.x, y = (float)point.y;
     return x >= _xMin && x <= _xMax && y >= _yMin && y <= _yMax;
 }
