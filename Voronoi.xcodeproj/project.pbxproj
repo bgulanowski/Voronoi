@@ -260,8 +260,7 @@
 				84AD32B3164B04CF00E37EDE /* S-hull in C++ */,
 				84AD32A5164B04BE00E37EDE /* S-hull in Java */,
 			);
-			name = Reference;
-			path = Meter;
+			path = Reference;
 			sourceTree = "<group>";
 		};
 		84AD32A5164B04BE00E37EDE /* S-hull in Java */ = {
@@ -281,7 +280,7 @@
 				84AD32E7164B72D700E37EDE /* Voronoi.java */,
 			);
 			name = "S-hull in Java";
-			path = graph;
+			path = "S-hull Java";
 			sourceTree = "<group>";
 		};
 		84AD32B3164B04CF00E37EDE /* S-hull in C++ */ = {
