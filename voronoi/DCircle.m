@@ -12,16 +12,27 @@
 #import "DRange.h"
 
 
-@implementation DCircle
+@implementation DCircle {
+    vector_double2 _centre;
+}
+
+- (DPoint *)centre {
+    return [DPoint pointWithX:_centre.x y:_centre.y];
+}
+
+- (void)setCentre:(DPoint *)centre {
+    _centre.x = centre.x;
+    _centre.y = centre.y;
+}
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"C: %@ - %.2f (%.0f)", _centre, _radius, _r2];
+    return [NSString stringWithFormat:@"C: %@ - %.2f (%.0f)", self.centre, _radius, _r2];
 }
 
 - (id)initWithCentre:(DPoint *)p radius:(double)r {
     self = [super init];
     if(self) {
-        _centre = p;
+        _centre = vector2(p.x, p.y);
         _radius = r;
         _r2 = r*r;
     }
@@ -29,7 +40,7 @@
 }
 
 - (BOOL)containsPoint:(DPoint *)p {
-    return [[DRange rangeWithPoint:_centre point:p] length] <= _radius;
+    return [[DRange rangeWithPoint:self.centre point:p] length] <= _radius;
 }
 
 
