@@ -41,6 +41,8 @@
         case kPivotA: return _a;
         case kPivotB: return _b;
         case kPivotC: return _c;
+        case kPivotUndefined:
+            [NSException raise:NSInternalInconsistencyException format:@"Cannot determine index for undefined pivot"];
         default: return NSNotFound;
     }
 }
@@ -53,12 +55,17 @@
     
     NSUInteger *curr = points;
     
-    if(_a == other->_a || _a == other->_b || _a == other->_c)
-        *curr = _a, ++curr;
-    if(_b == other->_a || _b == other->_b || _b == other->_c)
-        *curr = _b, ++curr;
-    if(_c == other->_a || _c == other->_b || _c == other->_c)
-        *curr = _c, ++curr;
+    if(_a == other->_a || _a == other->_b || _a == other->_c) {
+        *curr = _a; ++curr;
+    }
+    if(_b == other->_a || _b == other->_b || _b == other->_c) {
+        *curr = _b;
+        ++curr;
+    }
+    if(_c == other->_a || _c == other->_b || _c == other->_c) {
+        *curr = _c;
+        ++curr;
+    }
 }
 
 - (NSUInteger)neighbourIndexForEdge:(Edge)edge {
@@ -147,9 +154,11 @@
     
     NSUInteger i1, i2;
     switch (edge) {
-        case kEdgeAB: i1=_a, i2=_b; break;
-        case kEdgeBC: i1=_b, i2=_c; break;
-        case kEdgeCA: i1=_c, i2=_a; break;
+        case kEdgeAB: i1=_a; i2=_b; break;
+        case kEdgeBC: i1=_b; i2=_c; break;
+        case kEdgeCA: i1=_c; i2=_a; break;
+        case kEdgeUndefined:
+            [NSException raise:NSInvalidArgumentException format:@"edge undefined"];
         default: break;
     }
 

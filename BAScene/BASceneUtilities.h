@@ -180,7 +180,9 @@ static inline BAPointf BATranslatePointf(BAPointf p, CGFloat dx, CGFloat dy, CGF
 
 static inline BAPointh BAMakePointh(CGFloat x, CGFloat y, CGFloat w) {
 	BAPointh p;
-	p.x = x, p.y = y, p.w = w;
+    p.x = x;
+    p.y = y;
+    p.w = w;
 	return p;
 }
 
@@ -197,13 +199,17 @@ static inline BAVector BASubtractPointsh(BAPointh a, BAPointh b) {
 
 static inline BAPointi BAScalePointi(BAPointi a, NSInteger factor) {
 	BAPointi v;
-	v.x = a.x*factor, v.y = a.y*factor, v.z = a.z*factor;
+    v.x = a.x*factor;
+    v.y = a.y*factor;
+    v.z = a.z*factor;
 	return v;
 }
 
 static inline BAPointf BAScalePointf(BAPointf a, CGFloat factor) {
 	BAPointf v;
-	v.x = a.x*factor, v.y = a.y*factor, v.z = a.z*factor;
+    v.x = a.x*factor;
+    v.y = a.y*factor;
+    v.z = a.z*factor;
 	return v;
 }
 
@@ -217,7 +223,9 @@ static inline BAVector3 BAInverseVector3(BAVector3 v) {
 
 static inline BAVector3 BAAddVectors3(BAVector3 a, BAVector3 b) {
 	BAVector3 v;
-	v.x = a.x+b.x, v.y = a.y+b.y, v.z = a.z+b.z;
+    v.x = a.x+b.x;
+    v.y = a.y+b.y;
+    v.z = a.z+b.z;
 	return v;
 }
 
@@ -234,8 +242,11 @@ static inline BAVector3 BANormalizeVector3(BAVector3 a) {
 	BAVector3 v = {};
 	CGFloat length = sqrt(a.x*a.x + a.y*a.y + a.z*a.z);
 	
-	if(length)
-		v.x = a.x/length, v.y = a.y/length, v.z = a.z/length;
+    if(length) {
+        v.x = a.x/length;
+        v.y = a.y/length;
+        v.z = a.z/length;
+    }
 	
 	return v;
 }
@@ -259,7 +270,10 @@ static inline CGFloat BADotProductVectors3(BAVector3 a, BAVector3 b) {
 
 static inline BAPoint4f BAMakePoint4f(CGFloat x, CGFloat y, CGFloat z, CGFloat w) {
 	BAPoint4f v;
-	v.x = x, v.y = y, v.z = z, v.w = w;
+    v.x = x;
+    v.y = y;
+    v.z = z;
+    v.w = w;
 	return v;
 }
 
@@ -287,14 +301,18 @@ static inline BOOL BAPointIsOrigin(BAPoint4f p) {
 
 static inline BAPoint4f BATranslatePoint4f(BAPoint4f v, CGFloat x, CGFloat y, CGFloat z) {
 	BAPoint4f r;
-	r.x = v.x+x, r.y = v.y+y, r.z = v.z+z;
+    r.x = v.x+x;
+    r.y = v.y+y;
+    r.z = v.z+z;
 	return r;
 }
 
 
 static inline BAPoint4f BAScalePoint4f(BAPoint4f a, CGFloat factor) {
 	BAPoint4f v;
-	v.x = a.x*factor, v.y = a.y*factor, v.z = a.z*factor;
+    v.x = a.x*factor;
+    v.y = a.y*factor;
+    v.z = a.z*factor;
 	return v;
 }
 
@@ -507,7 +525,8 @@ static inline BAPoint4f BATransformPoint4f(BAPoint4f a, BAMatrix4x4f m) {
 
 static inline BAMatrix3x3f BATranslationMatrix3x3f(BAVector v) {
 	BAMatrix3x3f m = BAIdentityMatrix3x3f;
-	m.v[2].x = v.x, m.v[2].y = v.y;
+    m.v[2].x = v.x;
+    m.v[2].y = v.y;
 	return m;
 }
 

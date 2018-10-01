@@ -173,7 +173,8 @@ NSUInteger bitsInChar = NSNotFound;
 	unsigned char t=1;
 	NSUInteger b=0;
 	
-	while(!*p && p++<buffer+bufferLength-1);
+	while(!*p && p++<buffer+bufferLength-1)
+        ;
     
     if(p-buffer>=bufferLength)
         return NSNotFound;
@@ -195,7 +196,8 @@ NSUInteger bitsInChar = NSNotFound;
 	unsigned char *p = buffer+bufferLength-1;
 	unsigned char b=(bitsInChar-1), t=1;
 
-	while(!*p && p-->=buffer);
+	while(!*p && p-->=buffer)
+        ;
     
     if(p < buffer)
         return NSNotFound;
@@ -213,7 +215,8 @@ NSUInteger bitsInChar = NSNotFound;
 	unsigned char *p = buffer;
 	unsigned char b=0, t=1;
 
-	while(!(unsigned char)~*p && p++<buffer+bufferLength-1);
+	while(!(unsigned char)~*p && p++<buffer+bufferLength-1)
+        ;
 
     if(p-buffer>=bufferLength)
         return NSNotFound;

@@ -34,14 +34,21 @@
     if(self) {
         _p0 = p0;
         _p1 = p1;
-        if(_p0.x < _p1.x)
-            _xMin = _p0.x, _xMax = _p1.x;
-        else
-            _xMin = _p1.x, _xMax = _p0.x;
-        if(_p0.y < _p1.y)
-            _yMin = _p0.y, _yMax = _p1.y;
-        else
-            _yMin = _p1.y, _yMax = _p0.y;
+        if(_p0.x < _p1.x) {
+            _xMin = _p0.x; _xMax = _p1.x;
+        }
+        else {
+            _xMin = _p1.x;
+            _xMax = _p0.x;
+        }
+        if(_p0.y < _p1.y) {
+            _yMin = _p0.y;
+            _yMax = _p1.y;
+        }
+        else {
+            _yMin = _p1.y;
+            _yMax = _p0.y;
+        }
     }
     return self;
 }
