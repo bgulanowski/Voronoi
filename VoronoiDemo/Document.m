@@ -181,8 +181,8 @@ static int comparePointsYDistanceIndexed(CGPoint *points, NSUInteger *pi1, NSUIn
         __block NSUInteger n = 0;
         
         [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-            p.x += _points[idx].x;
-            p.y += _points[idx].y;
+            p.x += self->_points[idx].x;
+            p.y += self->_points[idx].y;
             ++n;
         }];
         relaxed[i].x = p.x/n;
