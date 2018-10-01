@@ -20,6 +20,7 @@
 #define sine sin
 #define cosine cos
 #define absolute fabs
+#define labsolute labs
 #define BAInt long long
 #define BAUInt unsigned long long
 #define NAN_OFFSET LLONG_MAX+1 // -1 in signed long long
@@ -29,6 +30,7 @@
 #define sine sinf
 #define cosine cosf
 #define absolute fabsf
+#define labsolute llabs
 #define BAInt long
 #define BAUInt unsigned long
 #define NAN_OFFSET LONG_MAX+1  // -1 signed long
@@ -44,10 +46,10 @@
 BAInt a = *(BAInt*)&_f1_;\
 BAInt b = *(BAInt*)&_f2_;\
 \
-if (a < 0) a = (BAInt)(NAN_OFFSET - (BAUInt)a);\
-if (b < 0) b = (BAInt)(NAN_OFFSET - (BAUInt)b);\
+if (a < 0) a = (BAInt)((BAUInt)NAN_OFFSET - (BAUInt)a);\
+if (b < 0) b = (BAInt)((BAUInt)NAN_OFFSET - (BAUInt)b);\
 \
-_r_ = absolute(a - b);\
+_r_ = labsolute(a - b);\
 } while(0)
 
 
@@ -92,7 +94,7 @@ static inline NSInteger BAmod(NSInteger dend, NSInteger div) {
 
 static inline NSUInteger BARandomIntegerInRange(NSUInteger min, NSUInteger max) {
 	
-	NSUInteger result = (NSUInteger)BARandomCGFloatInRange(min, max+1);
+	NSUInteger result = (NSUInteger)BARandomCGFloatInRange((CGFloat)min, (CGFloat)(max+1));
 	
 	return result > max ? max : result;
 }
