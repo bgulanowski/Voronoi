@@ -12,11 +12,7 @@
 
 @class DPoint;
 
-@interface DSegment : DRange {
-    double _a;
-    double _b;
-    double _c;
-}
+@interface DSegment : DRange
 
 @property double a;
 @property double b;

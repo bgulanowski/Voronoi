@@ -11,13 +11,7 @@
 
 @class DPoint, DBoundary, Voronoi;
 
-@interface DRegion : NSObject {
-    __weak Voronoi *_voronoi;
-    __weak DBoundary *_boundary;
-    __strong NSMutableArray *_triads;
-    __strong NSMutableArray *_points;
-    NSUInteger _inputIndex;
-}
+@interface DRegion : NSObject
 
 @property (readonly) Voronoi *voronoi;
 @property (readonly) DBoundary *boundary;

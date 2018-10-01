@@ -11,12 +11,7 @@
 
 @class DPoint;
 
-@interface DRange : NSObject {
-    DPoint *_p0;
-    DPoint *_p1;
-    
-    double _xMin, _xMax, _yMin, _yMax;
-}
+@interface DRange : NSObject
 
 @property DPoint *p0;
 @property DPoint *p1;

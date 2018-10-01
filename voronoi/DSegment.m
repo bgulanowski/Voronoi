@@ -74,7 +74,7 @@
     
     DSegment *projection = [self projectToPoint:point];
     DPoint *projectedPoint = [self intersection:projection restrictToRange:NO];
-    DPoint *edgeVector = [_p1 subtract:_p0];
+    DPoint *edgeVector = [self.p1 subtract:self.p0];
     
     double temp = edgeVector.x;
 

@@ -11,7 +11,9 @@
 #import "DPoint.h"
 
 
-@implementation DHull
+@implementation DHull {
+    NSMutableArray *_vertices;
+}
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"[ %@ ]", [[self pointsForVertices] valueForKey:@"description"]];

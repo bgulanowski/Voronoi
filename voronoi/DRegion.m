@@ -24,7 +24,11 @@ static __strong NSNumber *notfound;
 @end
 
 
-@implementation DRegion
+@implementation DRegion {
+    NSUInteger _inputIndex;
+    NSMutableArray *_triads;
+    NSMutableArray *_points;
+}
 
 #pragma mark - Private
 - (void)clip {

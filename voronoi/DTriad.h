@@ -45,22 +45,16 @@ typedef enum {
 
 @class DCircle, DPoint, DSegment;
 
-@interface DTriad : NSObject {
-    DCircle *_circumcircle;
-    NSUInteger _ab; // _ab, _bc, and _cd are indices to adjacent edges in neighbouring triangles (I think)
-    NSUInteger _bc;
-    NSUInteger _ca;
-    NSUInteger _a; // _a, _b, and _c are indices into a list of points maintained elsewhere
-    NSUInteger _b;
-    NSUInteger _c;
-}
+@interface DTriad : NSObject
 
 @property (strong) DCircle *circumcircle;
 
+// _a, _b, and _c are indices into a list of points maintained elsewhere
 @property NSUInteger a;
 @property NSUInteger b;
 @property NSUInteger c;
 
+// _ab, _bc, and _cd are indices to adjacent edges in neighbouring triangles
 @property NSUInteger ab;
 @property NSUInteger bc;
 @property NSUInteger ca;

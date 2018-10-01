@@ -11,14 +11,7 @@
 
 @class DBoundary, DRange, DRegion;
 
-@interface Voronoi : NSObject {
-    __strong DBoundary *_boundary;
-    __strong NSArray *_points;
-    __strong NSArray *_triads;
-    __strong NSArray *_regions;
-    
-    NSUInteger *_indexedTriads;
-}
+@interface Voronoi : NSObject
 
 @property (readonly) DBoundary *boundary;
 

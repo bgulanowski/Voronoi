@@ -11,11 +11,7 @@
 
 @class DPoint, DRange, DSegment;
 
-@interface DBoundary : NSObject {
-    DRange *_range;
-    NSMutableArray *_segments;
-    double _minSizeFactor;
-}
+@interface DBoundary : NSObject
 
 @property DRange *range;
 @property double minSizeFactor;

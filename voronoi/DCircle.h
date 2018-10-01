@@ -11,15 +11,11 @@
 
 @class DPoint;
 
-@interface DCircle : NSObject {
-    DPoint *_centre;
-    double _radius;
-    double _r2; // _radius^2 (optimization)
-}
+@interface DCircle : NSObject
 
 @property (readonly) DPoint *centre;
 @property (readonly) double radius;
-@property (readonly) double r2;
+@property (readonly) double r2; // _radius^2 (optimization)
 
 - (id)initWithCentre:(DPoint *)p radius:(double)r;
 - (BOOL)containsPoint:(DPoint *)p;

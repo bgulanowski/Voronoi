@@ -18,7 +18,12 @@
 #import "DTriad.h"
 
 
-@implementation Voronoi
+@implementation Voronoi {
+    NSUInteger *_indexedTriads;
+}
+
+@synthesize triads=_triads;
+@synthesize regions=_regions;
 
 #pragma mark - Private
 

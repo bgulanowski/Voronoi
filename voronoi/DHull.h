@@ -11,13 +11,10 @@
 
 @class DPoint, DHullPoint;
 
-@interface DHull : NSObject {
-    __strong NSMutableArray *_vertices; // DHullPoints
-    __strong NSArray *_points;   // all DPoints
-}
+@interface DHull : NSObject
 
-@property (readonly) NSArray *vertices;
-@property NSArray *points;
+@property (readonly) NSArray *vertices; // DHullPoints
+@property NSArray *points;   // all DPoints
 
 // points is an array of DPoints, not DHullPOints
 - (id)initWithPoints:(NSArray *)points;

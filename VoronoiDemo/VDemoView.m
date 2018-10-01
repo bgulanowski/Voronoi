@@ -280,10 +280,10 @@ static __strong NSBezierPath *hatch;
     
     NSBezierPath *path = [NSBezierPath bezierPath];
     
-    [path moveToPoint:[[points objectAtIndex:_a] CGPoint]];
-    [path lineToPoint:[[points objectAtIndex:_b] CGPoint]];
-    [path lineToPoint:[[points objectAtIndex:_c] CGPoint]];
-    [path lineToPoint:[[points objectAtIndex:_a] CGPoint]];
+    [path moveToPoint:[[points objectAtIndex:self.a] CGPoint]];
+    [path lineToPoint:[[points objectAtIndex:self.b] CGPoint]];
+    [path lineToPoint:[[points objectAtIndex:self.c] CGPoint]];
+    [path lineToPoint:[[points objectAtIndex:self.a] CGPoint]];
     
     return path;
 }
