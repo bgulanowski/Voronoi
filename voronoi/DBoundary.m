@@ -15,29 +15,12 @@
 
 @implementation DBoundary
 
-+ (NSMutableArray *)segmentsForRange:(DRange *)range {
-    
-    NSMutableArray *array = [NSMutableArray array];
-    
-    DPoint *p1 = [DPoint pointWithX:range.xMin y:range.yMax];
-    DPoint *p2 = range.max;
-    DPoint *p3 = [DPoint pointWithX:range.xMax y:range.yMin];
-    DPoint *p4 = range.min;
-    
-    [array addObject:[DSegment segmentWithPoint:p1 point:p2]];
-    [array addObject:[DSegment segmentWithPoint:p2 point:p3]];
-    [array addObject:[DSegment segmentWithPoint:p3 point:p4]];
-    [array addObject:[DSegment segmentWithPoint:p4 point:p1]];
-    
-    return array;
-}
-
 - (id)initWithRange:(DRange *)range {
     self = [self init];
     if(self) {
         _range = range;
         _minSizeFactor = range.width + range.height;
-        _segments = [DBoundary segmentsForRange:range];
+        _segments = [range boundarySegments];
     }
     return self;
 }

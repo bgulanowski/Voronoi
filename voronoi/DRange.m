@@ -26,7 +26,7 @@
 
 #pragma mark - NSObject
 - (NSString *)description {
-    return [NSString stringWithFormat:@"[(%f,%f) - (%f,%f)]", _p0.x, _p0.y, _p1.x, _p1.y];
+    return [NSString stringWithFormat:@"[(%.1f, %.1f) - (%.1f, %.1f)]", _p0.x, _p0.y, _p1.x, _p1.y];
 }
 
 - (instancetype)init {
@@ -102,21 +102,16 @@
 
 - (NSArray *)boundarySegments {
     
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    
-    [array addObject:[DPoint pointWithX:_p0.x y:_p1.y]];
-    [array addObject:[DPoint pointWithX:_p1.x y:_p1.y]];
-    [array addObject:[DPoint pointWithX:_p1.x y:_p0.x]];
-    [array addObject:[DPoint pointWithX:_p0.x y:_p0.y]];
-    
-    NSArray *points = [array copy];
-    
-    [array removeAllObjects];
-    
-    for (NSUInteger i=0; i<4; ++i)
-        [array addObject:[DSegment segmentWithPoint:[points objectAtIndex:i] point:[points objectAtIndex:i%4]]];
-    
-    return [array copy];
+    DPoint *a = [DPoint pointWithX:_xMin y:_yMax];
+    DPoint *b = self.max;
+    DPoint *c = [DPoint pointWithX:_xMax y:_yMin];
+    DPoint *d = self.min;
+    return @[
+             [DSegment segmentWithPoint:a point:b],
+             [DSegment segmentWithPoint:b point:c],
+             [DSegment segmentWithPoint:c point:d],
+             [DSegment segmentWithPoint:d point:a]
+             ];
 }
 
 - (BOOL)containsPoint:(DPoint *)point {
