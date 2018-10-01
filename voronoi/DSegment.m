@@ -79,8 +79,7 @@
     double temp = edgeVector.x;
 
     scale /= [edgeVector distanceFromOrigin];
-    edgeVector.x = -edgeVector.y * scale;
-    edgeVector.y = temp * scale;
+    edgeVector = [DPoint pointWithX:-edgeVector.y * scale y:temp * scale];
     
     DPoint *p1 = [DPoint pointWithX:projectedPoint.x-edgeVector.x
                                   y:projectedPoint.y-edgeVector.y];

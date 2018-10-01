@@ -168,10 +168,8 @@
     double temp = edgeVector.x;
     
     scale /= [edgeVector distanceFromOrigin];
+    edgeVector = [DPoint pointWithX:-edgeVector.y * scale y:temp * scale];
 
-    edgeVector.x = - edgeVector.y * scale;
-    edgeVector.y = temp * scale;
-    
     p1 = _circumcircle.centre;
     p2 = [DPoint pointWithX:p1.x+edgeVector.x y:p1.y+edgeVector.y];
     

@@ -8,25 +8,32 @@
 
 #import "DPoint.h"
 
-
 @implementation DPoint
+
+- (double)x {
+    return _p.x;
+}
+
+- (double)y {
+    return _p.y;
+}
 
 #pragma mark - NSObject
 - (NSString *)description {
-    return [NSString stringWithFormat:@"{%.2f, %.2f}", _x, _y];
+    return [NSString stringWithFormat:@"{%.2f, %.2f}", _p.x, _p.y];
 }
 
 - (BOOL)isEqual:(id)object {
     if(![object isKindOfClass:[self class]])
         return NO;
-    DPoint *other = (DPoint *)object;
-    return fabs(other->_x - _x) < DBL_EPSILON && fabs(other->_y - _y) < DBL_EPSILON;
+    DPoint *other = object;
+    return fabs(other->_p.x - _p.x) < DBL_EPSILON && fabs(other->_p.y - _p.y) < DBL_EPSILON;
 }
 
 
 #pragma mark - NSCoding
 - (id)copyWithZone:(NSZone *)zone {
-    return [[[self class] alloc] initWithX:_x y:_y];
+    return [[[self class] alloc] initWithX:_p.x y:_p.y];
 }
 
 
@@ -34,8 +41,7 @@
 - (id)initWithX:(double)x y:(double)y {
     self = [self init];
     if(self) {
-        _x = x;
-        _y = y;
+        _p = vector2(x, y);
     }
     return self;
 }
@@ -45,29 +51,29 @@
 }
 
 - (DPoint *)add:(DPoint *)other {
-    return [DPoint pointWithX:_x + other->_x y:_y + other->_y];
+    vector_double2 p = _p + other->_p;
+    return [DPoint pointWithX:p.x y:p.y];
 }
 
 - (DPoint *)subtract:(DPoint *)other {
-    return [DPoint pointWithX:_x - other->_x y:_y - other->_y];
+    vector_double2 p = _p - other->_p;
+    return [DPoint pointWithX:p.x y:p.y];
 }
 
 - (double)distanceTo:(DPoint *)other {
-    double dx = other->_x-_x, dy = other->_y-_y;
-    return sqrt(dx*dx + dy*dy);
+    return simd_distance(other->_p, _p);
 }
 
 - (double)distanceSquaredTo:(DPoint *)other {
-    double dx = other->_x-_x, dy = other->_y-_y;
-    return dx*dx + dy*dy;
+    return simd_distance_squared(other->_p, _p);
 }
 
 - (double)distanceFromOrigin {
-    return sqrt(_x*_x + _y*_y);
+    return simd_length(_p);
 }
 
 -(CGPoint)CGPoint {
-    return CGPointMake(_x, _y);
+    return CGPointMake(_p.x, _p.y);
 }
 
 + (DPoint *)pointWithX:(double)x y:(double)y {

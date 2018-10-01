@@ -12,12 +12,11 @@
 
 @interface DPoint : NSObject<NSCopying> {
 @public
-    double _x;
-    double _y;
+    vector_double2 _p;
 }
 
-@property double x;
-@property double y;
+@property (nonatomic, readonly) double x;
+@property (nonatomic, readonly) double y;
 
 - (id)initWithX:(double)x y:(double)y;
 - (id)initWithCGPoint:(CGPoint)point;
