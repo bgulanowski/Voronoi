@@ -28,18 +28,6 @@
 @synthesize size=_size;
 @synthesize count=_count;
 
-static int comparePointsDistanceFromOrigin(CGPoint *p1, CGPoint *p2) {
-    return (int)((p1->x * p1->x + p1->y * p1->y ) - (p2->x * p2->x + p2->y * p2->y));
-}
-
-static int comparePointsXDistance(CGPoint *p1, CGPoint *p2) {
-    return (int)(p1->x - p2->x);
-}
-
-static int comparePointsYDistance(CGPoint *p1, CGPoint *p2) {
-    return (int)(p1->y - p2->y);
-}
-
 static int comparePointsXDistanceIndexed(CGPoint *points, NSUInteger *pi1, NSUInteger *pi2) {
     CGFloat x1 = points[*pi1].x, x2 = points[*pi2].x;
     if(x1 == x2) return 0;
