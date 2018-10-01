@@ -15,7 +15,7 @@
 
 #pragma mark - NSObject
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ a:%.4f b:%.4f c:%.4f",
+    return [NSString stringWithFormat:@"%@ a:%.2f b:%.2f c:%.2f",
             [super description], _a, _b, _c];
 }
 
