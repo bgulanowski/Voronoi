@@ -63,6 +63,7 @@ static __strong NSBezierPath *hatch;
 
 - (BOOL)acceptsFirstResponder { return YES; }
 
+/* // no longer works - colours don't match
 - (void)mouseMoved:(NSEvent *)theEvent {
     
     NSColor *color = NSReadPixel([theEvent locationInWindow]);
@@ -85,6 +86,7 @@ static __strong NSBezierPath *hatch;
         [self setNeedsDisplay:YES];
     }
 }
+ */
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
