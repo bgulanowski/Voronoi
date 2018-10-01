@@ -13,8 +13,8 @@
 
 @interface DRange : NSObject
 
-@property DPoint *p0;
-@property DPoint *p1;
+@property (readonly) DPoint *p0;
+@property (readonly) DPoint *p1;
 
 @property (readonly) double xMin;
 @property (readonly) double xMax;
@@ -29,9 +29,10 @@
 @property (readonly) double width;
 @property (readonly) double height;
 
-- (id)initWithPoint:(DPoint *)p0 point:(DPoint *)p1;
+@property (nonatomic, readonly) NSArray *boundarySegments;
 
-- (NSArray *)boundary;
+- (instancetype)init:(vector_double2)p0 :(vector_double2)p1 NS_DESIGNATED_INITIALIZER;
+- (id)initWithPoint:(DPoint *)p0 point:(DPoint *)p1;
 
 - (BOOL)containsPoint:(DPoint *)point;
 

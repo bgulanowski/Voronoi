@@ -11,11 +11,26 @@
 #import "DSegment.h"
 
 
-@implementation DRange
+@implementation DRange {
+    vector_double2 _p0;
+    vector_double2 _p1;
+}
+
+- (DPoint *)p0 {
+    return [DPoint pointWithX:_p0.x y:_p0.y];
+}
+
+- (DPoint *)p1 {
+    return [DPoint pointWithX:_p1.x y:_p1.y];
+}
 
 #pragma mark - NSObject
 - (NSString *)description {
-    return [NSString stringWithFormat:@"[%@ - %@]", [_p0 description], [_p1 description]];
+    return [NSString stringWithFormat:@"[(%f,%f) - (%f,%f)]", _p0.x, _p0.y, _p1.x, _p1.y];
+}
+
+- (instancetype)init {
+    return [self init:0 :1];
 }
 
 - (BOOL)isEqual:(id)object {
@@ -23,17 +38,21 @@
         return NO;
     
     DRange *other = (DRange *)object;
-    
-    return [_p0 isEqual:other->_p0] && [_p1 isEqual:other->_p1];
+    return (fabs(other->_p0.x - _p0.x) < DBL_EPSILON &&
+            fabs(other->_p0.y - _p0.y) < DBL_EPSILON &&
+            fabs(other->_p1.x - _p1.x) < DBL_EPSILON &&
+            fabs(other->_p1.y - _p1.y) < DBL_EPSILON);
 }
 
 
 #pragma mark - DRange
-- (id)initWithPoint:(DPoint *)p0 point:(DPoint *)p1 {
+- (instancetype)init:(vector_double2)p0 :(vector_double2)p1 {
     self = [super init];
     if(self) {
+        
         _p0 = p0;
         _p1 = p1;
+        
         if(_p0.x < _p1.x) {
             _xMin = _p0.x; _xMax = _p1.x;
         }
@@ -53,12 +72,16 @@
     return self;
 }
 
+- (id)initWithPoint:(DPoint *)p0 point:(DPoint *)p1 {
+    return [self init:vector2(p0.x, p0.y) :vector2(p1.x, p1.y)];
+}
+
 - (double)lengthSquared {
-    return [_p1 distanceSquaredTo:_p0];
+    return simd_distance_squared(_p1, _p0);
 }
 
 - (double)length {
-    return [_p1 distanceTo:_p0];
+    return simd_distance(_p1, _p0);
 }
 
 - (double)width {
@@ -77,14 +100,14 @@
     return [DPoint pointWithX:_xMax y:_yMax];
 }
 
-- (NSArray *)boundary {
+- (NSArray *)boundarySegments {
     
     NSMutableArray *array = [[NSMutableArray alloc] init];
     
     [array addObject:[DPoint pointWithX:_p0.x y:_p1.y]];
-    [array addObject:[_p1 copy]];
+    [array addObject:[DPoint pointWithX:_p1.x y:_p1.y]];
     [array addObject:[DPoint pointWithX:_p1.x y:_p0.x]];
-    [array addObject:[_p0 copy]];
+    [array addObject:[DPoint pointWithX:_p0.x y:_p0.y]];
     
     NSArray *points = [array copy];
     
