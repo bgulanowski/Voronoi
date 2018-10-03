@@ -10,16 +10,20 @@
 
 #import <simd/simd.h>
 
-typedef int (^VOIPointComparator)(const vector_double2 *, const vector_double2 *);
+typedef vector_double2 VOIPoint;
+
+typedef int (^VOIPointComparator)(const VOIPoint *, const VOIPoint *);
 
 @interface VOIPointList : NSObject
 
 @property (readonly) NSUInteger count;
 
-- (instancetype)initWithPoints:(vector_double2 *)points count:(NSUInteger)count;
+- (instancetype)initWithPoints:(VOIPoint *)points count:(NSUInteger)count;
 
-- (vector_double2)pointAtIndex:(NSUInteger)index;
+- (VOIPoint)pointAtIndex:(NSUInteger)index;
 
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator;
+- (VOIPointList *)sortedByLength;
+- (VOIPointList *)sortedByDistanceFrom:(VOIPoint)p;
 
 @end

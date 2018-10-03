@@ -8,42 +8,71 @@
 
 #import "VOIPointList.h"
 
+static VOIPointComparator length = ^(const VOIPoint *p0, const VOIPoint *p1) {
+    double l0 = simd_length(*p0);
+    double l1 = simd_length(*p1);
+    if (l0 < l1) {
+        return -1;
+    }
+    else if (l1 < l0) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+};
+
+static VOIPointComparator distanceFrom(const VOIPoint p) {
+    return ^(const VOIPoint *p0, const VOIPoint *p1) {
+        double d0 = simd_distance_squared(*p0, p);
+        double d1 = simd_distance_squared(*p1, p);
+        if (d0 < d1) {
+            return -1;
+        }
+        else if (d1 < d0) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    };
+}
+
 @interface VOIPointList ()
 
-@property (nonatomic) vector_double2 *points;
+@property (nonatomic) VOIPoint *points;
+@property (nonatomic) NSMutableData *pointsData;
 
 @end
 
 @implementation VOIPointList
 
-- (void)dealloc {
-    free(_points);
-}
-
-- (instancetype)initWithPointsNoCopy:(vector_double2 *)points count:(NSUInteger)count {
+- (instancetype)initWithPoints:(VOIPoint *)points count:(NSUInteger)count {
     self = [super init];
     if (self) {
-        _count = count;
-        _points = points;
+        _pointsData = [[NSMutableData alloc] initWithBytes:points length:(count * sizeof(VOIPoint))];
+        _points = _pointsData.mutableBytes;
     }
     return self;
 }
 
-- (instancetype)initWithPoints:(vector_double2 *)points count:(NSUInteger)count {
-    const size_t len = sizeof(vector_double2) * (size_t)count;
-    vector_double2 *copy = malloc(len);
-    memcpy(copy, points, len);
-    return [self initWithPointsNoCopy:copy count:count];
-}
-
-- (vector_double2)pointAtIndex:(NSUInteger)index {
+- (VOIPoint)pointAtIndex:(NSUInteger)index {
+    NSParameterAssert(index < _count);
     return _points[index];
 }
 
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator {
     VOIPointList *copy = [[VOIPointList alloc] initWithPoints:_points count:_count];
-    qsort_b(copy->_points, _count, sizeof(vector_double2), [comparator copy]);
+    qsort_b(copy->_points, _count, sizeof(VOIPoint), [comparator copy]);
     return copy;
+}
+
+- (VOIPointList *)sortedByLength {
+    return [self sortedPointList:[length copy]];
+}
+
+- (VOIPointList *)sortedByDistanceFrom:(VOIPoint)p {
+    return [self sortedPointList:distanceFrom(p)];
 }
 
 @end
