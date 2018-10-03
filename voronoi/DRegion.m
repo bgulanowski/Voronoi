@@ -83,23 +83,23 @@ static __strong NSNumber *notfound;
 
 - (BOOL)close {
     
-    DTriad *trOr = [_triads lastObject];
-    Pivot pivotOr = [trOr pivotForIndex:_inputIndex];
+    DTriad *start = [_triads lastObject];
+    Pivot pivot = [start pivotForIndex:_inputIndex];
     
-    if(NSNotFound != [trOr nextIndexForPivot:pivotOr])
+    if(NSNotFound != [start nextIndexForPivot:pivot])
         return NO;
     
     DRange *range = _boundary.range;
-    BOOL orInRange = [range containsPoint:trOr.circumcircle.centre];
+    BOOL orInRange = [range containsPoint:start.circumcircle.centre];
     DTriad *trDest = [_triads objectAtIndex:0];
     BOOL destInRange = [range containsPoint:trDest.circumcircle.centre];
     
     while ([_triads count] > 1 && !orInRange) {
         [_triads removeLastObject];
-        trOr = [_triads lastObject];
-        orInRange = [range containsPoint:trOr.circumcircle.centre];
+        start = [_triads lastObject];
+        orInRange = [range containsPoint:start.circumcircle.centre];
     }
-    pivotOr = [trOr pivotForIndex:_inputIndex];
+    pivot = [start pivotForIndex:_inputIndex];
         
     while ([_triads count] > 1 && !destInRange) {
         [_triads removeObjectAtIndex:0];
@@ -113,15 +113,15 @@ static __strong NSNumber *notfound;
     
     if([_triads count] == 1 && !orInRange) {
         [_triads removeAllObjects];
-        segments = [_voronoi.triads perpendicularsForTriad:trOr
+        segments = [_voronoi.triads perpendicularsForTriad:start
                                                     points:_voronoi.points
-                                                     pivot:pivotOr
+                                                     pivot:pivot
                                                      scale:scale];
     }
     else {
-        Pivot pivotDest = [trOr commonPivotForTriad:trDest pivot:pivotOr];
+        Pivot pivotDest = [start commonPivotForTriad:trDest pivot:pivot];
         segments = @[
-        [trOr perpendicularFromCentreForEdge:(Edge)(pivotOr+1)%3+1 points:_voronoi.points scale:scale],
+        [start perpendicularFromCentreForEdge:(Edge)(pivot+1)%3+1 points:_voronoi.points scale:scale],
         [trDest perpendicularFromCentreForEdge:(Edge)pivotDest points:_voronoi.points scale:scale],
         ];
     }
