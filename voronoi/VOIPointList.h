@@ -17,7 +17,10 @@ typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 
 @interface VOIPointList : NSObject
 
+// -count is overridden by subclasses to count the specific primitive
+// -pointCount always returns the number of underlying points
 @property (readonly) NSUInteger count;
+@property (readonly) NSUInteger pointCount;
 
 - (instancetype)init NS_UNAVAILABLE;
 

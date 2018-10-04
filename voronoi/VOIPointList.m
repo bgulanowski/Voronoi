@@ -49,6 +49,10 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 
 @implementation VOIPointList
 
+- (NSUInteger)pointCount {
+    return _count;
+}
+
 - (NSString *)description {
     // up to the first eight points and the count
     NSMutableArray *pointStrings = [NSMutableArray array];
@@ -58,7 +62,7 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
         [pointStrings addObject:[NSString stringWithFormat:@"(%.2f, %.2f)", p.x, p.y]];
     }
     NSString *pointsString = [pointStrings componentsJoinedByString:@", "];
-    return [NSString stringWithFormat:@"VOIPointList: points: [%@, ...] count: %td", pointsString, _count];
+    return [NSString stringWithFormat:@"VOIPointList: points: [%@, ...] count: %td", pointsString, self.count];
 }
 
 - (BOOL)isEqual:(id)object {
