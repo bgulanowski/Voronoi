@@ -17,5 +17,6 @@
 
 // must be two points
 - (instancetype)initWithPoints:(const VOIPoint *)points;
+- (BOOL)isEqualToSegment:(VOISegment *)other;
 
 @end

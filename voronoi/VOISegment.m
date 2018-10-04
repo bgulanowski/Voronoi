@@ -10,6 +10,10 @@
 
 @implementation VOISegment
 
+- (BOOL)isEqual:(id)object {
+    return [object isKindOfClass:[self class]] && [self isEqualToSegment:object];
+}
+
 - (instancetype)initWithPoints:(const VOIPoint *)points {
     self = [super init];
     if (self) {
@@ -17,6 +21,10 @@
         _b = points[1];
     }
     return self;
+}
+
+- (BOOL)isEqualToSegment:(VOISegment *)other {
+    return simd_equal(_a, other->_a) && simd_equal(_b, other->_b);
 }
 
 @end

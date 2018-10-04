@@ -24,6 +24,10 @@
     return _points[2];
 }
 
+- (BOOL)isEqual:(id)object {
+    return [object isKindOfClass:[self class]];
+}
+
 - (instancetype)initWithPoints:(const VOIPoint *)points {
     self = [super init];
     if (self) {
@@ -32,6 +36,14 @@
         _points[2] = points[2];
     }
     return self;
+}
+
+- (BOOL)isEqualToTriangle:(VOITriangle *)other {
+    return (
+            simd_equal(_points[0], other->_points[0]) &&
+            simd_equal(_points[1], other->_points[1]) &&
+            simd_equal(_points[2], other->_points[2])
+            );
 }
 
 - (VOIPoint)pointAt:(NSUInteger)index {

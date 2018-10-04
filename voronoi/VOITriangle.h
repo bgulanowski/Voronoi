@@ -22,6 +22,7 @@
 
 // must be 3 points
 - (instancetype)initWithPoints:(const VOIPoint *)points;
+- (BOOL)isEqualToTriangle:(VOITriangle *)other;
 
 // any index will do - uses %3
 - (VOIPoint)pointAt:(NSUInteger)index;
