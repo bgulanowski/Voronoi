@@ -9,15 +9,8 @@
 #import "VOISegmentList.h"
 
 #import "VOISegment.h"
+#import "VOIPointListPrivate.h"
 
-@interface VOIPointList (VOIPrivate)
-- (instancetype)initWithData:(NSMutableData *)data;
-@property (nonatomic, readonly) NSMutableData *pointsData;
-@end
-
-@interface VOIPointList (VOISegmentList)
-- (VOISegmentList *)asSegments;
-@end
 
 @implementation VOISegmentList
 
@@ -48,10 +41,10 @@
 
 @end
 
-@implementation VOIPointList (VOISegmentList)
+@implementation VOIPointList (VOISegmentListAdditions)
 
-- (VOISegmentList *)asSegments {
-    return [[VOISegmentList alloc] initWithData:self.pointsData];
+- (VOISegmentList *)asSegmentList {
+    return [[VOISegmentList alloc] _initWithData:self.pointsData];
 }
 
 @end

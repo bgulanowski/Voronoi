@@ -173,6 +173,7 @@
 		84D905AD2166641100EA72FC /* VOISegment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOISegment.m; sourceTree = "<group>"; };
 		84D905B0216664AC00EA72FC /* VOISegmentList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOISegmentList.h; sourceTree = "<group>"; };
 		84D905B1216664AC00EA72FC /* VOISegmentList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOISegmentList.m; sourceTree = "<group>"; };
+		84D905BA216682E300EA72FC /* VOIPointListPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPointListPrivate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,6 +341,7 @@
 				84D9058021653D4200EA72FC /* VOIMesh.m */,
 				84D9058321653D8900EA72FC /* VOIPointList.h */,
 				84D9058421653D8900EA72FC /* VOIPointList.m */,
+				84D905BA216682E300EA72FC /* VOIPointListPrivate.h */,
 				84D905AC2166641100EA72FC /* VOISegment.h */,
 				84D905AD2166641100EA72FC /* VOISegment.m */,
 				84D905B0216664AC00EA72FC /* VOISegmentList.h */,

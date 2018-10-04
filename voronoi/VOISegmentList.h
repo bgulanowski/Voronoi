@@ -18,3 +18,7 @@ typedef BOOL (^VOISegmentIterator)(VOISegment *, NSUInteger);
 - (void)iterateSegments:(VOISegmentIterator)iterator;
 
 @end
+
+@interface VOIPointList (VOISegmentListAdditions)
+- (VOISegmentList *)asSegmentList;
+@end

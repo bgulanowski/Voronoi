@@ -21,3 +21,7 @@ typedef BOOL (^VOITriangleIterator)(VOITriangle *, NSUInteger);
 - (NSArray<VOITriangle *> *)allTriangles;
 
 @end
+
+@interface VOIPointList (VOITriangleList)
+- (VOITriangleList *)asTriangleList;
+@end

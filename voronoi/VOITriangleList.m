@@ -8,16 +8,9 @@
 
 #import "VOITriangleList.h"
 
+#import "VOIPointListPrivate.h"
 #import "VOITriangle.h"
 
-@interface VOIPointList (VOIPrivate)
-- (instancetype)initWithData:(NSMutableData *)data;
-@property (nonatomic, readonly) NSMutableData *pointsData;
-@end
-
-@interface VOIPointList (VOITriangleList)
-- (VOITriangleList *)asTriangles;
-@end
 
 @implementation VOITriangleList
 
@@ -60,8 +53,8 @@
 
 @implementation VOIPointList (VOITriangleList)
 
-- (VOITriangleList *)asTriangles {
-    return [[VOITriangleList alloc] initWithData:self.pointsData];
+- (VOITriangleList *)asTriangleList {
+    return [[VOITriangleList alloc] _initWithData:self.pointsData];
 }
 
 @end
