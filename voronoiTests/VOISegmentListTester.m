@@ -1,0 +1,65 @@
+//
+//  VOISegmentListTester.m
+//  voronoiTests
+//
+//  Created by Brent Gulanowski on 2018-10-04.
+//  Copyright © 2018 Lichen Labs. All rights reserved.
+//
+
+#import <XCTest/XCTest.h>
+
+#import "VOISegment.h"
+#import "VOISegmentList.h"
+
+@interface VOISegmentListTester : XCTestCase
+@property VOISegmentList *segmentList;
+@end
+
+static VOIPoint points[6];
+
+@implementation VOISegmentListTester
+
++ (void)setUp {
+    // Four unconnected diagonal line segments
+    points[0] = vector2(0.0, 0.0);
+    points[1] = vector2(1.0, 1.0);
+    points[2] = vector2(1.0, 0.0);
+    points[3] = vector2(2.0, 1.0);
+    points[4] = vector2(2.0, 0.0);
+    points[5] = vector2(3.0, 1.0);
+}
+
+- (void)setUp {
+    [super setUp];
+    self.segmentList = [[VOISegmentList alloc] initWithPoints:points count:3];
+}
+
+- (void)testSegmentAt {
+    VOISegment *e = [[VOISegment alloc] initWithPoints:&points[4]];
+    VOISegment *a = [self.segmentList segmentAt:2];
+    
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testAsSegmentList {
+    VOISegmentList *e = self.segmentList;
+    VOIPointList *pointList = [[VOIPointList alloc] initWithPoints:points count:6];
+    VOISegmentList *a = [pointList asSegmentList];
+    
+    XCTAssertEqualObjects(e, a);
+    
+    XCTAssertEqual([self.segmentList asSegmentList], self.segmentList);
+}
+
+- (void)testAllSegments {
+    NSArray *e = @[
+                   [[VOISegment alloc] initWithPoints:&points[0]],
+                   [[VOISegment alloc] initWithPoints:&points[2]],
+                   [[VOISegment alloc] initWithPoints:&points[4]]
+                   ];
+    NSArray *a = [self.segmentList allSegments];
+    
+    XCTAssertEqualObjects(e, a);
+}
+
+@end
