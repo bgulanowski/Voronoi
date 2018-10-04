@@ -14,8 +14,10 @@ typedef BOOL (^VOISegmentIterator)(VOISegment *, NSUInteger);
 
 @interface VOISegmentList : VOIPointList
 
+- (BOOL)isEqualToSegmentList:(VOISegmentList *)other;
 - (VOISegment *)segmentAt:(NSUInteger)index;
 - (void)iterateSegments:(VOISegmentIterator)iterator;
+- (NSArray<VOISegment *> *)allSegments;
 
 @end
 

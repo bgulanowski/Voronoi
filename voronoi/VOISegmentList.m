@@ -27,6 +27,12 @@ const NSUInteger PPS = 2;
     return [super initWithPoints:points count:count * PPS];
 }
 
+#pragma mark - VOISegmentList
+
+- (BOOL)isEqualToSegmentList:(VOISegmentList *)other {
+    return [super isEqualToPointList:other];
+}
+
 - (VOISegment *)segmentAt:(NSUInteger)index {
     const NSUInteger count = self.pointCount;
     VOIPoint points[2];
@@ -43,6 +49,21 @@ const NSUInteger PPS = 2;
         }
         return NO;
     }];
+}
+
+- (NSArray<VOISegment *> *)allSegments {
+    NSMutableArray *segments = [NSMutableArray array];
+    [self iterateSegments:^BOOL(VOISegment *s, NSUInteger i) {
+        [segments addObject:s];
+        return NO;
+    }];
+    return segments;
+}
+
+#pragma mark - VOISegmentListAdditions
+
+- (VOISegmentList *)asSegmentList {
+    return self;
 }
 
 @end
