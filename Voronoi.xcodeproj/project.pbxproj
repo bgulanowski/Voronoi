@@ -66,6 +66,7 @@
 		84D905B52166700F00EA72FC /* VOISegmentListTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D905B42166700F00EA72FC /* VOISegmentListTester.m */; };
 		84D905B821667E3100EA72FC /* VOIPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D905B621667E3100EA72FC /* VOIPath.h */; };
 		84D905B921667E3100EA72FC /* VOIPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D905B721667E3100EA72FC /* VOIPath.m */; };
+		84D905BC2166A18F00EA72FC /* VOITriangleListTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D905BB2166A18F00EA72FC /* VOITriangleListTester.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +181,7 @@
 		84D905B621667E3100EA72FC /* VOIPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPath.h; sourceTree = "<group>"; };
 		84D905B721667E3100EA72FC /* VOIPath.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPath.m; sourceTree = "<group>"; };
 		84D905BA216682E300EA72FC /* VOIPointListPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPointListPrivate.h; sourceTree = "<group>"; };
+		84D905BB2166A18F00EA72FC /* VOITriangleListTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOITriangleListTester.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -391,6 +393,7 @@
 				84AD330B164C3DBE00E37EDE /* VoronoiTester.h */,
 				84AD330C164C3DBE00E37EDE /* VoronoiTester.m */,
 				84D905A42166322D00EA72FC /* voronoiTests.pch */,
+				84D905BB2166A18F00EA72FC /* VOITriangleListTester.m */,
 			);
 			path = voronoiTests;
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				84D905A8216632BA00EA72FC /* TriangulationTester.m in Sources */,
 				84D905A7216632BA00EA72FC /* SegmentTester.m in Sources */,
 				84D905B52166700F00EA72FC /* VOISegmentListTester.m in Sources */,
+				84D905BC2166A18F00EA72FC /* VOITriangleListTester.m in Sources */,
 				84D905A5216632BA00EA72FC /* PointTester.m in Sources */,
 				84D905A9216632BA00EA72FC /* VoronoiTester.m in Sources */,
 			);

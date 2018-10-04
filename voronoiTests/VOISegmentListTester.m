@@ -41,6 +41,11 @@ static VOIPoint points[6];
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testCount {
+    XCTAssertEqual(3, self.segmentList.count);
+    XCTAssertEqual(6, self.segmentList.pointCount);
+}
+
 - (void)testAsSegmentList {
     VOISegmentList *e = self.segmentList;
     VOIPointList *pointList = [[VOIPointList alloc] initWithPoints:points count:6];
