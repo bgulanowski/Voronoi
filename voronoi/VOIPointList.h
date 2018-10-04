@@ -19,6 +19,8 @@ typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 
 @property (readonly) NSUInteger count;
 
+- (instancetype)init NS_UNAVAILABLE;
+
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count;
 
 - (BOOL)isEqualToPointList:(VOIPointList *)other;
