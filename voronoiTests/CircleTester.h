@@ -6,11 +6,12 @@
 //  Copyright (c) 2012 Lichen Labs. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+//#import <XCTest/XCTest.h>
+#import <XCTest/XCTest.h>
 
 @class DCircle;
 
-@interface CircleTester : SenTestCase {
+@interface CircleTester : XCTestCase {
     __strong DCircle *_circle;
 }
 

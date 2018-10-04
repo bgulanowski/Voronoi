@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 Lichen Labs. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 
 @class DSegment;
 
-@interface SegmentTester : SenTestCase {
+@interface SegmentTester : XCTestCase {
     __strong DSegment *_segment;
 }
 

@@ -32,7 +32,7 @@
     DSegment *e = [DSegment segmentWithPoint:p1 point:p2];
     DSegment *a = [_segment projectToPoint:p1];
     
-    STAssertEqualObjects(e, a, @"%@ != %@", e, a);
+    XCTAssertEqualObjects(e, a, @"%@ != %@", e, a);
 }
 
 - (void)test02 {
@@ -42,7 +42,7 @@
     DPoint *e = [DPoint pointWithX:0 y:1];
     DPoint *a = [_segment intersection:s2];
     
-    STAssertEqualObjects(e, a, @"%@ != %@", e, a);
+    XCTAssertEqualObjects(e, a, @"%@ != %@", e, a);
 }
 
 @end

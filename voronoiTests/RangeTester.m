@@ -29,22 +29,22 @@
     double e = 2.0 * sqrt(2.0);
     double a = [_range length];
     
-    STAssertEquals(e, a, @"%.5d != %.5d", e, a);
+    XCTAssertEqual(e, a, @"%.5f != %.5f", e, a);
     
     e = 8.0;
     a = [_range lengthSquared];
     
-    STAssertEquals(e, a, @"%.5d != %.5d", e, a);
+    XCTAssertEqual(e, a, @"%.5f != %.5f", e, a);
 }
 
 - (void)test02 {
     
-    STAssertTrue([_range containsPoint:_range.p0], @"%@ contains %@", _range, _range.p0);
-    STAssertTrue([_range containsPoint:_range.p1], @"%@ contains %@", _range, _range.p1);
+    XCTAssertTrue([_range containsPoint:_range.p0], @"%@ contains %@", _range, _range.p0);
+    XCTAssertTrue([_range containsPoint:_range.p1], @"%@ contains %@", _range, _range.p1);
     
     DPoint *p = [DPoint pointWithX:0 y:0];
     
-    STAssertTrue([_range containsPoint:p], @"%@ contains %@", _range, p);
+    XCTAssertTrue([_range containsPoint:p], @"%@ contains %@", _range, p);
 }
 
 @end

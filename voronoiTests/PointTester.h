@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 Lichen Labs. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 
 @class DPoint;
 
-@interface PointTester : SenTestCase {
+@interface PointTester : XCTestCase {
     __strong DPoint *_point;
 }
 

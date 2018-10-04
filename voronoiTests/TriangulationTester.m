@@ -24,7 +24,7 @@
     hull = [[VoronoiTester points3] convexHull];
     e = [VoronoiTester points3];
     
-    STAssertEqualObjects(hull, e, @"hull doesn't match");
+    XCTAssertEqualObjects(hull, e, @"hull doesn't match");
     
     hull = [[VoronoiTester points5] convexHull];
     e = @[
@@ -32,7 +32,7 @@
     [DPoint pointWithX: 5 y: 5],
     [DPoint pointWithX: 2 y:-3],
     ];
-    STAssertEqualObjects(hull, e, @"hull doesn't match");
+    XCTAssertEqualObjects(hull, e, @"hull doesn't match");
 
     e = @[
     [DPoint pointWithX:-2 y: 5],
@@ -42,7 +42,7 @@
     [DPoint pointWithX:-9 y:-1],
     ];
     hull = [[VoronoiTester points7] convexHull];
-    STAssertEqualObjects(hull, e, @"hull doesn't match");
+    XCTAssertEqualObjects(hull, e, @"hull doesn't match");
     
     e = @[
     [DPoint pointWithX: 3 y:-5],
@@ -52,7 +52,7 @@
     [DPoint pointWithX: 7 y: 7],
     ];
     hull = [[VoronoiTester points10] convexHull];
-    STAssertEqualObjects(hull, e, @"hull doesn't match");
+    XCTAssertEqualObjects(hull, e, @"hull doesn't match");
 }
 
 //- (void)test02 {
@@ -67,12 +67,12 @@
 //    for (NSArray *points in pointSets) {
 //        
 //        NSArray *tris = [points triangulation];
-//        STAssertNotNil(tris, @"erm");
+//        XCTAssertNotNil(tris, @"erm");
 //        
-//        STAssertTrue([tris validateTriads], @"triad validation");
+//        XCTAssertTrue([tris validateTriads], @"triad validation");
 //        
 //        BABitArray *flipped = [tris reorientTrianglesWithPoints:points];
-//        STAssertNotNil(flipped, @"whee");
+//        XCTAssertNotNil(flipped, @"whee");
 //    }
 //}
 

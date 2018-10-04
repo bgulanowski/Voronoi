@@ -25,11 +25,11 @@
 }
 
 - (void)circleContainsPoint:(CGPoint)p {
-    STAssertTrue([_circle containsPoint:[DPoint pointWithX:p.x y:p.y]], @"Circle fails test for containing point %@", NSStringFromPoint(p));
+    XCTAssertTrue([_circle containsPoint:[DPoint pointWithX:p.x y:p.y]], @"Circle fails test for containing point %@", NSStringFromPoint(p));
 }
 
 - (void)circleNotContainsPoint:(CGPoint)p {
-    STAssertFalse([_circle containsPoint:[DPoint pointWithX:p.x y:p.y]], @"Circle fails test for containing point %@", NSStringFromPoint(p));
+    XCTAssertFalse([_circle containsPoint:[DPoint pointWithX:p.x y:p.y]], @"Circle fails test for containing point %@", NSStringFromPoint(p));
 }
 
 - (void)test01Contains {

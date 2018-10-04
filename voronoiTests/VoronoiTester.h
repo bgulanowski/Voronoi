@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 Lichen Labs. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 
 @class Voronoi;
 
-@interface VoronoiTester : SenTestCase
+@interface VoronoiTester : XCTestCase
 
 + (NSArray *)points3;
 + (NSArray *)points5;

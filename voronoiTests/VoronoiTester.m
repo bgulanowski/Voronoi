@@ -58,7 +58,7 @@ static NSArray *_points10;
 }
 
 
-#pragma mark - SenTestCase
+#pragma mark - XCTestCase
 //- (void)setUp {}
 
 //- (void)tearDown {}
@@ -100,7 +100,7 @@ static NSArray *_points10;
         
         NSArray *regions = [voronoi regions];
         
-        STAssertEquals([regions count], [points count], @"crash");
+        XCTAssertEqual([regions count], [points count], @"crash");
     }
 }
 

@@ -29,10 +29,10 @@
     DPoint *p2 = [DPoint pointWithX:0 y:0];
     DPoint *p3 = [_point copy];
     
-    STAssertEqualObjects(_point, p1, @"%@ != %@", _point, p1);
-    STAssertEqualObjects(_point, p2, @"%@ != %@", _point, p2);
-    STAssertEqualObjects(_point, p3, @"%@ != %@", _point, p3);
-    STAssertEqualObjects(p1, p2, @"%@ != %@", p1, p2);
+    XCTAssertEqualObjects(_point, p1, @"%@ != %@", _point, p1);
+    XCTAssertEqualObjects(_point, p2, @"%@ != %@", _point, p2);
+    XCTAssertEqualObjects(_point, p3, @"%@ != %@", _point, p3);
+    XCTAssertEqualObjects(p1, p2, @"%@ != %@", p1, p2);
 }
 
 - (void)test02Addition {
@@ -42,15 +42,15 @@
     
     DPoint *p3 = [_point add:p1];
     
-    STAssertEqualObjects(_point, p3, @"%@ != %@", _point, p3);
+    XCTAssertEqualObjects(_point, p3, @"%@ != %@", _point, p3);
     
     p3 = [_point add:p2];
     
-    STAssertEqualObjects(p2, p3, @"%@ != %@", p2, p3);
+    XCTAssertEqualObjects(p2, p3, @"%@ != %@", p2, p3);
     
     p3 = [p2 add:p2];
     
-    STAssertTrue(p3.x == 8 && p3.y == 8, @"%@ should be (8,8)", p3);
+    XCTAssertTrue(p3.x == 8 && p3.y == 8, @"%@ should be (8,8)", p3);
 }
 
 @end
