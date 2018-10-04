@@ -20,14 +20,11 @@ VOIPoint points[4];
 
 @implementation VOIPointListTester
 
-+ (void)initialize {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        points[0] = vector2(3.0, 0.0);
-        points[1] = vector2(1.0, 0.5);
-        points[2] = vector2(0.0, 4.0);
-        points[3] = vector2(0.5, 2.0);
-    });
++ (void)setUp {
+    points[0] = vector2(3.0, 0.0);
+    points[1] = vector2(1.0, 0.5);
+    points[2] = vector2(0.0, 4.0);
+    points[3] = vector2(0.5, 2.0);
 }
 
 - (void)setUp {
