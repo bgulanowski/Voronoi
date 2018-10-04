@@ -11,30 +11,32 @@
 #import "VOIPointListPrivate.h"
 #import "VOITriangle.h"
 
+const NSUInteger PPT = 3;
 
 @implementation VOITriangleList
 
 - (NSUInteger)count {
-    return [super count] / 3;
+    return [super count] / PPT;
 }
 
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count {
-    return [super initWithPoints:points count:count * 3];
+    return [super initWithPoints:points count:count * PPT];
 }
 
 - (VOITriangle *)triangleAt:(NSUInteger)index {
+    const NSUInteger count = self.pointCount;
     VOIPoint points[3];
-    points[0] = [self pointAtIndex:index * 3];
-    points[1] = [self pointAtIndex:index * 3 + 1];
-    points[2] = [self pointAtIndex:index * 3 + 2];
+    points[0] = [self pointAtIndex:(index * PPT) % count];
+    points[1] = [self pointAtIndex:(index * PPT + 1) % count];
+    points[2] = [self pointAtIndex:(index * PPT + 2) % count];
     return [[VOITriangle alloc] initWithPoints:points];
 }
 
 - (void)iterateTriangles:(VOITriangleIterator)iterator {
     [self iteratePoints:^BOOL(const VOIPoint *points, const NSUInteger i) {
-        if (i % 3 == 0) {
+        if (i % PPT == 0) {
             VOITriangle *t = [[VOITriangle alloc] initWithPoints:points];
-            return iterator(t, i / 3);
+            return iterator(t, i / PPT);
         }
         return NO;
     }];

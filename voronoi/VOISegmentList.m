@@ -11,29 +11,35 @@
 #import "VOISegment.h"
 #import "VOIPointListPrivate.h"
 
+const NSUInteger PPS = 2;
 
 @implementation VOISegmentList
+
+#pragma mark - Accessors
 
 - (NSUInteger)count {
     return [super count] / 2;
 }
 
+#pragma mark - VOIPointList
+
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count {
-    return [super initWithPoints:points count:count * 3];
+    return [super initWithPoints:points count:count * PPS];
 }
 
 - (VOISegment *)segmentAt:(NSUInteger)index {
+    const NSUInteger count = self.pointCount;
     VOIPoint points[2];
-    points[0] = [self pointAtIndex:index * 2];
-    points[1] = [self pointAtIndex:index * 2 + 1];
+    points[0] = [self pointAtIndex:(index * PPS) % count];
+    points[1] = [self pointAtIndex:(index * PPS + 1) % count];
     return [[VOISegment alloc] initWithPoints:points];
 }
 
 - (void)iterateSegments:(VOISegmentIterator)iterator {
     [self iteratePoints:^(const VOIPoint *points, const NSUInteger i) {
-        if (i % 2) {
+        if (i % PPS == 0) {
             VOISegment *segment = [[VOISegment alloc] initWithPoints:points];
-            return iterator(segment, i / 2);
+            return iterator(segment, i / PPS);
         }
         return NO;
     }];
