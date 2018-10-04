@@ -9,22 +9,22 @@
 #import "VOITriangle.h"
 
 @implementation VOITriangle {
-    vector_double2 _points[3];
+    VOIPoint _points[3];
 }
 
-- (vector_double2)p0 {
+- (VOIPoint)p0 {
     return _points[0];
 }
 
-- (vector_double2)p1 {
+- (VOIPoint)p1 {
     return _points[1];
 }
 
-- (vector_double2)p2 {
+- (VOIPoint)p2 {
     return _points[2];
 }
 
-- (instancetype)initWithPoints:(vector_double2 *)points {
+- (instancetype)initWithPoints:(VOIPoint *)points {
     self = [super init];
     if (self) {
         _points[0] = points[0];
@@ -34,7 +34,7 @@
     return self;
 }
 
-- (vector_double2)pointAt:(NSUInteger)index {
+- (VOIPoint)pointAt:(NSUInteger)index {
     return _points[index%3];
 }
 

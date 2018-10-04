@@ -10,16 +10,18 @@
 
 #import <simd/simd.h>
 
+#import "VOIPointList.h"
+
 @interface VOITriangle : NSObject
 
-@property (readonly) vector_double2 p0;
-@property (readonly) vector_double2 p1;
-@property (readonly) vector_double2 p2;
+@property (readonly) VOIPoint p0;
+@property (readonly) VOIPoint p1;
+@property (readonly) VOIPoint p2;
 
 // must be 3 points
-- (instancetype)initWithPoints:(vector_double2 *)points;
+- (instancetype)initWithPoints:(VOIPoint *)points;
 
 // any index will do - uses %3
-- (vector_double2)pointAt:(NSUInteger)index;
+- (VOIPoint)pointAt:(NSUInteger)index;
 
 @end
