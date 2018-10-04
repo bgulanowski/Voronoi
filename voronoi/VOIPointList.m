@@ -66,7 +66,17 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
             );
 }
 
-- (instancetype)initWithPoints:(VOIPoint *)points count:(NSUInteger)count {
+- (instancetype)initWithData:(NSMutableData *)data {
+    self = [super init];
+    if (self) {
+        _pointsData = data;
+        _points = _pointsData.mutableBytes;
+        _count = _pointsData.length / sizeof(VOIPoint);
+    }
+    return self;
+}
+
+- (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count {
     self = [super init];
     if (self) {
         _pointsData = [[NSMutableData alloc] initWithBytes:points length:(count * sizeof(VOIPoint))];
@@ -101,6 +111,14 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 
 - (VOIPointList *)sortedByDistanceFrom:(VOIPoint)p {
     return [self sortedPointList:distanceFrom(p)];
+}
+
+- (void)iteratePoints:(VOIPointIterator)iterator {
+    for (NSUInteger i = 0; i < _count; ++i) {
+        if (iterator(&_points[i], i)) {
+            break;
+        }
+    }
 }
 
 @end

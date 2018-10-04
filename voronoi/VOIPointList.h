@@ -13,12 +13,13 @@
 typedef vector_double2 VOIPoint;
 
 typedef int (^VOIPointComparator)(const VOIPoint *, const VOIPoint *);
+typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 
 @interface VOIPointList : NSObject
 
 @property (readonly) NSUInteger count;
 
-- (instancetype)initWithPoints:(VOIPoint *)points count:(NSUInteger)count;
+- (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count;
 
 - (BOOL)isEqualToPointList:(VOIPointList *)other;
 
@@ -27,5 +28,7 @@ typedef int (^VOIPointComparator)(const VOIPoint *, const VOIPoint *);
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator;
 - (VOIPointList *)sortedByLength;
 - (VOIPointList *)sortedByDistanceFrom:(VOIPoint)p;
+
+- (void)iteratePoints:(VOIPointIterator)iterator;
 
 @end

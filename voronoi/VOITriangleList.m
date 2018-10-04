@@ -10,22 +10,58 @@
 
 #import "VOITriangle.h"
 
+@interface VOIPointList (VOIPrivate)
+- (instancetype)initWithData:(NSMutableData *)data;
+@property (nonatomic, readonly) NSMutableData *pointsData;
+@end
+
+@interface VOIPointList (VOITriangleList)
+- (VOITriangleList *)asTriangles;
+@end
+
 @implementation VOITriangleList
 
 - (NSUInteger)count {
     return [super count] / 3;
 }
 
-- (instancetype)initWithPoints:(vector_double2 *)points count:(NSUInteger)count {
+- (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count {
     return [super initWithPoints:points count:count * 3];
 }
 
 - (VOITriangle *)triangleAt:(NSUInteger)index {
-    vector_double2 points[3];
+    VOIPoint points[3];
     points[0] = [self pointAtIndex:index * 3];
     points[1] = [self pointAtIndex:index * 3 + 1];
     points[2] = [self pointAtIndex:index * 3 + 2];
     return [[VOITriangle alloc] initWithPoints:points];
+}
+
+- (void)iterateTriangles:(VOITriangleIterator)iterator {
+    [self iteratePoints:^BOOL(const VOIPoint *points, const NSUInteger i) {
+        if (i % 3 == 0) {
+            VOITriangle *t = [[VOITriangle alloc] initWithPoints:points];
+            return iterator(t, i / 3);
+        }
+        return NO;
+    }];
+}
+
+- (NSArray<VOITriangle *> *)allTriangles {
+    NSMutableArray<VOITriangle *> *triangles = [NSMutableArray array];
+    [self iterateTriangles:^BOOL(VOITriangle *t, NSUInteger i) {
+        [triangles addObject:t];
+        return NO;
+    }];
+    return triangles;
+}
+
+@end
+
+@implementation VOIPointList (VOITriangleList)
+
+- (VOITriangleList *)asTriangles {
+    return [[VOITriangleList alloc] initWithData:self.pointsData];
 }
 
 @end

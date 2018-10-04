@@ -24,7 +24,7 @@
     return _points[2];
 }
 
-- (instancetype)initWithPoints:(VOIPoint *)points {
+- (instancetype)initWithPoints:(const VOIPoint *)points {
     self = [super init];
     if (self) {
         _points[0] = points[0];
