@@ -20,6 +20,8 @@ typedef int (^VOIPointComparator)(const VOIPoint *, const VOIPoint *);
 
 - (instancetype)initWithPoints:(VOIPoint *)points count:(NSUInteger)count;
 
+- (BOOL)isEqualToPointList:(VOIPointList *)other;
+
 - (VOIPoint)pointAtIndex:(NSUInteger)index;
 
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator;

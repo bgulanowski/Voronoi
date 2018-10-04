@@ -58,6 +58,7 @@
 		84D905A7216632BA00EA72FC /* SegmentTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD334E164C5C8400E37EDE /* SegmentTester.m */; };
 		84D905A8216632BA00EA72FC /* TriangulationTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3351164C6E9C00E37EDE /* TriangulationTester.m */; };
 		84D905A9216632BA00EA72FC /* VoronoiTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD330C164C3DBE00E37EDE /* VoronoiTester.m */; };
+		84D905AB216659F300EA72FC /* VOIPointListTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D905AA216659F300EA72FC /* VOIPointListTester.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +164,7 @@
 		84D905982166314A00EA72FC /* voronoiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = voronoiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D9059C2166314A00EA72FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84D905A42166322D00EA72FC /* voronoiTests.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = voronoiTests.pch; sourceTree = "<group>"; };
+		84D905AA216659F300EA72FC /* VOIPointListTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPointListTester.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -353,6 +355,7 @@
 			children = (
 				84AD333F164C445C00E37EDE /* CircleTester.h */,
 				84AD3340164C445C00E37EDE /* CircleTester.m */,
+				84D9059C2166314A00EA72FC /* Info.plist */,
 				84AD3346164C494300E37EDE /* PointTester.h */,
 				84AD3347164C494300E37EDE /* PointTester.m */,
 				84AD334A164C494D00E37EDE /* RangeTester.h */,
@@ -361,9 +364,9 @@
 				84AD334E164C5C8400E37EDE /* SegmentTester.m */,
 				84AD3350164C6E9C00E37EDE /* TriangulationTester.h */,
 				84AD3351164C6E9C00E37EDE /* TriangulationTester.m */,
+				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
 				84AD330B164C3DBE00E37EDE /* VoronoiTester.h */,
 				84AD330C164C3DBE00E37EDE /* VoronoiTester.m */,
-				84D9059C2166314A00EA72FC /* Info.plist */,
 				84D905A42166322D00EA72FC /* voronoiTests.pch */,
 			);
 			path = voronoiTests;
@@ -568,6 +571,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D905A6216632BA00EA72FC /* RangeTester.m in Sources */,
+				84D905AB216659F300EA72FC /* VOIPointListTester.m in Sources */,
 				84D905A32166317600EA72FC /* CircleTester.m in Sources */,
 				84D905A8216632BA00EA72FC /* TriangulationTester.m in Sources */,
 				84D905A7216632BA00EA72FC /* SegmentTester.m in Sources */,

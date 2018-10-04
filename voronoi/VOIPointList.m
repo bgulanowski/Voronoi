@@ -47,13 +47,41 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 
 @implementation VOIPointList
 
+- (NSString *)description {
+    // up to the first eight points and the count
+    NSMutableArray *pointStrings = [NSMutableArray array];
+    NSUInteger max = _count > 8 ? 8 : _count;
+    for (NSUInteger i = 0; i < max; ++i) {
+        VOIPoint p = _points[i];
+        [pointStrings addObject:[NSString stringWithFormat:@"(%.2f, %.2f)", p.x, p.y]];
+    }
+    NSString *pointsString = [pointStrings componentsJoinedByString:@", "];
+    return [NSString stringWithFormat:@"VOIPointList: points: [%@, ...] count: %td", pointsString, _count];
+}
+
+- (BOOL)isEqual:(id)object {
+    return (
+            [object isKindOfClass:[VOIPointList class]] &&
+            [self isEqualToPointList:object]
+            );
+}
+
 - (instancetype)initWithPoints:(VOIPoint *)points count:(NSUInteger)count {
     self = [super init];
     if (self) {
         _pointsData = [[NSMutableData alloc] initWithBytes:points length:(count * sizeof(VOIPoint))];
         _points = _pointsData.mutableBytes;
+        _count = 4;
     }
     return self;
+}
+
+- (BOOL)isEqualToPointList:(VOIPointList *)other {
+    return (
+            other != nil &&
+            [_pointsData isEqualToData:other->_pointsData] &&
+            _count == other->_count
+            );
 }
 
 - (VOIPoint)pointAtIndex:(NSUInteger)index {
