@@ -72,6 +72,14 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
             );
 }
 
+- (instancetype)init {
+    return [self initWithPoints:NULL count:0];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [[VOIPointList alloc] _initWithData:[_pointsData mutableCopy]];
+}
+
 - (instancetype)_initWithData:(NSMutableData *)data {
     self = [super init];
     if (self) {
@@ -96,8 +104,31 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 }
 
 - (VOIPoint)pointAtIndex:(NSUInteger)index {
-    NSParameterAssert(index < _count);
-    return _points[index];
+    return _points[(index % _count)];
+}
+
+- (VOIPointList *)add:(VOIPointList *)other {
+    NSMutableData *copy = [_pointsData mutableCopy];
+    [copy appendData:other.pointsData];
+    return [[VOIPointList alloc] _initWithData:copy];
+}
+
+- (VOIPointList *)pointListWithRange:(NSRange)range {
+    
+    range.location %= _count;
+    
+    VOIPointList *result = [VOIPointList new];
+    NSUInteger count = MIN(range.length, _count - range.location);
+    
+    while (count) {
+        VOIPointList *next = [[VOIPointList alloc] initWithPoints:&_points[range.location] count:count];
+        result = [result add:next];
+        range.location = 0;
+        range.length -= count;
+        count = MIN(range.length, _count);
+    }
+    
+    return result;
 }
 
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator {

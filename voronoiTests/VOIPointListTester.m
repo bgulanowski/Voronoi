@@ -32,6 +32,14 @@ VOIPoint points[4];
     _pointList = [[VOIPointList alloc] initWithPoints:points count:4];
 }
 
+- (void)testIsEqualClass {
+    XCTAssertFalse([self.pointList isEqual:@0]);
+}
+
+- (void)testIsEqualNil {
+    XCTAssertFalse([self.pointList isEqual:nil]);
+}
+
 - (void)testCount {
     XCTAssertEqual((NSUInteger)4, _pointList.count);
 }
@@ -49,6 +57,66 @@ VOIPoint points[4];
         XCTAssertEqual(e.x, a.x);
         XCTAssertEqual(e.y, a.y);
     }
+}
+
+- (void)testAdd {
+    VOIPointList *a = [[VOIPointList alloc] initWithPoints:points count:2];
+    VOIPointList *b = [[VOIPointList alloc] initWithPoints:&points[2] count:2];
+    a = [a add:b];
+    VOIPointList *e = self.pointList;
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPointListWithRangeEmpty {
+    VOIPointList *a = [self.pointList pointListWithRange:NSMakeRange(0, 0)];
+    VOIPointList *e = [VOIPointList new];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPointListWithRangeAll {
+    VOIPointList *e = self.pointList;
+    VOIPointList *a = [self.pointList pointListWithRange:NSMakeRange(0, _pointList.count)];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPointListWithRangeInsetStart {
+    VOIPointList *e = [[VOIPointList alloc] initWithPoints:&points[2] count:2];
+    VOIPointList *a = [self.pointList pointListWithRange:NSMakeRange(2, 2)];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPointListWithRangeShort {
+    VOIPointList *e = [[VOIPointList alloc] initWithPoints:points count:2];
+    VOIPointList *a = [self.pointList pointListWithRange:NSMakeRange(0, 2)];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPointListWithRangeInsetBothEnds {
+    VOIPointList *e = [[VOIPointList alloc] initWithPoints:&points[1] count:2];
+    VOIPointList *a = [self.pointList pointListWithRange:NSMakeRange(1, 2)];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPointListWithRangeExtended {
+    
+    const NSUInteger Location = 2;
+    const NSUInteger Length = 10;
+    NSRange range = NSMakeRange(Location, Length);
+    
+    VOIPoint repeating[Length];
+    for (NSUInteger i = 0; i < Length; ++i) {
+        repeating[i] = points[(i + Location) % 4];
+    }
+    
+    VOIPointList *e = [[VOIPointList alloc] initWithPoints:repeating count:10];
+    VOIPointList *a = [self.pointList pointListWithRange:range];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPointListWithRangeLocationBeyondEnd {
+    VOIPointList *e = [[VOIPointList alloc] initWithPoints:&points[1] count:3];
+    VOIPointList *a = [self.pointList pointListWithRange:NSMakeRange(5, 3)];
+    XCTAssertEqualObjects(e, a);
 }
 
 - (void)testSortedByLength {
