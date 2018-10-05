@@ -34,10 +34,20 @@ static VOIPoint points[6];
     self.segmentList = [[VOISegmentList alloc] initWithPoints:points count:3];
 }
 
+- (void)testInitWithSegments {
+    NSArray *segments = @[
+                          [[VOISegment alloc] initWithPoints:&points[0]],
+                          [[VOISegment alloc] initWithPoints:&points[2]],
+                          [[VOISegment alloc] initWithPoints:&points[4]]
+                          ];
+    VOISegmentList *a = [[VOISegmentList alloc] initWithSegments:segments];
+    VOISegmentList *e = self.segmentList;
+    XCTAssertEqualObjects(e, a);
+}
+
 - (void)testSegmentAt {
     VOISegment *e = [[VOISegment alloc] initWithPoints:&points[4]];
     VOISegment *a = [self.segmentList segmentAt:2];
-    
     XCTAssertEqualObjects(e, a);
 }
 

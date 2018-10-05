@@ -29,6 +29,17 @@ const NSUInteger PPS = 2;
 
 #pragma mark - VOISegmentList
 
+- (instancetype)initWithSegments:(NSArray<VOISegment *> *)segments {
+    NSMutableData *data = [NSMutableData dataWithLength:segments.count * 2 * sizeof(VOIPoint)];
+    VOIPoint *points = data.mutableBytes;
+    NSUInteger i = 0;
+    for (VOISegment *segment in segments) {
+        points[i++] = segment.a;
+        points[i++] = segment.b;
+    }
+    return [self _initWithData:data];
+}
+
 - (BOOL)isEqualToSegmentList:(VOISegmentList *)other {
     return [super isEqualToPointList:other];
 }
