@@ -16,6 +16,7 @@
 		847F31EC16497C120068A102 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847F31EA16497C120068A102 /* MainMenu.xib */; };
 		847F31F416497C670068A102 /* VDemoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847F31F316497C670068A102 /* VDemoView.m */; };
 		847F321E1649800C0068A102 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F321D1649800B0068A102 /* OpenGL.framework */; };
+		848097362167A85600912E79 /* VOISegmentTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 848097352167A85600912E79 /* VOISegmentTester.m */; };
 		848097392167B4AD00912E79 /* VOIBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 848097372167B4AD00912E79 /* VOIBox.h */; };
 		8480973A2167B4AD00912E79 /* VOIBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 848097382167B4AD00912E79 /* VOIBox.m */; };
 		84AD32F2164C3DBD00E37EDE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F31D216497C120068A102 /* Cocoa.framework */; };
@@ -107,6 +108,7 @@
 		847F31F216497C670068A102 /* VDemoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDemoView.h; sourceTree = "<group>"; };
 		847F31F316497C670068A102 /* VDemoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDemoView.m; sourceTree = "<group>"; };
 		847F321D1649800B0068A102 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		848097352167A85600912E79 /* VOISegmentTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOISegmentTester.m; sourceTree = "<group>"; };
 		848097372167B4AD00912E79 /* VOIBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIBox.h; sourceTree = "<group>"; };
 		848097382167B4AD00912E79 /* VOIBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIBox.m; sourceTree = "<group>"; };
 		84AD32DC164B72D700E37EDE /* BoundingPolygon.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = BoundingPolygon.java; path = "Reference/S-hull Java/BoundingPolygon.java"; sourceTree = SOURCE_ROOT; };
@@ -398,6 +400,7 @@
 				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
 				84D905B42166700F00EA72FC /* VOISegmentListTester.m */,
+				848097352167A85600912E79 /* VOISegmentTester.m */,
 				84D905BB2166A18F00EA72FC /* VOITriangleListTester.m */,
 			);
 			path = voronoiTests;
@@ -644,6 +647,7 @@
 				84D905A7216632BA00EA72FC /* SegmentTester.m in Sources */,
 				84D905B52166700F00EA72FC /* VOISegmentListTester.m in Sources */,
 				84D905BE2166A5EE00EA72FC /* VOIPathTester.m in Sources */,
+				848097362167A85600912E79 /* VOISegmentTester.m in Sources */,
 				84D905BC2166A18F00EA72FC /* VOITriangleListTester.m in Sources */,
 				84D905A5216632BA00EA72FC /* PointTester.m in Sources */,
 				84D905A9216632BA00EA72FC /* VoronoiTester.m in Sources */,
