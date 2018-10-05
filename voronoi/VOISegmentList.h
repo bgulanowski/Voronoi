@@ -9,15 +9,19 @@
 #import "VOIPointList.h"
 
 @class VOISegment;
+@class VOITriangle;
 
 typedef BOOL (^VOISegmentIterator)(VOISegment *, NSUInteger);
 
 @interface VOISegmentList : VOIPointList
 
 - (instancetype)initWithSegments:(NSArray<VOISegment *> *)segments;
+- (instancetype)initWithTriangle:(VOITriangle *)triangle;
+
 - (BOOL)isEqualToSegmentList:(VOISegmentList *)other;
 - (VOISegment *)segmentAt:(NSUInteger)index;
 - (void)iterateSegments:(VOISegmentIterator)iterator;
+- (VOISegmentList *)sortedByLength;
 - (NSArray<VOISegment *> *)allSegments;
 
 @end

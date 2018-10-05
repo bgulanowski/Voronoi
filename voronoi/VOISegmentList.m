@@ -8,10 +8,28 @@
 
 #import "VOISegmentList.h"
 
-#import "VOISegment.h"
 #import "VOIPointListPrivate.h"
+#import "VOISegment.h"
+#import "VOITriangle.h"
+
+#import <simd/simd.h>
 
 const NSUInteger PPS = 2;
+
+// Sorts from longest to shortest
+static VOIPointComparator SegmentLength = ^(const VOIPoint *s0, const VOIPoint *s1) {
+    double l0 = simd_distance(s0[0], s0[1]);
+    double l1 = simd_distance(s1[0], s1[1]);
+    if (l0 < l1) {
+        return 1;
+    }
+    else if (l1 < l0) {
+        return -1;
+    }
+    else {
+        return 0;
+    }
+};
 
 @implementation VOISegmentList
 
@@ -29,6 +47,10 @@ const NSUInteger PPS = 2;
 
 #pragma mark - VOISegmentList
 
+- (id)copyWithZone:(NSZone *)zone {
+    return [[VOISegmentList alloc] _initWithData:[self.pointsData mutableCopy]];
+}
+
 - (instancetype)initWithSegments:(NSArray<VOISegment *> *)segments {
     NSMutableData *data = [NSMutableData dataWithLength:segments.count * 2 * sizeof(VOIPoint)];
     VOIPoint *points = data.mutableBytes;
@@ -38,6 +60,18 @@ const NSUInteger PPS = 2;
         points[i++] = segment.b;
     }
     return [self _initWithData:data];
+}
+
+- (instancetype)initWithTriangle:(VOITriangle *)triangle {
+    VOIPoint points[6] = {
+        triangle.p0,
+        triangle.p1,
+        triangle.p1,
+        triangle.p2,
+        triangle.p2,
+        triangle.p0
+    };
+    return [super initWithPoints:points count:3];
 }
 
 - (BOOL)isEqualToSegmentList:(VOISegmentList *)other {
@@ -60,6 +94,12 @@ const NSUInteger PPS = 2;
         }
         return NO;
     }];
+}
+
+- (VOISegmentList *)sortedByLength {
+    VOISegmentList *copy = [self copy];
+    qsort_b(copy.pointsData.mutableBytes, self.count, sizeof(VOIPoint) * 2, [SegmentLength copy]);
+    return copy;
 }
 
 - (NSArray<VOISegment *> *)allSegments {
