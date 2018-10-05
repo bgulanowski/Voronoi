@@ -10,6 +10,10 @@
 
 @implementation VOISegment
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@; [(%.2f, %.2f) -> (%.2f, %.2f)]", [self className], _a.x, _a.y, _b.x, _b.y];
+}
+
 - (BOOL)isEqual:(id)object {
     return [object isKindOfClass:[self class]] && [self isEqualToSegment:object];
 }

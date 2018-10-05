@@ -12,6 +12,15 @@
     VOIPoint _points[3];
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@: <(%.2f, %.2f) - (%.2f, %.2f) - (%.2f, %.2f)>",
+            [self className],
+            _points[0].x, _points[0].y,
+            _points[1].x, _points[1].y,
+            _points[2].x, _points[2].y
+            ];
+}
+
 - (VOIPoint)p0 {
     return _points[0];
 }
