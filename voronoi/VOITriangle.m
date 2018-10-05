@@ -8,8 +8,20 @@
 
 #import "VOITriangle.h"
 
+#import "VOIBox.h"
+#import "VOISegment.h"
+#import "VOISegmentList.h"
+
+typedef enum {
+    DegenerateUnknown,
+    DegenerateYes,
+    DegenerateNo
+} Degeneracy;
+
 @implementation VOITriangle {
     VOIPoint _points[3];
+    VOIPoint _centre;
+    Degeneracy _degeneracy;
 }
 
 - (NSString *)description {
@@ -33,6 +45,17 @@
     return _points[2];
 }
 
+- (VOIPoint)centre {
+    return (!self.degenerate && isnan(_centre.x)) ? [self calculateCentre] : _centre;
+}
+
+- (BOOL)isDegenerate {
+    if (_degeneracy == DegenerateUnknown) {
+        [self calculateDegeneracy];
+    }
+    return _degeneracy == DegenerateYes;
+}
+
 - (BOOL)isEqual:(id)object {
     return [object isKindOfClass:[self class]];
 }
@@ -43,6 +66,7 @@
         _points[0] = points[0];
         _points[1] = points[1];
         _points[2] = points[2];
+        _centre = vector2((double)NAN, (double)NAN);
     }
     return self;
 }
@@ -57,6 +81,21 @@
 
 - (VOIPoint)pointAt:(NSUInteger)index {
     return _points[index%3];
+}
+
+- (void)calculateDegeneracy {
+    BOOL degenerate = [[VOIPointList alloc] initWithPoints:_points count:3].boundingBox.degenerate;
+    _degeneracy = degenerate ? DegenerateYes : DegenerateNo;
+}
+
+- (VOIPoint)calculateCentre {
+    VOISegmentList *segmentList = [[[VOISegmentList alloc] initWithTriangle:self] sortedByLength];
+    VOISegment *l0 = [[segmentList segmentAt:0] perpendicular];
+    VOISegment *l1 = [[segmentList segmentAt:1] perpendicular];
+    
+    _centre = [l0 intersectWithSegment:l1];
+    
+    return _centre;
 }
 
 @end

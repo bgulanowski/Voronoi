@@ -8,17 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-#import <simd/simd.h>
-
 #import "VOIPointList.h"
-
-@class VOISegment, VOISegmentList;
 
 @interface VOITriangle : NSObject
 
 @property (readonly) VOIPoint p0;
 @property (readonly) VOIPoint p1;
 @property (readonly) VOIPoint p2;
+@property (readonly) VOIPoint centre;
+@property (readonly, getter=isDegenerate) BOOL degenerate;
 
 // must be 3 points
 - (instancetype)initWithPoints:(const VOIPoint *)points;
