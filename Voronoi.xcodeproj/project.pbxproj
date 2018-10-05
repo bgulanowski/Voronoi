@@ -286,6 +286,33 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		848097232167398E00912E79 /* Original */ = {
+			isa = PBXGroup;
+			children = (
+				84AD3353164DB72A00E37EDE /* DBoundary.h */,
+				84AD3354164DB72A00E37EDE /* DBoundary.m */,
+				84AD3316164C3E8100E37EDE /* DCircle.h */,
+				84AD3317164C3E8100E37EDE /* DCircle.m */,
+				84AD3318164C3E8100E37EDE /* DHull.h */,
+				84AD3319164C3E8100E37EDE /* DHull.m */,
+				84AD331A164C3E8100E37EDE /* DPoint.h */,
+				84AD331B164C3E8100E37EDE /* DPoint.m */,
+				84AD331C164C3E8100E37EDE /* DRange.h */,
+				84AD331D164C3E8100E37EDE /* DRange.m */,
+				84AD331E164C3E8100E37EDE /* DRegion.h */,
+				84AD331F164C3E8100E37EDE /* DRegion.m */,
+				84AD3320164C3E8100E37EDE /* DSegment.h */,
+				84AD3321164C3E8100E37EDE /* DSegment.m */,
+				84AD3322164C3E8100E37EDE /* DTriad.h */,
+				84AD3323164C3E8100E37EDE /* DTriad.m */,
+				84AD3324164C3E8100E37EDE /* NSArray+Voronoi.h */,
+				84AD3325164C3E8100E37EDE /* NSArray+Voronoi.m */,
+				84AD3326164C3E8100E37EDE /* Voronoi.h */,
+				84AD3327164C3E8100E37EDE /* Voronoi.m */,
+			);
+			name = Original;
+			sourceTree = "<group>";
+		};
 		84AD32A4164B049B00E37EDE /* Reference */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,24 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				84D3FAF316642B3500A05727 /* BAFoundation */,
-				84AD3353164DB72A00E37EDE /* DBoundary.h */,
-				84AD3354164DB72A00E37EDE /* DBoundary.m */,
-				84AD3316164C3E8100E37EDE /* DCircle.h */,
-				84AD3317164C3E8100E37EDE /* DCircle.m */,
-				84AD3318164C3E8100E37EDE /* DHull.h */,
-				84AD3319164C3E8100E37EDE /* DHull.m */,
-				84AD331A164C3E8100E37EDE /* DPoint.h */,
-				84AD331B164C3E8100E37EDE /* DPoint.m */,
-				84AD331C164C3E8100E37EDE /* DRange.h */,
-				84AD331D164C3E8100E37EDE /* DRange.m */,
-				84AD331E164C3E8100E37EDE /* DRegion.h */,
-				84AD331F164C3E8100E37EDE /* DRegion.m */,
-				84AD3320164C3E8100E37EDE /* DSegment.h */,
-				84AD3321164C3E8100E37EDE /* DSegment.m */,
-				84AD3322164C3E8100E37EDE /* DTriad.h */,
-				84AD3323164C3E8100E37EDE /* DTriad.m */,
-				84AD3324164C3E8100E37EDE /* NSArray+Voronoi.h */,
-				84AD3325164C3E8100E37EDE /* NSArray+Voronoi.m */,
+				848097232167398E00912E79 /* Original */,
 				84AD32F4164C3DBE00E37EDE /* Supporting Files */,
 				84D9057F21653D4200EA72FC /* VOIMesh.h */,
 				84D9058021653D4200EA72FC /* VOIMesh.m */,
@@ -362,8 +372,6 @@
 				84D9058821653EFE00EA72FC /* VOITriangle.m */,
 				84D9058B2165403C00EA72FC /* VOITriangleList.h */,
 				84D9058C2165403C00EA72FC /* VOITriangleList.m */,
-				84AD3326164C3E8100E37EDE /* Voronoi.h */,
-				84AD3327164C3E8100E37EDE /* Voronoi.m */,
 			);
 			path = voronoi;
 			sourceTree = "<group>";
@@ -379,24 +387,12 @@
 		84AD3305164C3DBE00E37EDE /* voronoiTests */ = {
 			isa = PBXGroup;
 			children = (
-				84AD333F164C445C00E37EDE /* CircleTester.h */,
-				84AD3340164C445C00E37EDE /* CircleTester.m */,
-				84D9059C2166314A00EA72FC /* Info.plist */,
-				84AD3346164C494300E37EDE /* PointTester.h */,
-				84AD3347164C494300E37EDE /* PointTester.m */,
-				84AD334A164C494D00E37EDE /* RangeTester.h */,
-				84AD334B164C494D00E37EDE /* RangeTester.m */,
-				84AD334D164C5C8400E37EDE /* SegmentTester.h */,
-				84AD334E164C5C8400E37EDE /* SegmentTester.m */,
-				84AD3350164C6E9C00E37EDE /* TriangulationTester.h */,
-				84AD3351164C6E9C00E37EDE /* TriangulationTester.m */,
+				84D905BF2167393400EA72FC /* Original Classes */,
+				84D905C02167396100EA72FC /* Supporting Files */,
+				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
 				84D905B42166700F00EA72FC /* VOISegmentListTester.m */,
-				84AD330B164C3DBE00E37EDE /* VoronoiTester.h */,
-				84AD330C164C3DBE00E37EDE /* VoronoiTester.m */,
-				84D905A42166322D00EA72FC /* voronoiTests.pch */,
 				84D905BB2166A18F00EA72FC /* VOITriangleListTester.m */,
-				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 			);
 			path = voronoiTests;
 			sourceTree = "<group>";
@@ -422,6 +418,34 @@
 			);
 			path = BAScene;
 			sourceTree = SOURCE_ROOT;
+		};
+		84D905BF2167393400EA72FC /* Original Classes */ = {
+			isa = PBXGroup;
+			children = (
+				84AD333F164C445C00E37EDE /* CircleTester.h */,
+				84AD3340164C445C00E37EDE /* CircleTester.m */,
+				84AD3346164C494300E37EDE /* PointTester.h */,
+				84AD3347164C494300E37EDE /* PointTester.m */,
+				84AD334A164C494D00E37EDE /* RangeTester.h */,
+				84AD334B164C494D00E37EDE /* RangeTester.m */,
+				84AD334D164C5C8400E37EDE /* SegmentTester.h */,
+				84AD334E164C5C8400E37EDE /* SegmentTester.m */,
+				84AD3350164C6E9C00E37EDE /* TriangulationTester.h */,
+				84AD3351164C6E9C00E37EDE /* TriangulationTester.m */,
+				84AD330B164C3DBE00E37EDE /* VoronoiTester.h */,
+				84AD330C164C3DBE00E37EDE /* VoronoiTester.m */,
+			);
+			name = "Original Classes";
+			sourceTree = "<group>";
+		};
+		84D905C02167396100EA72FC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84D9059C2166314A00EA72FC /* Info.plist */,
+				84D905A42166322D00EA72FC /* voronoiTests.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
