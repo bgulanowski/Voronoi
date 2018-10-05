@@ -10,8 +10,25 @@
 
 #import "VOIPointListPrivate.h"
 #import "VOISegment.h"
+#import "VOISegmentList.h"
 
 @implementation VOIPath
+
+- (NSUInteger)count {
+    // number of segments is 1 less than points when path is open
+    return [super count] - (_closed ? 0 : 1);
+}
+
+- (BOOL)isEqual:(id)object {
+    return [object isKindOfClass:[self class]];
+}
+
+- (BOOL)isEqualToPath:(VOIPath *)path {
+    return (
+            [super isEqualToPointList:path] &&
+            _closed == path->_closed
+            );
+}
 
 - (VOISegment *)segmentAt:(NSUInteger)index {
     const NSUInteger count = self.count;
@@ -35,19 +52,37 @@
     }];
 }
 
-- (VOISegmentList *)asSegmentList {
-
-    const NSUInteger segmentCount = self.count - (_closed ? 0 : 1);
-    NSMutableData *segmentsData = [NSMutableData dataWithLength:segmentCount * 2 * sizeof(VOIPoint)];
-    VOIPoint *segmentPoints = segmentsData.mutableBytes;
-
-    [self iteratePoints:^BOOL(const VOIPoint *p, const NSUInteger i) {
-        segmentPoints[i * 2] = p[0];
-        segmentPoints[i * 2 + 1] = p[1];
-        return (i == segmentCount);
+- (NSArray<VOISegment *> *)allSegments {
+    NSMutableArray *array = [NSMutableArray array];
+    [self iterateSegments:^BOOL(VOISegment *s, NSUInteger i) {
+        [array addObject:s];
+        return NO;
     }];
+    return array;
+}
 
-    return [[VOISegmentList alloc] _initWithData:segmentsData];
+- (VOISegmentList *)asSegmentList {
+    
+#if 0
+    // This feels so lazy
+    return [[VOISegmentList alloc] initWithSegments:[self allSegments]];
+    
+#else
+    const NSUInteger count = self.count * 2;
+    NSMutableData *data = [NSMutableData dataWithLength:count * sizeof(VOIPoint)];
+    VOIPoint *points = data.mutableBytes;
+
+    [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+        points[i * 2] = *p;
+        return NO;
+    }];
+    [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+        points[(i * 2 + count - 1) % count] = *p;
+        return NO;
+    }];
+    
+    return [[VOISegmentList alloc] _initWithData:data];
+#endif
 }
 
 @end

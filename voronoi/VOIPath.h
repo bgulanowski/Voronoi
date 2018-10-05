@@ -14,6 +14,7 @@
 
 @property (nonatomic) BOOL closed;
 
+- (BOOL)isEqualToPath:(VOIPath *)path;
 - (void)iterateSegments:(VOISegmentIterator)iterator;
 
 - (VOISegmentList *)asSegmentList;
