@@ -18,5 +18,8 @@
 // must be two points
 - (instancetype)initWithPoints:(const VOIPoint *)points;
 - (BOOL)isEqualToSegment:(VOISegment *)other;
+- (VOISegment *)perpendicular;
+// Treat point b like a vector
+- (VOIPoint)intersectWithSegment:(VOISegment *)other;
 
 @end

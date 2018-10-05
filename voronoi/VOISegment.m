@@ -31,4 +31,33 @@
     return simd_equal(_a, other->_a) && simd_equal(_b, other->_b);
 }
 
+- (VOISegment *)perpendicular {
+    VOIPoint v = _b - _a;
+    // rotate v 90° CW
+    VOIPoint vr = vector2(v.y, -v.x);
+    VOIPoint c = (_a + _b) / 2.0;
+    VOIPoint d = c + vr;
+    VOIPoint cd[] = { c, d };
+    return [[VOISegment alloc] initWithPoints:cd];
+}
+
+- (VOIPoint)intersectWithSegment:(VOISegment *)other {
+    
+    VOIPoint a = _a - other->_a;
+    VOIPoint b = other->_a - other->_b;
+    VOIPoint c = _a - _b;
+    
+    matrix_double2x2 A = simd_matrix(a, b);
+    matrix_double2x2 B = simd_matrix(c, b);
+    
+    double detA = simd_determinant(A);
+    double detB = simd_determinant(B);
+    
+    if (ABS(detB) <= DBL_EPSILON) {
+        return vector2((double)INFINITY, (double)INFINITY);
+    }
+    
+    return _a + detA/detB * (_b - _a);
+}
+
 @end
