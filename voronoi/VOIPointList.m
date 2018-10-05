@@ -8,6 +8,8 @@
 
 #import "VOIPointList.h"
 
+#import "VOIBox.h"
+
 static VOIPointComparator length = ^(const VOIPoint *p0, const VOIPoint *p1) {
     double l0 = simd_length(*p0);
     double l1 = simd_length(*p1);
@@ -44,6 +46,7 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 
 @property (nonatomic) VOIPoint *points;
 @property (nonatomic) NSMutableData *pointsData;
+@property (nonatomic) VOIBox *boundingBox;
 
 @end
 
@@ -51,6 +54,10 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 
 - (NSUInteger)pointCount {
     return _count;
+}
+
+- (VOIPoint)centre {
+    return self.boundingBox.centre;
 }
 
 - (NSString *)description {
@@ -151,6 +158,32 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
             break;
         }
     }
+}
+
+- (VOIBox *)boundingBox {
+    return _boundingBox ?: [self calculateBoundingBox];
+}
+
+- (VOIBox *)calculateBoundingBox {
+    
+    double Inf = (double)INFINITY;
+    __block VOIPoint ll = vector2(-Inf, -Inf);
+    __block VOIPoint ur = vector2(Inf, Inf);
+    
+    [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+        VOIPoint point = *p;
+        ll.x = MIN(ll.x, point.x);
+        ll.y = MIN(ll.y, point.y);
+        ur.x = MAX(ur.x, point.x);
+        ur.y = MAX(ur.y, point.y);
+        return NO;
+    }];
+    
+    VOIPoint origin = ll;
+    VOISize size = ur - ll;
+    _boundingBox = [[VOIBox alloc] initWithOrigin:origin size:size];
+    
+    return _boundingBox;
 }
 
 @end

@@ -15,12 +15,16 @@ typedef vector_double2 VOIPoint;
 typedef int (^VOIPointComparator)(const VOIPoint *, const VOIPoint *);
 typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 
+@class VOIBox;
+
 @interface VOIPointList : NSObject<NSCopying>
 
 // -count is overridden by subclasses to count the specific primitive
 // -pointCount always returns the number of underlying points
 @property (readonly) NSUInteger count;
 @property (readonly) NSUInteger pointCount;
+@property (readonly) VOIBox *boundingBox;
+@property (readonly) VOIPoint centre;
 
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count;
 
