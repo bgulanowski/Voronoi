@@ -10,13 +10,13 @@
 
 #import "VOIPointList.h"
 
-VOIPoint points[4];
-
 @interface VOIPointListTester : XCTestCase
 
 @property VOIPointList *pointList;
 
 @end
+
+static VOIPoint points[4];
 
 @implementation VOIPointListTester
 
@@ -54,8 +54,7 @@ VOIPoint points[4];
     for (NSUInteger i = 0; i < 4; ++i) {
         VOIPoint e = points[i];
         VOIPoint a = [_pointList pointAtIndex:i];
-        XCTAssertEqual(e.x, a.x);
-        XCTAssertEqual(e.y, a.y);
+        AssertEqualPoints(e, a);
     }
 }
 

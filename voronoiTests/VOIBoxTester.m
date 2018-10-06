@@ -24,22 +24,19 @@
 - (void)testOrigin {
     VOIPoint e = vector2(1.0, -5.0);
     VOIPoint a = self.box.origin;
-    XCTAssertEqual(e.x, a.x);
-    XCTAssertEqual(e.y, a.y);
+    AssertEqualPoints(e, a);
 }
 
 - (void)testSize {
     VOIPoint e = vector2(3.0, 7.0);
     VOIPoint a = self.box.size;
-    XCTAssertEqual(e.x, a.x);
-    XCTAssertEqual(e.y, a.y);
+    AssertEqualPoints(e, a);
 }
 
 - (void)testCentre {
     VOIPoint e = vector2(2.5, -1.5);
     VOIPoint a = self.box.centre;
-    XCTAssertEqual(e.x, a.x);
-    XCTAssertEqual(e.y, a.y);
+    AssertEqualPoints(e, a);
 }
 
 - (void)testExtents {
@@ -58,10 +55,10 @@
 
 - (void)testDegenerate {
     XCTAssertFalse(self.box.degenerate);
-    XCTAssertTrue([[VOIBox alloc] init]);
-    XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(0.0, 0.0)]);
-    XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(0.0, 1.0)]);
-    XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(1.0, 0.0)]);
+    XCTAssertTrue([[VOIBox alloc] init].degenerate);
+    XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(0.0, 0.0)].degenerate);
+    XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(0.0, 1.0)].degenerate);
+    XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(1.0, 0.0)].degenerate);
 }
 
 @end

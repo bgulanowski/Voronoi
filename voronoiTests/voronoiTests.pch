@@ -7,3 +7,8 @@
 //
 
 #import <simd/simd.h>
+
+#define AssertEqualPoints(p0, p1) do {\
+XCTAssertEqual((p0).x, (p1).x); \
+XCTAssertEqual((p0).y, (p1).y); \
+} while (0)
