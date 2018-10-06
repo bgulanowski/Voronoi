@@ -30,8 +30,10 @@ typedef vector_double2 VOISize;
 
 @property (readonly, getter = isDegenerate) BOOL degenerate;
 
-- (instancetype)initWithOrigin:(VOIPoint)origin size:(VOISize)size;
+- (instancetype)initWithOrigin:(VOIPoint)origin size:(VOISize)size NS_DESIGNATED_INITIALIZER;
 // clockwise starting at origin
 - (VOIPointList *)asPointList;
+
++ (VOIPoint)regularizeOrigin:(VOIPoint)origin forSize:(VOISize)size;
 
 @end

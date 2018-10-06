@@ -10,29 +10,31 @@
 
 @implementation VOIBox
 
+- (instancetype)init {
+    return [self initWithOrigin:vector2(0.0, 0.0) size:vector2(0.0, 0.0)];
+}
+
 - (instancetype)initWithOrigin:(VOIPoint)origin size:(VOISize)size {
     self = [super init];
     if (self) {
-        _origin = origin;
-        _size = size;
-        [self regularize];
+        _origin = [[self class] regularizeOrigin:origin forSize:size];
+        _size = simd_abs(size);
     }
     return self;
 }
 
-- (void)regularize {
-    if (_size.x < 0) {
-        _origin.x += _size.x;
-        _size.x = ABS(_size.x);
++ (VOIPoint)regularizeOrigin:(VOIPoint)origin forSize:(VOISize)size {
+    if (size.x < 0) {
+        origin.x += size.x;
     }
-    if (_size.y < 0) {
-        _origin.y += _size.y;
-        _size.y = ABS(_size.y);
+    if (size.y < 0) {
+        origin.y += size.y;
     }
+    return origin;
 }
 
 - (VOIPoint)centre {
-    return (_origin + _size) / 2.0;
+    return _origin + _size / 2.0;
 }
 
 - (double)minX {
@@ -40,7 +42,7 @@
 }
 
 - (double)midX {
-    return (_origin.x + _size.x) / 2.0;
+    return _origin.x + _size.x / 2.0;
 }
 
 - (double)maxX {
@@ -52,7 +54,7 @@
 }
 
 - (double)midY {
-    return (_origin.y + _size.y) / 2.0;
+    return _origin.y + _size.y / 2.0;
 }
 
 - (double)maxY {
