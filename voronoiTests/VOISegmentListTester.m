@@ -10,6 +10,7 @@
 
 #import "VOISegment.h"
 #import "VOISegmentList.h"
+#import "VOITriangle.h"
 
 @interface VOISegmentListTester : XCTestCase
 @property VOISegmentList *segmentList;
@@ -42,6 +43,20 @@ static VOIPoint points[6];
                           ];
     VOISegmentList *a = [[VOISegmentList alloc] initWithSegments:segments];
     VOISegmentList *e = self.segmentList;
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testInitWithTriangle {
+    VOITriangle *t = [[VOITriangle alloc] initWithPoints:points];
+    VOISegmentList *s = [[VOISegmentList alloc] initWithTriangle:t];
+    VOIPoint s2[] = { points[2], points[0] };
+    NSArray<VOISegment *> *e = @[
+                                 [[VOISegment alloc] initWithPoints:&points[0]],
+                                 [[VOISegment alloc] initWithPoints:&points[1]],
+                                 [[VOISegment alloc] initWithPoints:s2],
+                                 ];
+    NSArray<VOISegment *> *a = [s allSegments];
+    
     XCTAssertEqualObjects(e, a);
 }
 

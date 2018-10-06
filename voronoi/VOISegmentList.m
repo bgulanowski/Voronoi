@@ -71,7 +71,7 @@ static VOIPointComparator SegmentLength = ^(const VOIPoint *s0, const VOIPoint *
         triangle.p2,
         triangle.p0
     };
-    return [super initWithPoints:points count:3];
+    return [self initWithPoints:points count:3];
 }
 
 - (BOOL)isEqualToSegmentList:(VOISegmentList *)other {
