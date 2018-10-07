@@ -195,8 +195,8 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 - (VOIBox *)calculateBoundingBox {
     
     double Inf = (double)INFINITY;
-    __block VOIPoint ll = vector2(-Inf, -Inf);
-    __block VOIPoint ur = vector2(Inf, Inf);
+    __block VOIPoint ll = vector2(Inf, Inf);
+    __block VOIPoint ur = vector2(-Inf, -Inf);
     
     [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
         VOIPoint point = *p;

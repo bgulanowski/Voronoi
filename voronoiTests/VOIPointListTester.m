@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "VOIBox.h"
 #import "VOIPointList.h"
 
 @interface VOIPointListTester : XCTestCase
@@ -42,6 +43,14 @@ static VOIPoint points[4];
 
 - (void)testCount {
     XCTAssertEqual((NSUInteger)4, _pointList.count);
+}
+
+- (void)testPointCount {
+    XCTAssertEqual((NSUInteger)4, _pointList.pointCount);
+}
+
+- (void)testBoundingBox {
+    VOIBox *e = [[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(3.0, 4.0)];
 }
 
 - (void)testDescription {
