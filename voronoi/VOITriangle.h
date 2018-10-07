@@ -16,6 +16,7 @@
 @property (readonly) VOIPoint p1;
 @property (readonly) VOIPoint p2;
 @property (readonly) VOIPoint centre;
+@property (readonly) double radius;
 @property (readonly, getter=isDegenerate) BOOL degenerate;
 
 // must be 3 points

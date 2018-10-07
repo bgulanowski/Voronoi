@@ -21,6 +21,7 @@ typedef enum {
 @implementation VOITriangle {
     VOIPoint _points[3];
     VOIPoint _centre;
+    double _radius;
     Degeneracy _degeneracy;
 }
 
@@ -49,6 +50,10 @@ typedef enum {
     return (!self.degenerate && isnan(_centre.x)) ? [self calculateCentre] : _centre;
 }
 
+- (double)radius {
+    return (isnan(_radius) ? [self calculateRadius] : _radius);
+}
+
 - (BOOL)isDegenerate {
     return (_degeneracy == DegenerateUnknown) ? [self calculateDegeneracy] : (_degeneracy == DegenerateYes);
 }
@@ -64,6 +69,7 @@ typedef enum {
         _points[1] = points[1];
         _points[2] = points[2];
         _centre = vector2((double)NAN, (double)NAN);
+        _radius = (double)NAN;
     }
     return self;
 }
@@ -93,9 +99,11 @@ typedef enum {
     VOISegment *l0 = [[segmentList segmentAt:0] perpendicular];
     VOISegment *l1 = [[segmentList segmentAt:1] perpendicular];
     
-    _centre = [l0 intersectWithSegment:l1];
-    
-    return _centre;
+    return (_centre = [l0 intersectWithSegment:l1]);
+}
+
+- (double)calculateRadius {
+    return (_radius = simd_distance(_points[0], self.centre));
 }
 
 @end
