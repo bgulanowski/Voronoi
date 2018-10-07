@@ -16,6 +16,9 @@ typedef BOOL (^VOITriangleIterator)(VOITriangle *, NSUInteger);
 
 @interface VOITriangleList : VOIPointList
 
+- (instancetype)initWithTriangles:(NSArray<VOITriangle *> *)triangles;
+- (BOOL)isEqualToTriangleList:(VOITriangleList *)other;
+
 - (VOITriangle *)triangleAt:(NSUInteger)index;
 - (void)iterateTriangles:(VOITriangleIterator)iterator;
 - (NSArray<VOITriangle *> *)allTriangles;

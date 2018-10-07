@@ -23,6 +23,24 @@ const NSUInteger PPT = 3;
     return [super initWithPoints:points count:count * PPT];
 }
 
+- (instancetype)initWithTriangles:(NSArray<VOITriangle *> *)triangles {
+    NSMutableData *data = [NSMutableData dataWithLength:(triangles.count * 3 *sizeof(VOIPoint))];
+    VOIPoint *cursor = data.mutableBytes;
+    for (VOITriangle *triangle in triangles) {
+        *cursor = triangle.p0;
+        ++cursor;
+        *cursor = triangle.p1;
+        ++cursor;
+        *cursor = triangle.p2;
+        ++cursor;
+    }
+    return [self _initWithData:data];
+}
+
+- (BOOL)isEqualToTriangleList:(VOITriangleList *)other {
+    return [super isEqualToPointList:other];
+}
+
 - (VOITriangle *)triangleAt:(NSUInteger)index {
     const NSUInteger count = self.pointCount;
     VOIPoint points[3];
