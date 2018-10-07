@@ -50,10 +50,7 @@ typedef enum {
 }
 
 - (BOOL)isDegenerate {
-    if (_degeneracy == DegenerateUnknown) {
-        [self calculateDegeneracy];
-    }
-    return _degeneracy == DegenerateYes;
+    return (_degeneracy == DegenerateUnknown) ? [self calculateDegeneracy] : (_degeneracy == DegenerateYes);
 }
 
 - (BOOL)isEqual:(id)object {
@@ -83,9 +80,12 @@ typedef enum {
     return _points[index%3];
 }
 
-- (void)calculateDegeneracy {
+#pragma mark - Private
+
+- (BOOL)calculateDegeneracy {
     BOOL degenerate = [[VOIPointList alloc] initWithPoints:_points count:3].boundingBox.degenerate;
     _degeneracy = degenerate ? DegenerateYes : DegenerateNo;
+    return degenerate;
 }
 
 - (VOIPoint)calculateCentre {
