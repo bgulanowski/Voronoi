@@ -20,6 +20,7 @@
 		848097392167B4AD00912E79 /* VOIBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 848097372167B4AD00912E79 /* VOIBox.h */; };
 		8480973A2167B4AD00912E79 /* VOIBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 848097382167B4AD00912E79 /* VOIBox.m */; };
 		8480973C21696B6D00912E79 /* VOIBoxTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480973B21696B6D00912E79 /* VOIBoxTester.m */; };
+		8480973E2169717500912E79 /* VOITriangleTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480973D2169717500912E79 /* VOITriangleTester.m */; };
 		84AD32F2164C3DBD00E37EDE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F31D216497C120068A102 /* Cocoa.framework */; };
 		84AD332A164C3E8100E37EDE /* DCircle.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD3316164C3E8100E37EDE /* DCircle.h */; };
 		84AD332B164C3E8100E37EDE /* DCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3317164C3E8100E37EDE /* DCircle.m */; };
@@ -113,6 +114,7 @@
 		848097372167B4AD00912E79 /* VOIBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIBox.h; sourceTree = "<group>"; };
 		848097382167B4AD00912E79 /* VOIBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIBox.m; sourceTree = "<group>"; };
 		8480973B21696B6D00912E79 /* VOIBoxTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIBoxTester.m; sourceTree = "<group>"; };
+		8480973D2169717500912E79 /* VOITriangleTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOITriangleTester.m; sourceTree = "<group>"; };
 		84AD32DC164B72D700E37EDE /* BoundingPolygon.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = BoundingPolygon.java; path = "Reference/S-hull Java/BoundingPolygon.java"; sourceTree = SOURCE_ROOT; };
 		84AD32DD164B72D700E37EDE /* Hull.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Hull.java; path = "Reference/S-hull Java/Hull.java"; sourceTree = SOURCE_ROOT; };
 		84AD32DE164B72D700E37EDE /* Line.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Line.java; path = "Reference/S-hull Java/Line.java"; sourceTree = SOURCE_ROOT; };
@@ -400,6 +402,7 @@
 				84D905BF2167393400EA72FC /* Original Classes */,
 				84D905C02167396100EA72FC /* Supporting Files */,
 				8480973B21696B6D00912E79 /* VOIBoxTester.m */,
+				8480973D2169717500912E79 /* VOITriangleTester.m */,
 				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
 				84D905B42166700F00EA72FC /* VOISegmentListTester.m */,
@@ -655,6 +658,7 @@
 				84D905BC2166A18F00EA72FC /* VOITriangleListTester.m in Sources */,
 				84D905A5216632BA00EA72FC /* PointTester.m in Sources */,
 				84D905A9216632BA00EA72FC /* VoronoiTester.m in Sources */,
+				8480973E2169717500912E79 /* VOITriangleTester.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
