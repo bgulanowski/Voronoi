@@ -16,11 +16,14 @@
 		847F31EC16497C120068A102 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847F31EA16497C120068A102 /* MainMenu.xib */; };
 		847F31F416497C670068A102 /* VDemoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847F31F316497C670068A102 /* VDemoView.m */; };
 		847F321E1649800C0068A102 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F321D1649800B0068A102 /* OpenGL.framework */; };
+		8480972621673B3300912E79 /* VOITriangulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8480972421673B3300912E79 /* VOITriangulator.h */; };
+		8480972721673B3300912E79 /* VOITriangulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480972521673B3300912E79 /* VOITriangulator.m */; };
 		848097362167A85600912E79 /* VOISegmentTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 848097352167A85600912E79 /* VOISegmentTester.m */; };
 		848097392167B4AD00912E79 /* VOIBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 848097372167B4AD00912E79 /* VOIBox.h */; };
 		8480973A2167B4AD00912E79 /* VOIBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 848097382167B4AD00912E79 /* VOIBox.m */; };
 		8480973C21696B6D00912E79 /* VOIBoxTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480973B21696B6D00912E79 /* VOIBoxTester.m */; };
 		8480973E2169717500912E79 /* VOITriangleTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480973D2169717500912E79 /* VOITriangleTester.m */; };
+		848097402169AADD00912E79 /* VOITriangulatorTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480973F2169AADD00912E79 /* VOITriangulatorTester.m */; };
 		84AD32F2164C3DBD00E37EDE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F31D216497C120068A102 /* Cocoa.framework */; };
 		84AD332A164C3E8100E37EDE /* DCircle.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AD3316164C3E8100E37EDE /* DCircle.h */; };
 		84AD332B164C3E8100E37EDE /* DCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD3317164C3E8100E37EDE /* DCircle.m */; };
@@ -110,11 +113,14 @@
 		847F31F216497C670068A102 /* VDemoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDemoView.h; sourceTree = "<group>"; };
 		847F31F316497C670068A102 /* VDemoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDemoView.m; sourceTree = "<group>"; };
 		847F321D1649800B0068A102 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		8480972421673B3300912E79 /* VOITriangulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOITriangulator.h; sourceTree = "<group>"; };
+		8480972521673B3300912E79 /* VOITriangulator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOITriangulator.m; sourceTree = "<group>"; };
 		848097352167A85600912E79 /* VOISegmentTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOISegmentTester.m; sourceTree = "<group>"; };
 		848097372167B4AD00912E79 /* VOIBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIBox.h; sourceTree = "<group>"; };
 		848097382167B4AD00912E79 /* VOIBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIBox.m; sourceTree = "<group>"; };
 		8480973B21696B6D00912E79 /* VOIBoxTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIBoxTester.m; sourceTree = "<group>"; };
 		8480973D2169717500912E79 /* VOITriangleTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOITriangleTester.m; sourceTree = "<group>"; };
+		8480973F2169AADD00912E79 /* VOITriangulatorTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOITriangulatorTester.m; sourceTree = "<group>"; };
 		84AD32DC164B72D700E37EDE /* BoundingPolygon.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = BoundingPolygon.java; path = "Reference/S-hull Java/BoundingPolygon.java"; sourceTree = SOURCE_ROOT; };
 		84AD32DD164B72D700E37EDE /* Hull.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Hull.java; path = "Reference/S-hull Java/Hull.java"; sourceTree = SOURCE_ROOT; };
 		84AD32DE164B72D700E37EDE /* Line.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = Line.java; path = "Reference/S-hull Java/Line.java"; sourceTree = SOURCE_ROOT; };
@@ -382,6 +388,8 @@
 				84D9058821653EFE00EA72FC /* VOITriangle.m */,
 				84D9058B2165403C00EA72FC /* VOITriangleList.h */,
 				84D9058C2165403C00EA72FC /* VOITriangleList.m */,
+				8480972421673B3300912E79 /* VOITriangulator.h */,
+				8480972521673B3300912E79 /* VOITriangulator.m */,
 				848097372167B4AD00912E79 /* VOIBox.h */,
 				848097382167B4AD00912E79 /* VOIBox.m */,
 			);
@@ -408,6 +416,7 @@
 				84D905B42166700F00EA72FC /* VOISegmentListTester.m */,
 				848097352167A85600912E79 /* VOISegmentTester.m */,
 				84D905BB2166A18F00EA72FC /* VOITriangleListTester.m */,
+				8480973F2169AADD00912E79 /* VOITriangulatorTester.m */,
 			);
 			path = voronoiTests;
 			sourceTree = "<group>";
@@ -473,6 +482,7 @@
 				84AD332A164C3E8100E37EDE /* DCircle.h in Headers */,
 				84AD332C164C3E8100E37EDE /* DHull.h in Headers */,
 				84AD332E164C3E8100E37EDE /* DPoint.h in Headers */,
+				8480972621673B3300912E79 /* VOITriangulator.h in Headers */,
 				84D905AE2166641100EA72FC /* VOISegment.h in Headers */,
 				84D9058921653EFE00EA72FC /* VOITriangle.h in Headers */,
 				84AD3330164C3E8100E37EDE /* DRange.h in Headers */,
@@ -623,6 +633,7 @@
 				84AD332B164C3E8100E37EDE /* DCircle.m in Sources */,
 				84AD332D164C3E8100E37EDE /* DHull.m in Sources */,
 				8480973A2167B4AD00912E79 /* VOIBox.m in Sources */,
+				8480972721673B3300912E79 /* VOITriangulator.m in Sources */,
 				84AD332F164C3E8100E37EDE /* DPoint.m in Sources */,
 				84D9058221653D4200EA72FC /* VOIMesh.m in Sources */,
 				84D9058A21653EFE00EA72FC /* VOITriangle.m in Sources */,
@@ -659,6 +670,7 @@
 				84D905A5216632BA00EA72FC /* PointTester.m in Sources */,
 				84D905A9216632BA00EA72FC /* VoronoiTester.m in Sources */,
 				8480973E2169717500912E79 /* VOITriangleTester.m in Sources */,
+				848097402169AADD00912E79 /* VOITriangulatorTester.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

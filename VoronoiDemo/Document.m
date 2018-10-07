@@ -148,7 +148,7 @@ static int comparePointsYDistanceIndexed(CGPoint *points, NSUInteger *pi1, NSUIn
     
     _voronoi = [Voronoi voronoiWithPoints:points range:range];
     
-    
+#if 0
     // Relax the points
     CGPoint *relaxed = malloc(sizeof(CGPoint)*_count);
     
@@ -196,19 +196,22 @@ static int comparePointsYDistanceIndexed(CGPoint *points, NSUInteger *pi1, NSUIn
         [points addObject:[DPoint pointWithCGPoint:relaxed[i]]];
     
     _voronoi = [Voronoi voronoiWithPoints:points range:range];
+#endif
 }
 
 - (void)createPoints {
     
-//    srandom(88);
-    srandom((unsigned)time(NULL));
+    srandom(88);
+//    srandom((unsigned)time(NULL));
 //    srandom(50001);
     
     if(!_points) _points = malloc(sizeof(CGPoint)*_count);
     
     for (NSUInteger i=0; i<_count; ++i) {
-        _points[i].x = floor(BARandomCGFloatInRange(0, _size.width));
-        _points[i].y = floor(BARandomCGFloatInRange(0, _size.height));
+//        _points[i].x = floor(BARandomCGFloatInRange(0, _size.width));
+//        _points[i].y = floor(BARandomCGFloatInRange(0, _size.height));
+        _points[i].x = (CGFloat)floor(BARandomIntegerInRange(0, _size.width));
+        _points[i].y = (CGFloat)floor(BARandomIntegerInRange(0, _size.height));
     }
     
 //    qsort(_points, _count, sizeof(CGPoint), (int (*)(const void *, const void *))comparePointsDistanceFromOrigin);
