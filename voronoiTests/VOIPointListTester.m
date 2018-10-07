@@ -58,6 +58,14 @@ static VOIPoint points[4];
     }
 }
 
+- (void)testPointClosestToPoint {
+    NSUInteger index = NSNotFound;
+    VOIPoint e = points[2];
+    VOIPoint a = [self.pointList pointClosestToPoint:vector2(-1.0, 4.0) index:&index];
+    AssertEqualPoints(e, a);
+    XCTAssertEqual(2, index);
+}
+
 - (void)testAdd {
     VOIPointList *a = [[VOIPointList alloc] initWithPoints:points count:2];
     VOIPointList *b = [[VOIPointList alloc] initWithPoints:&points[2] count:2];
@@ -115,6 +123,19 @@ static VOIPoint points[4];
 - (void)testPointListWithRangeLocationBeyondEnd {
     VOIPointList *e = [[VOIPointList alloc] initWithPoints:&points[1] count:3];
     VOIPointList *a = [self.pointList pointListWithRange:NSMakeRange(5, 3)];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPointListByDeletingRange {
+    VOIPoint p[2] = { points[0], points[3] };
+    VOIPointList *e = [[VOIPointList alloc]  initWithPoints:p count:2];
+    VOIPointList *a = [self.pointList pointListByDeletingRange:NSMakeRange(1, 2)];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPointListByDeletingPointAtIndex {
+    VOIPointList *e = [[VOIPointList alloc] initWithPoints:&points[1] count:3];
+    VOIPointList *a = [self.pointList pointListByDeletingPointAtIndex:0];
     XCTAssertEqualObjects(e, a);
 }
 

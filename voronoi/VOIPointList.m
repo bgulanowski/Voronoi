@@ -114,6 +114,23 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return _points[(index % _count)];
 }
 
+- (VOIPoint)pointClosestToPoint:(VOIPoint)p index:(NSUInteger *)pIndex {
+    __block NSUInteger index = NSNotFound;
+    __block double best = (double)INFINITY;
+    [self iteratePoints:^(const VOIPoint *q, const NSUInteger i) {
+        double d = simd_distance(*q, p);
+        if (d < best) {
+            best = d;
+            index = i;
+        }
+        return NO;
+    }];
+    if (pIndex) {
+        *pIndex = index;
+    }
+    return _points[index];
+}
+
 - (VOIPointList *)add:(VOIPointList *)other {
     NSMutableData *copy = [_pointsData mutableCopy];
     [copy appendData:other.pointsData];
@@ -136,6 +153,17 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     }
     
     return result;
+}
+
+- (VOIPointList *)pointListByDeletingRange:(NSRange)range {
+    NSRange a = NSMakeRange(0, range.location);
+    NSUInteger end = NSMaxRange(range);
+    NSRange b = NSMakeRange(end, _count - end);
+    return [[self pointListWithRange:a] add:[self pointListWithRange:b]];
+}
+
+- (VOIPointList *)pointListByDeletingPointAtIndex:(NSUInteger)index {
+    return [self pointListByDeletingRange:NSMakeRange(index, 1)];
 }
 
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator {
