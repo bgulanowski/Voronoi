@@ -62,4 +62,9 @@ static VOIPoint points[4];
     XCTAssertEqual(e, a);
 }
 
+- (void)testHandedness {
+    XCTAssertFalse(self.triangle.rightHanded);
+    XCTAssertTrue([self.triangle reorder].rightHanded);
+}
+
 @end

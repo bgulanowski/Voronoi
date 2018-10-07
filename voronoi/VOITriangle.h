@@ -18,6 +18,7 @@
 @property (readonly) VOIPoint centre;
 @property (readonly) double radius;
 @property (readonly, getter=isDegenerate) BOOL degenerate;
+@property (readonly, getter=isRightHanded) BOOL rightHanded;
 
 // must be 3 points
 - (instancetype)initWithPoints:(const VOIPoint *)points;
@@ -25,5 +26,7 @@
 
 // any index will do - uses %3
 - (VOIPoint)pointAt:(NSUInteger)index;
+
+- (VOITriangle *)reorder;
 
 @end

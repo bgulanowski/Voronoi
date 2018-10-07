@@ -18,11 +18,18 @@ typedef enum {
     DegenerateNo
 } Degeneracy;
 
+typedef enum {
+    HandednessUnknown,
+    HandednessLeft,
+    HandednessRight
+} Handedness;
+
 @implementation VOITriangle {
     VOIPoint _points[3];
     VOIPoint _centre;
     double _radius;
     Degeneracy _degeneracy;
+    Handedness _handedness;
 }
 
 - (NSString *)description {
@@ -58,6 +65,10 @@ typedef enum {
     return (_degeneracy == DegenerateUnknown) ? [self calculateDegeneracy] : (_degeneracy == DegenerateYes);
 }
 
+- (BOOL)isRightHanded {
+    return (_handedness == HandednessUnknown) ? [self calculateHandedness] : (_handedness == HandednessRight);
+}
+
 - (BOOL)isEqual:(id)object {
     return [object isKindOfClass:[self class]];
 }
@@ -86,12 +97,28 @@ typedef enum {
     return _points[index%3];
 }
 
+- (VOITriangle *)reorder {
+    VOIPoint reordered[3] = {
+        _points[0],
+        _points[2],
+        _points[1]
+    };
+    return [[VOITriangle alloc] initWithPoints:reordered];
+}
+
 #pragma mark - Private
 
 - (BOOL)calculateDegeneracy {
     BOOL degenerate = [[VOIPointList alloc] initWithPoints:_points count:3].boundingBox.degenerate;
     _degeneracy = degenerate ? DegenerateYes : DegenerateNo;
     return degenerate;
+}
+
+- (BOOL)calculateHandedness {
+    vector_double3 cross = simd_cross((_points[1] - _points[0]), (_points[2] - _points[0]));
+    BOOL rightHanded = cross.z > 0;
+    _handedness = rightHanded ? HandednessRight : HandednessLeft;
+    return rightHanded;
 }
 
 - (VOIPoint)calculateCentre {
