@@ -8,7 +8,11 @@
 
 #import <simd/simd.h>
 
+#define AssertEqualFloats(f0, f1) do {\
+XCTAssertLessThan(ABS((f1) - (f0)), DBL_EPSILON * 2.0);\
+} while (0)
+
 #define AssertEqualPoints(p0, p1) do {\
-XCTAssertEqual((p0).x, (p1).x); \
-XCTAssertEqual((p0).y, (p1).y); \
+AssertEqualFloats((p0).x, (p1).x); \
+AssertEqualFloats((p0).y, (p1).y); \
 } while (0)
