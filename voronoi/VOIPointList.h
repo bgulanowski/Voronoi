@@ -33,6 +33,7 @@ typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 - (VOIPointList *)add:(VOIPointList *)other;
 // index is truncated with %
 - (VOIPoint)pointAtIndex:(NSUInteger)index;
+- (VOIPoint)pointClosestToPoint:(VOIPoint)p index:(NSUInteger *)pIndex ignoreIfEqual:(BOOL)ignore;
 - (VOIPoint)pointClosestToPoint:(VOIPoint)p index:(NSUInteger *)index;
 
 // range can be anything; indices will be truncated with %
