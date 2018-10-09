@@ -35,7 +35,14 @@
     return copy;
 }
 
-#pragma mark - VOIPointList
+#pragma mark - VOIPath
+
+- (BOOL)isEqualToPath:(VOIPath *)path {
+    return (
+            [super isEqualToPointList:path] &&
+            _closed == path->_closed
+            );
+}
 
 - (VOIPath *)closedPath {
     VOIPath *path = self;
@@ -84,13 +91,6 @@
         return NO;
     }];
     return array;
-}
-
-- (BOOL)isEqualToPath:(VOIPath *)path {
-    return (
-            [super isEqualToPointList:path] &&
-            _closed == path->_closed
-            );
 }
 
 - (VOISegmentList *)asSegmentList {
