@@ -40,6 +40,14 @@
 
 #pragma mark - VOIPath
 
+- (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count close:(BOOL)closed {
+    self = [super initWithPoints:points count:count];
+    if (self) {
+        _closed = closed;
+    }
+    return self;
+}
+
 - (BOOL)isEqualToPath:(VOIPath *)path {
     return (
             [super isEqualToPointList:path] &&
@@ -74,17 +82,13 @@
 }
 
 - (void)iterateSegments:(VOISegmentIterator)iterator {
-    const NSUInteger last = self.count - 1;
+    const NSUInteger last = self.pointCount - 1;
     [self iteratePoints:^(const VOIPoint *points, const NSUInteger i) {
-        VOISegment *segment = nil;
-        if (i < last) {
-            segment = [[VOISegment alloc] initWithPoints:points];
-        }
-        else if (self.closed) {
-            segment = [self segmentAt:last];
-        }
-        return (BOOL)(segment ? iterator(segment, i) : NO);
+        return (BOOL)(i == last || iterator([[VOISegment alloc] initWithPoints:points], i));
     }];
+    if (self.closed) {
+        iterator([self segmentAt:last], last);
+    }
 }
 
 - (NSArray<VOISegment *> *)allSegments {
@@ -98,11 +102,8 @@
 
 - (VOISegmentList *)asSegmentList {
     
-#if 0
-    // This feels so lazy
-    return [[VOISegmentList alloc] initWithSegments:[self allSegments]];
+    // Creating segments requires doubling the number of points
     
-#else
     const NSUInteger count = self.count * 2;
     NSMutableData *data = [NSMutableData dataWithLength:count * sizeof(VOIPoint)];
     VOIPoint *points = data.mutableBytes;
@@ -117,7 +118,6 @@
     }];
     
     return [[VOISegmentList alloc] _initWithData:data];
-#endif
 }
 
 @end

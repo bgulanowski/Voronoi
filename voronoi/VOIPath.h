@@ -14,12 +14,17 @@
 
 @property (readonly) BOOL closed;
 
+- (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count close:(BOOL)closed;
+
 - (BOOL)isEqualToPath:(VOIPath *)path;
 - (VOIPath *)closedPath;
 - (VOIPath *)openPath;
 
+- (VOISegment *)segmentAt:(NSUInteger)index;
 - (void)iterateSegments:(VOISegmentIterator)iterator;
 - (VOISegmentList *)asSegmentList;
+
+- (NSArray<VOISegment *> *)allSegments;
 
 @end
 
