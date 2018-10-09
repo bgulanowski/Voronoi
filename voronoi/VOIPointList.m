@@ -52,6 +52,8 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 
 @implementation VOIPointList
 
+#pragma mark - Properties
+
 - (NSUInteger)pointCount {
     return _count;
 }
@@ -59,6 +61,12 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 - (VOIPoint)centre {
     return self.boundingBox.centre;
 }
+
+- (VOIBox *)boundingBox {
+    return _boundingBox ?: [self calculateBoundingBox];
+}
+
+#pragma mark - NSObject
 
 - (NSString *)description {
     // up to the first eight points and the count
@@ -86,6 +94,8 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 - (id)copyWithZone:(NSZone *)zone {
     return [[VOIPointList alloc] _initWithData:[_pointsData mutableCopy]];
 }
+
+#pragma mark - VOIPointList
 
 - (instancetype)_initWithData:(NSMutableData *)data {
     self = [super init];
@@ -188,9 +198,7 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     }
 }
 
-- (VOIBox *)boundingBox {
-    return _boundingBox ?: [self calculateBoundingBox];
-}
+#pragma mark - Private
 
 - (VOIBox *)calculateBoundingBox {
     
