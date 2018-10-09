@@ -48,6 +48,31 @@ static VOIPoint pathPoints[COUNT];
     self.path = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT];
 }
 
+- (void)testIsEqual {
+    VOIPath *e = self.path;
+    VOIPath *a = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT];
+    
+    for (NSUInteger i = 0; i < COUNT; ++i) {
+        AssertEqualPoints([e pointAtIndex:i], [a pointAtIndex:i]);
+    }
+    
+    XCTAssertEqual(e.closed, a.closed);
+}
+
+- (void)testIsEqualToPath {
+    VOIPath *other = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT];
+    XCTAssertEqualObjects(self.path, other);
+    
+    other = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT close:NO];
+    XCTAssertEqualObjects(self.path, other);
+
+    other = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT close:YES];
+    XCTAssertNotEqualObjects(self.path, other);
+
+    other = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT - 1];
+    XCTAssertNotEqualObjects(self.path, other);
+}
+
 - (void)testCount {
     XCTAssertEqual(COUNT - 1, self.path.count);
     VOIPath *closedPath = [self.path closedPath];

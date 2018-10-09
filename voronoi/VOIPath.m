@@ -24,7 +24,10 @@
 #pragma mark - NSObject
 
 - (BOOL)isEqual:(id)object {
-    return [object isKindOfClass:[self class]];
+    return (
+            [object isKindOfClass:[self class]] &&
+            [self isEqualToPath:object]
+            );
 }
 
 #pragma mark - NSCopying
