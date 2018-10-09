@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "VOIPointList.h"
+typedef vector_double2 VOIPoint;
 
 @interface VOITriangle : NSObject
 

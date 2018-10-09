@@ -198,6 +198,15 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     }
 }
 
+- (VOITriangle *)triangleWithIndices:(NSUInteger[3])indices {
+    VOIPoint vertices[3] = {
+        _points[indices[0]],
+        _points[indices[1]],
+        _points[indices[2]]
+    };
+    return [[VOITriangle alloc] initWithPoints:vertices];
+}
+
 #pragma mark - Private
 
 - (VOIBox *)calculateBoundingBox {

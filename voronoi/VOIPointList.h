@@ -10,7 +10,7 @@
 
 #import <simd/simd.h>
 
-typedef vector_double2 VOIPoint;
+#import "VOITriangle.h"
 
 typedef int (^VOIPointComparator)(const VOIPoint *, const VOIPoint *);
 typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
@@ -44,6 +44,7 @@ typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 - (VOIPointList *)sortedByLength;
 - (VOIPointList *)sortedByDistanceFrom:(VOIPoint)p;
 
+- (VOITriangle *)triangleWithIndices:(NSUInteger[3])indices;
 
 - (void)iteratePoints:(VOIPointIterator)iterator;
 
