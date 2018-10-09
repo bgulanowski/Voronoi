@@ -8,7 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+#define VOI_EPSILON (2 * DBL_EPSILON)
+
 typedef vector_double2 VOIPoint;
+
+NS_INLINE BOOL VOIPointsEqual(VOIPoint a, VOIPoint b) {
+    return ABS(a.x - b.x) < VOI_EPSILON && ABS(a.y - b.y) < VOI_EPSILON;
+}
+
+extern VOIPoint VOICentrePoint(VOIPoint points[3]);
 
 @interface VOITriangle : NSObject
 

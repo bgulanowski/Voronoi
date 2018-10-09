@@ -122,11 +122,7 @@ typedef enum {
 }
 
 - (VOIPoint)calculateCentre {
-    VOISegmentList *segmentList = [[[VOISegmentList alloc] initWithTriangle:self] sortedByLength];
-    VOISegment *l0 = [[segmentList segmentAt:0] perpendicular];
-    VOISegment *l1 = [[segmentList segmentAt:1] perpendicular];
-    
-    return (_centre = [l0 intersectWithSegment:l1]);
+    return (_centre = VOICentrePoint(_points));
 }
 
 - (double)calculateRadius {
@@ -134,3 +130,9 @@ typedef enum {
 }
 
 @end
+
+VOIPoint VOICentrePoint(VOIPoint points[3]) {
+    VOISegment *p0 = [[VOISegment alloc] initWithPoints:&points[0]].perpendicular;
+    VOISegment *p1 = [[VOISegment alloc] initWithPoints:&points[1]].perpendicular;
+    return [p0 intersectWithSegment:p1];
+}
