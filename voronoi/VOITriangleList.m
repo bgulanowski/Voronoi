@@ -15,9 +15,13 @@ const NSUInteger PPT = 3;
 
 @implementation VOITriangleList
 
+#pragma mark - Properties
+
 - (NSUInteger)count {
     return [super count] / PPT;
 }
+
+#pragma mark - VOITriangleList
 
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count {
     return [super initWithPoints:points count:count * PPT];
