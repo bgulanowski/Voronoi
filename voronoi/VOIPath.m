@@ -14,21 +14,20 @@
 
 @implementation VOIPath
 
+#pragma mark - Properties
+
 - (NSUInteger)count {
     // number of segments is 1 less than points when path is open
     return [super count] - (_closed ? 0 : 1);
 }
 
+#pragma mark - NSObject
+
 - (BOOL)isEqual:(id)object {
     return [object isKindOfClass:[self class]];
 }
 
-- (BOOL)isEqualToPath:(VOIPath *)path {
-    return (
-            [super isEqualToPointList:path] &&
-            _closed == path->_closed
-            );
-}
+#pragma mark - VOIPointList
 
 - (VOISegment *)segmentAt:(NSUInteger)index {
     const NSUInteger count = self.count;
@@ -59,6 +58,13 @@
         return NO;
     }];
     return array;
+}
+
+- (BOOL)isEqualToPath:(VOIPath *)path {
+    return (
+            [super isEqualToPointList:path] &&
+            _closed == path->_closed
+            );
 }
 
 - (VOISegmentList *)asSegmentList {
