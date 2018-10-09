@@ -47,10 +47,6 @@ static VOIPointComparator SegmentLength = ^(const VOIPoint *s0, const VOIPoint *
 
 #pragma mark - VOISegmentList
 
-- (id)copyWithZone:(NSZone *)zone {
-    return [[VOISegmentList alloc] _initWithData:[self.pointsData mutableCopy]];
-}
-
 - (instancetype)initWithSegments:(NSArray<VOISegment *> *)segments {
     NSMutableData *data = [NSMutableData dataWithLength:segments.count * 2 * sizeof(VOIPoint)];
     VOIPoint *points = data.mutableBytes;
