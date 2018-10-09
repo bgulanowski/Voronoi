@@ -50,15 +50,16 @@ static VOIPoint pathPoints[COUNT];
 
 - (void)testCount {
     XCTAssertEqual(COUNT - 1, self.path.count);
-    self.path.closed = YES;
-    XCTAssertEqual(COUNT, self.path.count);
+    VOIPath *closedPath = [self.path closedPath];
+    XCTAssertEqual(COUNT, closedPath.count);
 }
 
 - (void)testIterateSegments {
-    self.path.closed = YES;
+    VOIPath *closedPath = [self.path closedPath];
+    VOISegmentList *segmentList = [self segmentListClosed:YES];
     __block NSUInteger lastIndex = 0;
-    [self.path iterateSegments:^BOOL(VOISegment *s, NSUInteger i) {
-        XCTAssertEqualObjects([VOISegment class], [s class]);
+    [closedPath iterateSegments:^BOOL(VOISegment *s, NSUInteger i) {
+        XCTAssertEqualObjects([segmentList segmentAt:i], s, @"index: %td", i);
         XCTAssertEqual(lastIndex, i);
         ++lastIndex;
     }];
@@ -66,9 +67,14 @@ static VOIPoint pathPoints[COUNT];
 }
 
 - (void)testAsSegmentList {
-    
-    const NSUInteger SCount = COUNT;
-    VOIPoint segmentPoints[SCount * 2] = {
+    VOISegmentList *e = [self segmentListClosed:YES];
+    VOIPath *closedPath = [self.path closedPath];
+    VOISegmentList *a = [closedPath asSegmentList];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (VOISegmentList *)segmentListClosed:(BOOL)closed {
+    VOIPoint segmentPoints[COUNT * 2] = {
         pathPoints[0],
         pathPoints[1],
         pathPoints[1],
@@ -82,12 +88,8 @@ static VOIPoint pathPoints[COUNT];
         pathPoints[5],
         pathPoints[0]
     };
-    VOISegmentList *e = [[VOISegmentList alloc] initWithPoints:segmentPoints count:SCount];
-
-    self.path.closed = YES;
-    VOISegmentList *a = [self.path asSegmentList];
     
-    XCTAssertEqualObjects(e, a);
+    return [[VOISegmentList alloc] initWithPoints:segmentPoints count:(closed ? COUNT : COUNT - 1)];
 }
 
 @end

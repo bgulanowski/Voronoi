@@ -12,11 +12,13 @@
 
 @interface VOIPath : VOIPointList<NSCopying>
 
-@property (nonatomic) BOOL closed;
+@property (readonly) BOOL closed;
 
 - (BOOL)isEqualToPath:(VOIPath *)path;
-- (void)iterateSegments:(VOISegmentIterator)iterator;
+- (VOIPath *)closedPath;
+- (VOIPath *)openPath;
 
+- (void)iterateSegments:(VOISegmentIterator)iterator;
 - (VOISegmentList *)asSegmentList;
 
 @end

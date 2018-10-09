@@ -37,6 +37,24 @@
 
 #pragma mark - VOIPointList
 
+- (VOIPath *)closedPath {
+    VOIPath *path = self;
+    if (!_closed) {
+        path = [self copy];
+        path->_closed = YES;
+    }
+    return path;
+}
+
+- (VOIPath *)openPath {
+    VOIPath *path = self;
+    if (_closed) {
+        path = [self copy];
+        path->_closed = NO;
+    }
+    return path;
+}
+
 - (VOISegment *)segmentAt:(NSUInteger)index {
     const NSUInteger count = self.count;
     VOIPoint points[2];

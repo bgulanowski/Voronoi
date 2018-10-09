@@ -92,7 +92,7 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    return [[VOIPointList alloc] _initWithData:[_pointsData mutableCopy]];
+    return [[[self class] alloc] _initWithData:_pointsData];
 }
 
 #pragma mark - VOIPointList
