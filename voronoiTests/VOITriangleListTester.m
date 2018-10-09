@@ -66,6 +66,7 @@ static VOIPoint trianglePoints[9];
         XCTAssertEqual(i, indexCheck);
         ++indexCheck;
         XCTAssertNotNil(t);
+        return NO;
     }];
     XCTAssertEqual(indexCheck, 3);
 }
