@@ -10,6 +10,10 @@
 
 #import "VOIBox.h"
 
+@interface VOIBox (Testing)
++ (VOIPoint)regularizeOrigin:(VOIPoint)origin forSize:(VOISize)size;
+@end
+
 @interface VOIBoxTester : XCTestCase
 @property VOIBox *box;
 @end
@@ -24,6 +28,12 @@
 - (void)testOrigin {
     VOIPoint e = vector2(1.0, -5.0);
     VOIPoint a = self.box.origin;
+    AssertEqualPoints(e, a);
+}
+
+- (void)testRegularizeOrigin {
+    VOIPoint e = vector2(-1.0, -1.0);
+    VOIPoint a = [VOIBox regularizeOrigin:vector2(0.0, 0.0) forSize:vector2(-1.0, -1.0)];
     AssertEqualPoints(e, a);
 }
 
@@ -59,6 +69,18 @@
     XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(0.0, 0.0)].degenerate);
     XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(0.0, 1.0)].degenerate);
     XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(1.0, 0.0)].degenerate);
+}
+
+- (void)testAsPointList {
+    VOIPoint points[4] = {
+        vector2(1.0, -5.0),
+        vector2(1.0, 2.0),
+        vector2(4.0, 2.0),
+        vector2(4.0, -5.0)
+    };
+    VOIPointList *e = [[VOIPointList alloc] initWithPoints:points count:4];
+    VOIPointList *a = [self.box asPointList];
+    XCTAssertEqualObjects(e, a);
 }
 
 @end
