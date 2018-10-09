@@ -10,7 +10,7 @@
 
 #import "VOISegmentList.h"
 
-@interface VOIPath : VOIPointList
+@interface VOIPath : VOIPointList<NSCopying>
 
 @property (nonatomic) BOOL closed;
 

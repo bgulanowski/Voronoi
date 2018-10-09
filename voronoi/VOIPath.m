@@ -27,6 +27,14 @@
     return [object isKindOfClass:[self class]];
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+    VOIPath *copy = [super copyWithZone:zone];
+    copy->_closed = _closed;
+    return copy;
+}
+
 #pragma mark - VOIPointList
 
 - (VOISegment *)segmentAt:(NSUInteger)index {
