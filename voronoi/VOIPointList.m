@@ -183,9 +183,9 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 }
 
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator {
-    VOIPointList *copy = [[VOIPointList alloc] initWithPoints:_points count:_count];
-    qsort_b(copy->_points, _count, sizeof(VOIPoint), [comparator copy]);
-    return copy;
+    NSMutableData *data = [_pointsData mutableCopy];
+    qsort_b(data.mutableBytes, _count, sizeof(VOIPoint), [comparator copy]);
+    return [[VOIPointList alloc] _initWithData:data];
 }
 
 - (VOIPointList *)sortedByLength {
