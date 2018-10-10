@@ -52,6 +52,8 @@ extern VOIPoint VOICentrePoint(VOIPoint points[3]);
 // must be 3 points
 - (instancetype)initWithPoints:(const VOIPoint *)points;
 - (BOOL)isEqualToTriangle:(VOITriangle *)other;
+// Will check standardized versions of both
+- (BOOL)isEquivalentToTriangle:(VOITriangle *)other;
 
 // any index will do - uses %3
 - (VOIPoint)pointAt:(NSUInteger)index;

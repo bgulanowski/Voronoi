@@ -49,6 +49,18 @@
     return _normal.z > DBL_EPSILON;
 }
 
+- (BOOL)isLeftHanded {
+    return _normal.z < -DBL_EPSILON;
+}
+
+- (BOOL)isOrdered {
+    return _points[0].x < _points[1].x && _points[0].x < _points[2].x;
+}
+
+- (BOOL)isStandard {
+    return [self isOrdered] && ![self isLeftHanded];
+}
+
 #pragma mark - NSObject
 
 - (NSString *)description {
@@ -86,6 +98,12 @@
             simd_equal(_points[1], other->_points[1]) &&
             simd_equal(_points[2], other->_points[2])
             );
+}
+
+- (BOOL)isEquivalentToTriangle:(VOITriangle *)other {
+    VOITriangle *a = [self isStandard] ? self : [self standardize];
+    VOITriangle *b = [other isStandard] ? other : [other standardize];
+    return [a isEqualToTriangle:b];
 }
 
 - (VOIPoint)pointAt:(NSUInteger)index {

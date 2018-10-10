@@ -50,6 +50,18 @@ static VOIPoint points[4];
     XCTAssertFalse([other isEqualToTriangle:nil]);
 }
 
+- (void)testIsEquivalentToTriangle {
+    VOIPoint equivalent[3] = {
+        points[2],
+        points[0],
+        points[1]
+    };
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:equivalent];
+    VOITriangle *a = self.triangle;
+    XCTAssertNotEqualObjects(e, a);
+    XCTAssertTrue([e isEquivalentToTriangle:a]);
+}
+
 - (void)testCentre {
     VOIPoint e = vector2(3.0, 1.5 + 1.0 / 3.0);
     VOIPoint a = self.triangle.centre;
