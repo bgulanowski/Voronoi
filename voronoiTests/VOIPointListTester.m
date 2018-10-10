@@ -190,4 +190,34 @@ static VOIPoint points[4];
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testTriangleForIndices {
+    NSUInteger indices[3] = { 3, 2, 1 };
+    VOIPoint vertices[3] = {
+        points[indices[0]],
+        points[indices[1]],
+        points[indices[2]]
+    };
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:vertices];
+    VOITriangle *a = [self.pointList triangleForIndices:indices];
+    
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testTriangleForIndexSet {
+    NSUInteger indices[3] = { 3, 2, 1 };
+    VOIPoint vertices[3] = {
+        points[indices[0]],
+        points[indices[1]],
+        points[indices[2]]
+    };
+    VOITriangle *e = [[[VOITriangle alloc] initWithPoints:vertices] standardize];
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+    [indexSet addIndex:indices[0]];
+    [indexSet addIndex:indices[1]];
+    [indexSet addIndex:indices[2]];
+    VOITriangle *a = [[self.pointList triangleForIndexSet:indexSet] standardize];
+    
+    XCTAssertEqualObjects(e, a);
+}
+
 @end

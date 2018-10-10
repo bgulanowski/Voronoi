@@ -46,7 +46,8 @@ typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 - (VOIPointList *)sortedByLength;
 - (VOIPointList *)sortedByDistanceFrom:(VOIPoint)p;
 
-- (VOITriangle *)triangleWithIndices:(NSUInteger[3])indices;
+- (VOITriangle *)triangleForIndices:(NSUInteger[3])indices;
+- (VOITriangle *)triangleForIndexSet:(NSIndexSet *)indexSet;
 
 - (void)iteratePoints:(VOIPointIterator)iterator;
 

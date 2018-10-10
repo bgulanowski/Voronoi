@@ -219,13 +219,19 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     }
 }
 
-- (VOITriangle *)triangleWithIndices:(NSUInteger[3])indices {
-    VOIPoint vertices[3] = {
+- (VOITriangle *)triangleForIndices:(NSUInteger[3])indices {
+    VOIPoint points[3] = {
         _points[indices[0]],
         _points[indices[1]],
         _points[indices[2]]
     };
-    return [[VOITriangle alloc] initWithPoints:vertices];
+    return [[VOITriangle alloc] initWithPoints:points];
+}
+
+- (VOITriangle *)triangleForIndexSet:(NSIndexSet *)indexSet {
+    NSUInteger indices[3];
+    [indexSet getIndexes:indices maxCount:3 inIndexRange:NULL];
+    return [self triangleForIndices:indices];
 }
 
 #pragma mark - Private
