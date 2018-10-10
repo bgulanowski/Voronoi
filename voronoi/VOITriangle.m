@@ -12,24 +12,11 @@
 #import "VOISegment.h"
 #import "VOISegmentList.h"
 
-typedef enum {
-    DegenerateUnknown,
-    DegenerateYes,
-    DegenerateNo
-} Degeneracy;
-
-typedef enum {
-    HandednessUnknown,
-    HandednessLeft,
-    HandednessRight
-} Handedness;
-
 @implementation VOITriangle {
     VOIPoint _points[3];
     VOIPoint _centre;
     double _radius;
-    Degeneracy _degeneracy;
-    Handedness _handedness;
+    vector_double3 _normal;
 }
 
 - (NSString *)description {
@@ -62,11 +49,11 @@ typedef enum {
 }
 
 - (BOOL)isDegenerate {
-    return (_degeneracy == DegenerateUnknown) ? [self calculateDegeneracy] : (_degeneracy == DegenerateYes);
+    return ABS(_normal.z) < DBL_EPSILON;
 }
 
 - (BOOL)isRightHanded {
-    return (_handedness == HandednessUnknown) ? [self calculateHandedness] : (_handedness == HandednessRight);
+    return _normal.z > DBL_EPSILON;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -82,6 +69,7 @@ typedef enum {
         _points[0] = points[0];
         _points[1] = points[1];
         _points[2] = points[2];
+        _normal = simd_normalize(simd_cross((_points[1] - _points[0]), (_points[2] - _points[0])));
         _centre = vector2((double)NAN, (double)NAN);
         _radius = (double)NAN;
     }
@@ -134,19 +122,6 @@ static inline void OrderPointsX(VOIPoint *points, NSUInteger *indices) {
 }
 
 #pragma mark - Private
-
-- (BOOL)calculateDegeneracy {
-    BOOL degenerate = [[VOIPointList alloc] initWithPoints:_points count:3].boundingBox.degenerate;
-    _degeneracy = degenerate ? DegenerateYes : DegenerateNo;
-    return degenerate;
-}
-
-- (BOOL)calculateHandedness {
-    vector_double3 cross = simd_cross((_points[1] - _points[0]), (_points[2] - _points[0]));
-    BOOL rightHanded = cross.z > 0;
-    _handedness = rightHanded ? HandednessRight : HandednessLeft;
-    return rightHanded;
-}
 
 - (VOIPoint)calculateCentre {
     return (_centre = VOICentrePoint(_points));
