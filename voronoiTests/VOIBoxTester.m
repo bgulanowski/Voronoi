@@ -25,6 +25,22 @@
     self.box = [[VOIBox alloc] initWithOrigin:vector2(4.0, -5.0) size:vector2(-3.0, 7.0)];
 }
 
+- (void)testIsEqual {
+    XCTAssertFalse([self.box isEqual:nil]);
+    XCTAssertFalse([self.box isEqual:[NSObject new]]);
+}
+
+- (void)testIsEqualToBox {
+    VOIBox *other = [[VOIBox alloc] initWithOrigin:vector2(4.0, -5.0) size:vector2(-3.0, 7.0)];
+    XCTAssertEqualObjects(self.box, other);
+    other = [[VOIBox alloc] initWithOrigin:vector2(1.0, 2.0) size:vector2(3.0, -7.0)];
+    XCTAssertEqualObjects(self.box, other);
+    other = [[VOIBox alloc] initWithOrigin:vector2(4.0 + DBL_EPSILON, -5.0) size:vector2(-3.0, 7.0)];
+    XCTAssertEqualObjects(self.box, other);
+    other = [[VOIBox alloc] initWithOrigin:vector2(4.0, 5.0) size:vector2(-3.0, 7.0)];
+    XCTAssertNotEqualObjects(self.box, other);
+}
+
 - (void)testOrigin {
     VOIPoint e = vector2(1.0, -5.0);
     VOIPoint a = self.box.origin;

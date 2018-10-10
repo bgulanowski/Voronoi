@@ -10,8 +10,25 @@
 
 @implementation VOIBox
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"VOIBox: [(%.2f, %.2f) : (%.2f, %.2f)]", _origin.x, _origin.y, _size.x, _size.y];
+}
+
+- (BOOL)isEqual:(id)object {
+    return ([object isKindOfClass:[self class]] &&
+            [self isEqualToBox:object]
+            );
+}
+
 - (instancetype)init {
     return [self initWithOrigin:vector2(0.0, 0.0) size:vector2(0.0, 0.0)];
+}
+
+- (BOOL)isEqualToBox:(VOIBox *)other {
+    return (
+            VOIPointsEqual(_origin, other->_origin) &&
+            VOIPointsEqual(_size, other->_size)
+            );
 }
 
 - (instancetype)initWithOrigin:(VOIPoint)origin size:(VOISize)size {
