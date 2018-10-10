@@ -12,6 +12,27 @@
 
 typedef vector_double2 VOIPoint;
 
+typedef struct {
+    VOIPoint p0;
+    VOIPoint p1;
+} VOIPointPair;
+
+typedef union {
+    VOIPointPair pair;
+    VOIPoint points[2];
+} VOIPoints2;
+
+typedef struct {
+    VOIPoint p0;
+    VOIPoint p1;
+    VOIPoint p2;
+} VOIPointTriple;
+
+typedef union {
+    VOIPointTriple triple;
+    VOIPoint points[3];
+} VOIPoints3;
+
 NS_INLINE BOOL VOIPointsEqual(VOIPoint a, VOIPoint b) {
     return ABS(a.x - b.x) < VOI_EPSILON && ABS(a.y - b.y) < VOI_EPSILON;
 }

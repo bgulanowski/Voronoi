@@ -38,6 +38,18 @@ static VOIPoint points[4];
     AssertEqualPoints(points[2], self.triangle.p2);
 }
 
+- (void)testPointAt {
+    for (NSUInteger i = 0; i < 3; ++i) {
+        AssertEqualPoints(points[0], [self.triangle pointAt:0]);
+    }
+}
+
+- (void)testIsEqualToTriangle {
+    VOITriangle *other = [[VOITriangle alloc] initWithPoints:points];
+    XCTAssertTrue([other isEqualToTriangle:self.triangle]);
+    XCTAssertFalse([other isEqualToTriangle:nil]);
+}
+
 - (void)testCentre {
     VOIPoint e = vector2(3.0, 1.5 + 1.0 / 3.0);
     VOIPoint a = self.triangle.centre;

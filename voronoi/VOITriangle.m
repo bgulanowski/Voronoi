@@ -70,7 +70,10 @@ typedef enum {
 }
 
 - (BOOL)isEqual:(id)object {
-    return [object isKindOfClass:[self class]];
+    return (
+            [object isKindOfClass:[self class]] &&
+            [self isEqualToTriangle:object]
+            );
 }
 
 - (instancetype)initWithPoints:(const VOIPoint *)points {
@@ -86,7 +89,7 @@ typedef enum {
 }
 
 - (BOOL)isEqualToTriangle:(VOITriangle *)other {
-    return (
+    return (other != nil &&
             simd_equal(_points[0], other->_points[0]) &&
             simd_equal(_points[1], other->_points[1]) &&
             simd_equal(_points[2], other->_points[2])
