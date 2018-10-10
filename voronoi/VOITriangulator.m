@@ -30,46 +30,39 @@
 }
 
 - (VOITriangleList *)triangulate {
-    
-    if (_triangulation) {
-        return _triangulation;
-    }
-    
-    VOIPointList *remaining;
-    VOITriangle *first = [self selectInitialTriangleRemainingPoints:&remaining];
-    
-    return [[VOITriangleList alloc] initWithTriangles:@[first]];
+    return _triangulation ? _triangulation : [self generateTriangulation];
 }
 
-- (VOITriangle *)selectInitialTriangleRemainingPoints:(VOIPointList **)pRemaining {
+- (VOITriangleList *)generateTriangulation {
     
-    NSUInteger i;
+    NSUInteger indices[3];
+    [self selectSeedPointsReturningIndices:indices];
+    VOITriangle *first = [_pointList triangleForIndices:indices];
+
+    _triangulation = [[VOITriangleList alloc] initWithTriangles:@[first]];
+    return _triangulation;
+}
+
+- (void)selectSeedPointsReturningIndices:(NSUInteger[3])indices {
+    
     VOIPoint points[3];
+    points[0] = [_pointList pointClosestToPoint:_pointList.centre index:&indices[0] ignoreIfEqual:NO];
+    points[1] = [_pointList pointClosestToPoint:points[0] index:&indices[1]];
+    
     VOIPoint *pPoints = points;
-    
-    points[0] = [_pointList pointClosestToPoint:_pointList.centre index:&i];
-    VOIPointList *remaining = [_pointList pointListByDeletingPointAtIndex:i];
-    points[1] = [remaining pointClosestToPoint:points[0] index:&i];
-    remaining = [remaining pointListByDeletingPointAtIndex:i];
-    points[2] = points[1];
-    
-    __block NSUInteger index = NSNotFound;
-    __block VOITriangle *triangle = [[VOITriangle alloc] initWithPoints:points];
-    [remaining iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
-        pPoints[2] = *p;
-        VOITriangle *t = [[VOITriangle alloc] initWithPoints:pPoints];
-        if ([t radius] < [triangle radius]) {
-            index = i;
-            triangle = t;
+    __block double delta = (double)INFINITY;
+    [_pointList iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+        if (i != indices[0] && i != indices[1]) {
+            pPoints[2] = *p;
+            VOIPoint c = VOICentrePoint(pPoints);
+            double d = simd_distance_squared(*p, c);
+            if (d < delta) {
+                delta = d;
+                indices[2] = i;
+            }
         }
         return NO;
     }];
-    
-    if (pRemaining) {
-        *pRemaining = [remaining pointListByDeletingPointAtIndex:index];
-    }
-    
-    return triangle.rightHanded ? triangle : [triangle reorder];
 }
 
 @end
