@@ -410,12 +410,12 @@
 				84D905BF2167393400EA72FC /* Original Classes */,
 				84D905C02167396100EA72FC /* Supporting Files */,
 				8480973B21696B6D00912E79 /* VOIBoxTester.m */,
-				8480973D2169717500912E79 /* VOITriangleTester.m */,
 				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
 				84D905B42166700F00EA72FC /* VOISegmentListTester.m */,
 				848097352167A85600912E79 /* VOISegmentTester.m */,
 				84D905BB2166A18F00EA72FC /* VOITriangleListTester.m */,
+				8480973D2169717500912E79 /* VOITriangleTester.m */,
 				8480973F2169AADD00912E79 /* VOITriangulatorTester.m */,
 			);
 			path = voronoiTests;
