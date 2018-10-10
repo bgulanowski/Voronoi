@@ -57,5 +57,6 @@ extern VOIPoint VOICentrePoint(VOIPoint points[3]);
 - (VOIPoint)pointAt:(NSUInteger)index;
 
 - (VOITriangle *)reorder;
+- (VOITriangle *)standardize;
 
 @end

@@ -79,4 +79,44 @@ static VOIPoint points[4];
     XCTAssertTrue([self.triangle reorder].rightHanded);
 }
 
+- (void)testReorder {
+    VOIPoint other[3] = {
+        points[0],
+        points[2],
+        points[1]
+    };
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:other];
+    VOITriangle *a = [self.triangle reorder];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testStandardize {
+    VOIPoint other[3] = {
+        points[2],
+        points[1],
+        points[0]
+    };
+    VOITriangle *e = self.triangle;
+    VOITriangle *a = [[[VOITriangle alloc] initWithPoints:other] standardize];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testStandardizeInverted {
+    VOIPoint inverted[3] = {
+        points[0],
+        points[2],
+        vector2(points[1].x, -points[1].y)
+    };
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:inverted];
+    XCTAssertFalse(e.rightHanded);
+    
+    VOIPoint irregular[3] = {
+        inverted[2],
+        inverted[1],
+        inverted[0]
+    };
+    VOITriangle *a = [[[VOITriangle alloc] initWithPoints:irregular] standardize];
+    XCTAssertEqualObjects(e, a);
+}
+
 @end
