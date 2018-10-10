@@ -63,6 +63,9 @@ static VOIPoint pathPoints[COUNT];
     VOIPath *other = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT];
     XCTAssertEqualObjects(self.path, other);
     
+    other = [self.path openPath];
+    XCTAssertEqualObjects(self.path, other);
+
     other = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT close:NO];
     XCTAssertEqualObjects(self.path, other);
 
@@ -135,6 +138,13 @@ static VOIPoint pathPoints[COUNT];
     };
     
     return [[VOISegmentList alloc] initWithPoints:segmentPoints count:(closed ? COUNT : COUNT - 1)];
+}
+
+- (void)testPointListAsPath {
+    VOIPath *e = self.path;
+    VOIPointList *list = [[VOIPointList alloc] initWithPoints:pathPoints count:COUNT];
+    VOIPath *a = [list asPath];
+    XCTAssertEqualObjects(e, a);
 }
 
 @end
