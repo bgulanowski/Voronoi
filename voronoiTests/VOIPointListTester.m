@@ -51,6 +51,8 @@ static VOIPoint points[4];
 
 - (void)testBoundingBox {
     VOIBox *e = [[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(3.0, 4.0)];
+    VOIBox *a = [self.pointList boundingBox];
+    XCTAssertEqualObjects(e, a);
 }
 
 - (void)testDescription {
