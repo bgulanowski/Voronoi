@@ -21,11 +21,12 @@ static VOIPoint points[6];
 @implementation VOISegmentListTester
 
 + (void)setUp {
-    // Four unconnected diagonal line segments
     points[0] = vector2(0.0, 0.0);
-    points[1] = vector2(1.0, 1.0);
+    points[1] = vector2(3.0, 3.0);
+    
     points[2] = vector2(1.0, 0.0);
-    points[3] = vector2(2.0, 1.0);
+    points[3] = vector2(3.0, 2.0);
+    
     points[4] = vector2(2.0, 0.0);
     points[5] = vector2(3.0, 1.0);
 }
@@ -88,7 +89,17 @@ static VOIPoint points[6];
                    [[VOISegment alloc] initWithPoints:&points[4]]
                    ];
     NSArray *a = [self.segmentList allSegments];
-    
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testSortedByLength {
+    NSArray *segments = @[
+                          [[VOISegment alloc] initWithPoints:&points[4]],
+                          [[VOISegment alloc] initWithPoints:&points[2]],
+                          [[VOISegment alloc] initWithPoints:&points[0]]
+                          ];
+    VOISegmentList *e = [[VOISegmentList alloc] initWithSegments:segments];
+    VOISegmentList *a = [self.segmentList sortedByLength];
     XCTAssertEqualObjects(e, a);
 }
 

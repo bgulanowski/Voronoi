@@ -21,10 +21,10 @@ static VOIPointComparator SegmentLength = ^(const VOIPoint *s0, const VOIPoint *
     double l0 = simd_distance(s0[0], s0[1]);
     double l1 = simd_distance(s1[0], s1[1]);
     if (l0 < l1) {
-        return 1;
+        return -1;
     }
     else if (l1 < l0) {
-        return -1;
+        return 1;
     }
     else {
         return 0;
