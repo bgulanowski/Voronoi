@@ -147,6 +147,27 @@ static VOIPoint pathPoints[COUNT];
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testPointListAsClosedPath {
+    VOIPath *e = [self.path closedPath];
+    VOIPointList *list = [[VOIPointList alloc] initWithPoints:pathPoints count:COUNT];
+    VOIPath *a = [list asClosedPath];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testInitTriangleWithPath {
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:pathPoints];
+    VOIPath *path = [[self.path pointListWithRange:NSMakeRange(0, 3)] asClosedPath];
+    VOITriangle *a = [[VOITriangle alloc] initWithPath:path];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testTriangleAsPath {
+    VOIPath *e = [[self.path pointListWithRange:NSMakeRange(0, 3)] asClosedPath];
+    VOITriangle *triangle = [[VOITriangle alloc] initWithPoints:pathPoints];
+    VOIPath *a = [triangle asPath];
+    XCTAssertEqualObjects(e, a);
+}
+
 @end
 
 static NSUnit *Degrees;

@@ -31,5 +31,13 @@
 @interface VOIPointList (VOIPath)
 
 - (VOIPath *)asPath;
+- (VOIPath *)asClosedPath;
+
+@end
+
+@interface VOITriangle (VOIPath)
+
+- (instancetype)initWithPath:(VOIPath *)path;
+- (VOIPath *)asPath;
 
 @end

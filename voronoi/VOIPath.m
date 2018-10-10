@@ -48,6 +48,14 @@
     return self;
 }
 
+- (instancetype)_initWithData:(NSMutableData *)data close:(BOOL)closed {
+    self = [super _initWithData:data];
+    if (self) {
+        _closed = closed;
+    }
+    return self;
+}
+
 - (BOOL)isEqualToPath:(VOIPath *)path {
     return (
             [super isEqualToPointList:path] &&
@@ -126,6 +134,31 @@
 
 - (VOIPath *)asPath {
     return [[VOIPath alloc] _initWithData:self.pointsData];
+}
+
+- (VOIPath *)asClosedPath {
+    return [[VOIPath alloc] _initWithData:self.pointsData close:YES];
+}
+
+@end
+
+@implementation VOITriangle (VOIPath)
+
+- (instancetype)initWithPath:(VOIPath *)path {
+    VOIPoint points[3];
+    for (NSUInteger i = 0; i < 3; ++i) {
+        points[i] = [path pointAtIndex:i];
+    }
+    return [self initWithPoints:points];
+}
+
+- (VOIPath *)asPath {
+    VOIPoint points[3] = {
+         self.p0,
+         self.p1,
+         self.p2
+    };
+    return [[VOIPath alloc] initWithPoints:points count:3 close:YES];
 }
 
 @end
