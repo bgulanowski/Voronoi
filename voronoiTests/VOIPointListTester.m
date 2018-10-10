@@ -150,6 +150,16 @@ static VOIPoint points[4];
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testPointListByDeletingPointsAtIndices {
+    NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
+    [indices addIndex:0];
+    [indices addIndex:3];
+    VOIPointList *list = [self.pointList pointListByDeletingPointsAtIndices:indices];
+    XCTAssertEqual(list.count, (NSUInteger)2);
+    AssertEqualPoints(points[1], [list pointAtIndex:0]);
+    AssertEqualPoints(points[2], [list pointAtIndex:1]);
+}
+
 - (void)testSortedByLength {
     
     VOIPoint sorted[] = {

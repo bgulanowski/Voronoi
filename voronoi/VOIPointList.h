@@ -40,6 +40,7 @@ typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 - (VOIPointList *)pointListWithRange:(NSRange)range;
 - (VOIPointList *)pointListByDeletingRange:(NSRange)range;
 - (VOIPointList *)pointListByDeletingPointAtIndex:(NSUInteger)index;
+- (VOIPointList *)pointListByDeletingPointsAtIndices:(NSIndexSet *)indexSet;
 
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator;
 - (VOIPointList *)sortedByLength;

@@ -182,6 +182,21 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return [self pointListByDeletingRange:NSMakeRange(index, 1)];
 }
 
+- (VOIPointList *)pointListByDeletingPointsAtIndices:(NSIndexSet *)indexSet {
+
+    NSMutableData *data = [[NSMutableData alloc]  initWithLength:(_count - indexSet.count) * sizeof(VOIPoint)];
+    VOIPoint *points = data.mutableBytes;
+    NSUInteger di = 0;
+    
+    for (NSUInteger i = 0; i < _count; ++i) {
+        if (![indexSet containsIndex:i]) {
+            points[di++] = _points[i];
+        }
+    }
+    
+    return [[VOIPointList alloc] _initWithData:data];
+}
+
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator {
     NSMutableData *data = [_pointsData mutableCopy];
     qsort_b(data.mutableBytes, _count, sizeof(VOIPoint), [comparator copy]);
