@@ -77,7 +77,7 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
         [pointStrings addObject:[NSString stringWithFormat:@"(%.2f, %.2f)", p.x, p.y]];
     }
     NSString *pointsString = [pointStrings componentsJoinedByString:@", "];
-    return [NSString stringWithFormat:@"VOIPointList: points: [%@, ...] count: %td", pointsString, self.count];
+    return [NSString stringWithFormat:@"%@: points: [%@, ...] count: %td", self.className, pointsString, self.count];
 }
 
 - (BOOL)isEqual:(id)object {
