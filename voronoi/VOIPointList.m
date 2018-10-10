@@ -147,6 +147,17 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return [self pointClosestToPoint:p index:pIndex ignoreIfEqual:YES];
 }
 
+- (VOIPointList *)reverseList {
+    NSMutableData *data = [NSMutableData dataWithLength:self.pointsData.length];
+    VOIPoint *points = self.pointsData.mutableBytes;
+    VOIPoint *reversePoints = data.mutableBytes;
+    const NSUInteger count = self.pointCount;
+    for (NSUInteger i = 0; i < count; ++i) {
+        reversePoints[count - 1 - i] = points[i];
+    }
+    return [[[self class] alloc] _initWithData:data];
+}
+
 - (VOIPointList *)add:(VOIPointList *)other {
     NSMutableData *copy = [_pointsData mutableCopy];
     [copy appendData:other.pointsData];

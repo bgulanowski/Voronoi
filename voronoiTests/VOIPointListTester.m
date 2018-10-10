@@ -77,6 +77,18 @@ static VOIPoint points[4];
     XCTAssertEqual(2, index);
 }
 
+- (void)testReverseList {
+    VOIPoint reverse[4] = {
+        points[3],
+        points[2],
+        points[1],
+        points[0]
+    };
+    VOIPointList *e = [[VOIPointList alloc] initWithPoints:reverse count:4];
+    VOIPointList *a = [self.pointList reverseList];
+    XCTAssertEqualObjects(e, a);
+}
+
 - (void)testAdd {
     VOIPointList *a = [[VOIPointList alloc] initWithPoints:points count:2];
     VOIPointList *b = [[VOIPointList alloc] initWithPoints:&points[2] count:2];

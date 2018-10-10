@@ -48,6 +48,20 @@ static VOIPoint pathPoints[COUNT];
     self.path = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT];
 }
 
+- (void)testConvex {
+    
+    VOIPath *closedPath = [self.path closedPath];
+    XCTAssertTrue(closedPath.convex);
+    
+    VOIPath *reversePath = (VOIPath *)[closedPath reverseList];
+    XCTAssertTrue(reversePath.convex);
+    
+    VOIPointList *pointList = [[VOIPointList alloc] initWithPoints:pathPoints count:COUNT];
+    VOIPointList *reverseList = [pointList reverseList];
+    VOIPath *listPath = [reverseList asClosedPath];
+    XCTAssertTrue(listPath.convex);
+}
+
 - (void)testIsEqual {
     VOIPath *e = self.path;
     VOIPath *a = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT];

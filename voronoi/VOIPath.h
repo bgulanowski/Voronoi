@@ -13,6 +13,7 @@
 @interface VOIPath : VOIPointList<NSCopying>
 
 @property (readonly) BOOL closed;
+@property (readonly, getter=isConvex) BOOL convex;
 
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count close:(BOOL)closed;
 
@@ -25,6 +26,8 @@
 - (VOISegmentList *)asSegmentList;
 
 - (NSArray<VOISegment *> *)allSegments;
+
+- (VOIPath *)pathVisibleToPoint:(VOIPoint)point;
 
 @end
 
