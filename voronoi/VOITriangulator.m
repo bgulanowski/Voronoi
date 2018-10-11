@@ -35,32 +35,52 @@
 
 - (VOITriangleList *)generateTriangulation {
     
-    NSUInteger indices[3];
-    [self selectSeedPointsReturningIndices:indices];
-    VOITriangle *first = [_pointList triangleForIndices:indices];
+    NSIndexSet *indexSet = [self indicesForSeedTrianglePoints];
+    VOITriangle *firstTriangle = [_pointList triangleForIndexSet:indexSet];
+    VOIPointList *remaining = [_pointList pointListByDeletingPointsAtIndices:indexSet];
+    NSArray<VOITriangle *> *triangles = [NSMutableArray arrayWithObject:firstTriangle];
+    
+    [self addTriangles:triangles fromPoints:remaining];
 
-    _triangulation = [[VOITriangleList alloc] initWithTriangles:@[first]];
+    _triangulation = [[VOITriangleList alloc] initWithTriangles:triangles];
     return _triangulation;
 }
 
-- (void)selectSeedPointsReturningIndices:(NSUInteger[3])indices {
+- (NSIndexSet *)indicesForSeedTrianglePoints {
     
+    NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
     VOIPoint points[3];
-    points[0] = [_pointList pointClosestToPoint:_pointList.centre index:&indices[0] ignoreIfEqual:NO];
-    points[1] = [_pointList pointClosestToPoint:points[0] index:&indices[1]];
+    NSUInteger index = NSNotFound;
+    
+    points[0] = [_pointList pointClosestToPoint:_pointList.centre index:&index ignoreIfEqual:NO];
+    [indices addIndex:index];
+    points[1] = [_pointList pointClosestToPoint:points[0] index:&index];
+    [indices addIndex:index];
     
     VOIPoint *pPoints = points;
     __block double delta = (double)INFINITY;
     [_pointList iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
-        if (i != indices[0] && i != indices[1]) {
+        if (![indices containsIndex:i]) {
             pPoints[2] = *p;
             VOIPoint c = VOICentrePoint(pPoints);
             double d = simd_distance_squared(*p, c);
             if (d < delta) {
                 delta = d;
-                indices[2] = i;
+                [indices addIndex:i];
             }
         }
+        return NO;
+    }];
+    
+    return indices;
+}
+
+- (void)addTriangles:(NSArray<VOITriangle *> *)triangles fromPoints:(VOIPointList *)points {
+    
+    VOIPath *hull = [triangles[0] asPath];
+    
+    [points iteratePoints:^BOOL(const VOIPoint *p, const NSUInteger i) {
+        
         return NO;
     }];
 }
