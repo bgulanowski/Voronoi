@@ -163,7 +163,7 @@
             _convex = YES;
         }
         else if (pointCount > 3) {
-            const NSUInteger stop = pointCount - 3;
+            const NSUInteger stop = pointCount - 2;
             __block VOITriangle *first = nil;
             __block BOOL convex = YES;
             [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
@@ -185,7 +185,7 @@
                 NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
                 [indices addIndex:pointCount - 1];
                 [indices addIndex:pointCount - 2];
-                [indices addIndex:pointCount - 3];
+                [indices addIndex:0];
                 VOITriangle *last = [self triangleForIndexSet:indices];
                 if (first.rightHanded != last.rightHanded) {
                     convex = NO;

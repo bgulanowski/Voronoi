@@ -50,6 +50,8 @@ static VOIPoint pathPoints[COUNT];
 
 - (void)testConvex {
     
+    XCTAssertFalse(self.path.convex);
+    
     VOIPath *closedPath = [self.path closedPath];
     XCTAssertTrue(closedPath.convex);
     
@@ -60,6 +62,38 @@ static VOIPoint pathPoints[COUNT];
     VOIPointList *reverseList = [pointList reverseList];
     VOIPath *listPath = [reverseList asClosedPath];
     XCTAssertTrue(listPath.convex);
+    
+    VOIPath *line = [[VOIPath alloc] initWithPoints:pathPoints count:2 close:YES];
+    XCTAssertFalse(line.convex);
+    
+    VOIPath *triangle = [[VOIPath alloc] initWithPoints:pathPoints count:3 close:YES];
+    XCTAssertTrue(triangle.convex);
+
+    VOIPoint concavePoints[5] = {
+        vector2(0.0, 0.0),
+        vector2(1.0, 1.0),
+        vector2(1.0, 0.0),
+        vector2(2.0, 1.0),
+        vector2(0.0, 0.0)
+    };
+    
+    // orientation reverses on second point
+    VOIPath *concave = [[VOIPath alloc] initWithPoints:concavePoints count:4 close:YES];
+    XCTAssertFalse(concave.convex);
+    
+    // orientation reverses on third point
+    concave = [[VOIPath alloc] initWithPoints:&concavePoints[1] count:4 close:YES];
+    XCTAssertFalse(concave.convex);
+
+    VOIPoint colinearPoints[4] = {
+        vector2(0.0, 0.0),
+        vector2(1.0, 0.0),
+        vector2(2.0, 0.0),
+        vector2(1.0, 1.0)
+    };
+    
+    VOIPath *colinear = [[VOIPath alloc] initWithPoints:colinearPoints count:4 close:YES];
+    XCTAssertTrue(colinear.convex);
 }
 
 - (void)testIsEqual {
