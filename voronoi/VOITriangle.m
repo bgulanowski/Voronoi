@@ -42,7 +42,7 @@
 }
 
 - (BOOL)isDegenerate {
-    return ABS(_normal.z) < DBL_EPSILON;
+    return ABS(_normal.z) < DBL_EPSILON || isnan(_normal.z);
 }
 
 - (BOOL)isRightHanded {
