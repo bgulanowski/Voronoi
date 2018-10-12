@@ -8,10 +8,12 @@
 
 #import "VOIBox.h"
 
+#import "VOIPointList.h"
+
 @implementation VOIBox
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"VOIBox: [(%.2f, %.2f) : (%.2f, %.2f)]", _origin.x, _origin.y, _size.x, _size.y];
+    return [NSString stringWithFormat:@"VOIBox: [%@ : %@]", VOIPointToString(_origin), VOIPointToString(_size)];
 }
 
 - (BOOL)isEqual:(id)object {

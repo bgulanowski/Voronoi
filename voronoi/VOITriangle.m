@@ -154,9 +154,3 @@ static inline void OrderPointsX(VOIPoint *points, NSUInteger *indices) {
 }
 
 @end
-
-VOIPoint VOICentrePoint(VOIPoint points[3]) {
-    VOISegment *p0 = [[VOISegment alloc] initWithPoints:&points[0]].perpendicular;
-    VOISegment *p1 = [[VOISegment alloc] initWithPoints:&points[1]].perpendicular;
-    return [p0 intersectWithSegment:p1];
-}

@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "VOIPointList.h"
-
-typedef vector_double2 VOISize;
+@class VOIPointList;
 
 @interface VOIBox : NSObject
 

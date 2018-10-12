@@ -9,6 +9,7 @@
 #import "VOIPointList.h"
 
 #import "VOIBox.h"
+#import "VOITriangle.h"
 
 static VOIPointComparator length = ^(const VOIPoint *p0, const VOIPoint *p1) {
     double l0 = simd_length(*p0);

@@ -9,6 +9,7 @@
 #import "VOIPointList.h"
 
 #import "VOISegmentList.h"
+#import "VOITriangle.h"
 #import "VOITriangleList.h"
 
 @interface VOIPath : VOIPointList<NSCopying>

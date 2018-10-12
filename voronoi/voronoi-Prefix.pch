@@ -6,6 +6,8 @@
     #import <Foundation/Foundation.h>
     #import <simd/simd.h>
 
+    #import "VOIPoint.h"
+
 #define NO_METHOD_IMP [NSException raise:NSInternalInconsistencyException format:@"Method %@ is not implemented.", NSStringFromSelector(_cmd)]
 
 #endif

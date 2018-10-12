@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842C20322171356E009B8E2D /* VOIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C20302171356E009B8E2D /* VOIPoint.h */; };
+		842C20332171356E009B8E2D /* VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C20312171356E009B8E2D /* VOIPoint.m */; };
 		847F31D316497C120068A102 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F31D216497C120068A102 /* Cocoa.framework */; };
 		847F31DD16497C120068A102 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 847F31DB16497C120068A102 /* InfoPlist.strings */; };
 		847F31DF16497C120068A102 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847F31DE16497C120068A102 /* main.m */; };
@@ -96,6 +98,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		842C20302171356E009B8E2D /* VOIPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPoint.h; sourceTree = "<group>"; };
+		842C20312171356E009B8E2D /* VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPoint.m; sourceTree = "<group>"; };
 		847F31CE16497C120068A102 /* VoronoiDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoronoiDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847F31D216497C120068A102 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		847F31D516497C120068A102 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -379,6 +383,8 @@
 				84D9058021653D4200EA72FC /* VOIMesh.m */,
 				84D905B621667E3100EA72FC /* VOIPath.h */,
 				84D905B721667E3100EA72FC /* VOIPath.m */,
+				842C20302171356E009B8E2D /* VOIPoint.h */,
+				842C20312171356E009B8E2D /* VOIPoint.m */,
 				84D9058321653D8900EA72FC /* VOIPointList.h */,
 				84D9058421653D8900EA72FC /* VOIPointList.m */,
 				84D905BA216682E300EA72FC /* VOIPointListPrivate.h */,
@@ -489,6 +495,7 @@
 				84AD3332164C3E8100E37EDE /* DRegion.h in Headers */,
 				84AD3334164C3E8100E37EDE /* DSegment.h in Headers */,
 				84D9058121653D4200EA72FC /* VOIMesh.h in Headers */,
+				842C20322171356E009B8E2D /* VOIPoint.h in Headers */,
 				84AD3336164C3E8100E37EDE /* DTriad.h in Headers */,
 				84AD3338164C3E8100E37EDE /* NSArray+Voronoi.h in Headers */,
 				84D9058521653D8900EA72FC /* VOIPointList.h in Headers */,
@@ -642,6 +649,7 @@
 				84AD3333164C3E8100E37EDE /* DRegion.m in Sources */,
 				84AD3335164C3E8100E37EDE /* DSegment.m in Sources */,
 				84D905B921667E3100EA72FC /* VOIPath.m in Sources */,
+				842C20332171356E009B8E2D /* VOIPoint.m in Sources */,
 				84D905AF2166641100EA72FC /* VOISegment.m in Sources */,
 				84AD3337164C3E8100E37EDE /* DTriad.m in Sources */,
 				84D9058621653D8900EA72FC /* VOIPointList.m in Sources */,

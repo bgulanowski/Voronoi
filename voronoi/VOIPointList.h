@@ -10,12 +10,11 @@
 
 #import <simd/simd.h>
 
-#import "VOITriangle.h"
-
 typedef int (^VOIPointComparator)(const VOIPoint *, const VOIPoint *);
 typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 
 @class VOIBox;
+@class VOITriangle;
 
 @interface VOIPointList : NSObject<NSCopying>
 
