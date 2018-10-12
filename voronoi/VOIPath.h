@@ -9,6 +9,7 @@
 #import "VOIPointList.h"
 
 #import "VOISegmentList.h"
+#import "VOITriangleList.h"
 
 @interface VOIPath : VOIPointList<NSCopying>
 
@@ -23,11 +24,13 @@
 
 - (VOISegment *)segmentAt:(NSUInteger)index;
 - (void)iterateSegments:(VOISegmentIterator)iterator;
+- (NSArray<VOISegment *> *)allSegments;
 - (VOISegmentList *)asSegmentList;
 
-- (NSArray<VOISegment *> *)allSegments;
 - (VOITriangle *)triangleAt:(NSUInteger)index;
 - (void)iterateTriangles:(VOITriangleIterator)iterator;
+- (NSArray<VOITriangle *> *)allTriangles;
+- (VOITriangleList *)asTriangleList;
 
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point;
 

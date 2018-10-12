@@ -10,7 +10,6 @@
 
 #import "VOIPointListPrivate.h"
 #import "VOISegment.h"
-#import "VOISegmentList.h"
 
 @implementation VOIPath {
     BOOL _checkedConvex;
@@ -22,6 +21,10 @@
 - (NSUInteger)count {
     // number of segments is 1 less than points when path is open
     return [super count] - (_closed ? 0 : 1);
+}
+
+- (NSUInteger)segmentCount {
+    return self.count;
 }
 
 - (NSUInteger)triangleCount {
@@ -147,7 +150,7 @@
     
     // Creating segments requires doubling the number of points
     
-    const NSUInteger count = self.count * 2;
+    const NSUInteger count = [self segmentCount] * 2;
     NSMutableData *data = [NSMutableData dataWithLength:count * sizeof(VOIPoint)];
     VOIPoint *points = data.mutableBytes;
 
@@ -155,6 +158,7 @@
         points[i * 2] = *p;
         return NO;
     }];
+    // offset by (count - 1) (value must be positive before remainder operation)
     [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
         points[(i * 2 + count - 1) % count] = *p;
         return NO;
@@ -180,6 +184,45 @@
             break;
         }
     }
+}
+
+- (VOITriangleList *)asTriangleList {
+    
+    const NSUInteger count = [self triangleCount];
+    NSMutableData *data;
+    
+    if (count == 1) {
+        data = self.pointsData;
+    }
+    else {
+        data = [NSMutableData dataWithLength:count * 3];
+        VOIPoint *points = data.mutableBytes;
+        
+        // iterate three times, offsetting by (count - 1) each time
+        [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+            points[i * 3] = *p;
+            return NO;
+        }];
+        [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+            points[(i * 3 + count - 1) % count] = *p;
+            return NO;
+        }];
+        [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+            points[(i * 3 + count - 1) % count] = *p;
+            return NO;
+        }];
+    }
+    
+    return [[VOITriangleList alloc] _initWithData:data];
+}
+
+- (NSArray<VOITriangle *> *)allTriangles {
+    NSMutableArray *triangles = [NSMutableArray array];
+    [self iterateTriangles:^(VOITriangle *t, NSUInteger i) {
+        [triangles addObject:t];
+        return NO;
+    }];
+    return triangles;
 }
 
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point {
