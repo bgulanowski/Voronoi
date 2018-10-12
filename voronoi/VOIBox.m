@@ -92,6 +92,10 @@
     return _size.x <= DBL_EPSILON || _size.y <= DBL_EPSILON;
 }
 
+- (VOIPoint)randomPoint {
+    return VOIRandomPointBetween(_origin, _size);
+}
+
 - (VOIPointList *)asPointList {
     VOIPoint points[4] = {
         _origin,

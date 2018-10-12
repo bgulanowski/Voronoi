@@ -38,6 +38,25 @@ NS_INLINE BOOL VOIPointsEqual(VOIPoint a, VOIPoint b) {
     return ABS(a.x - b.x) < VOI_EPSILON && ABS(a.y - b.y) < VOI_EPSILON;
 }
 
+NS_INLINE long long VOIRandomLongLong() {
+    return (((long long)random() << 32) | (long long)random());
+}
+
+NS_INLINE double VOIRandomDouble() {
+    return ((double)VOIRandomLongLong()/(double)LLONG_MAX);
+}
+
+NS_INLINE double VOIRandomDoubleBetween(double min, double max) {
+    return VOIRandomDouble() * fabs(min - max) + MIN(min, max);
+}
+
+NS_INLINE VOIPoint VOIRandomPointBetween(VOIPoint min, VOIPoint max) {
+    return vector2(
+                   VOIRandomDoubleBetween(min.x, max.x),
+                   VOIRandomDoubleBetween(min.y, max.y)
+                   );
+}
+
 extern NSString *VOIPointToString(VOIPoint p);
 extern VOIPoint VOIPointFromString(NSString *s);
 
