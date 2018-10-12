@@ -10,10 +10,17 @@
 
 #import "VOIPointList.h"
 
+typedef enum {
+    VOILineSideRight,
+    VOILineSideOn,
+    VOILineSideLeft
+} VOILineSide;
+
 @interface VOISegment : NSObject
 
 @property (readonly) VOIPoint a;
 @property (readonly) VOIPoint b;
+@property (readonly) VOIPoint midpoint;
 
 // must be two points
 - (instancetype)initWithPoints:(const VOIPoint *)points;
@@ -21,5 +28,8 @@
 - (VOISegment *)perpendicular;
 // Treat point b like a vector
 - (VOIPoint)intersectWithSegment:(VOISegment *)other;
+
+// Forward is the direction of the vector b - a
+- (VOILineSide)sideForPoint:(VOIPoint)point;
 
 @end

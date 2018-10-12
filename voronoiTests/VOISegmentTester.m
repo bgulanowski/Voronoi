@@ -30,6 +30,12 @@
     _s2 = [[VOISegment alloc] initWithPoints:&points[1]];
 }
 
+- (void)testMidpoint {
+    VOIPoint e = vector2(1.0, 1.0);
+    VOIPoint a = self.s1.midpoint;
+    AssertEqualPoints(e, a);
+}
+
 - (void)testPerpendicular {
     VOIPoint points[4] = {
         vector2(1.0, 1.0),
@@ -80,6 +86,19 @@
     VOIPoint a = [p intersectWithSegment:p];
     XCTAssertEqual(a.x, e.x);
     XCTAssertEqual(a.y, e.y);
+}
+
+- (void)testSideForPoint {
+    VOIPoint p = vector2(1.0, 2.0);
+    XCTAssertEqual(VOILineSideLeft, [self.s1 sideForPoint:p]);
+    XCTAssertEqual(VOILineSideRight, [self.s2 sideForPoint:p]);
+    p = vector2(3.0, 2.0);
+    XCTAssertEqual(VOILineSideRight, [self.s1 sideForPoint:p]);
+    XCTAssertEqual(VOILineSideLeft, [self.s2 sideForPoint:p]);
+    p = vector2(1.0, 1.0);
+    XCTAssertEqual(VOILineSideOn, [self.s1 sideForPoint:p]);
+    p = vector2(3.0, 1.0);
+    XCTAssertEqual(VOILineSideOn, [self.s2 sideForPoint:p]);
 }
 
 @end

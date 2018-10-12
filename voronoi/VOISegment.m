@@ -10,6 +10,10 @@
 
 @implementation VOISegment
 
+- (VOIPoint)midpoint {
+    return simd_mix(_a, _b, vector2(0.5, 0.5));
+}
+
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@; [(%.2f, %.2f) -> (%.2f, %.2f)]", [self className], _a.x, _a.y, _b.x, _b.y];
 }
@@ -58,6 +62,19 @@
     }
     
     return _a + detA/detB * (_b - _a);
+}
+
+- (VOILineSide)sideForPoint:(VOIPoint)point {
+    double s = (_b.x - _a.x) * (point.y - _a.y) - (point.x -  _a.x) * (_b.y - _a.y);
+    if (s < 0) {
+        return VOILineSideRight;
+    }
+    else if (s > 0) {
+        return VOILineSideLeft;
+    }
+    else {
+        return VOILineSideOn;
+    }
 }
 
 @end
