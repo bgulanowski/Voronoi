@@ -42,12 +42,14 @@
 - (id)copyWithZone:(NSZone *)zone {
     VOIPath *copy = [super copyWithZone:zone];
     copy->_closed = _closed;
-    copy->_checkedConvex = _checkedConvex;
-    copy->_convex = _convex;
     return copy;
 }
 
 #pragma mark - VOIPointList
+
+- (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count {
+    return [self initWithPoints:points count:count close:NO];
+}
 
 - (VOIPointList *)reverseList {
     VOIPath *path = (VOIPath *)[super reverseList];
@@ -63,6 +65,7 @@
     self = [super initWithPoints:points count:count];
     if (self) {
         _closed = closed;
+        [self quickCheckConvex];
     }
     return self;
 }
@@ -71,6 +74,7 @@
     self = [super _initWithData:data];
     if (self) {
         _closed = closed;
+        [self quickCheckConvex];
     }
     return self;
 }
@@ -87,6 +91,7 @@
     if (!_closed) {
         path = [self copy];
         path->_closed = YES;
+        [path quickCheckConvex];
     }
     return path;
 }
@@ -96,6 +101,8 @@
     if (_closed) {
         path = [self copy];
         path->_closed = NO;
+        path->_convex = NO;
+        path->_checkedConvex = YES;
     }
     return path;
 }
@@ -155,50 +162,53 @@
 
 #pragma mark - Private
 
-- (BOOL)calculateConvex {
-    
-    const NSUInteger pointCount = self.pointCount;
-    if (_closed) {
-        if (pointCount == 3) {
-            _convex = YES;
-        }
-        else if (pointCount > 3) {
-            const NSUInteger stop = pointCount - 2;
-            __block VOITriangle *first = nil;
-            __block BOOL convex = YES;
-            [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
-                VOITriangle *t = [[VOITriangle alloc] initWithPoints:p];
-                if (!t.degenerate) {
-                    if (first == nil) {
-                        first = t;
-                    }
-                    else {
-                        if (first.rightHanded != t.rightHanded) {
-                            convex = NO;
-                            return YES;
-                        }
-                    }
-                }
-                return (BOOL)(i == stop);
-            }];
-            if (convex) {
-                NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
-                [indices addIndex:pointCount - 1];
-                [indices addIndex:pointCount - 2];
-                [indices addIndex:0];
-                VOITriangle *last = [self triangleForIndexSet:indices];
-                if (first.rightHanded != last.rightHanded) {
-                    convex = NO;
-                }
-            }
-            _convex = convex;
-        }
+- (void)quickCheckConvex {
+    if (!_closed || self.count < 3) {
+        _convex = NO;
+        _checkedConvex = YES;
+    }
+    else if (self.count == 3) {
+        _convex = YES;
+        _checkedConvex = YES;
     }
     else {
         _convex = NO;
+        _checkedConvex = NO;
     }
+}
+
+- (BOOL)calculateConvex {
+    
+    __block VOITriangle *first = nil;
+    __block BOOL convex = YES;
+    
+    [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+        VOITriangle *t = [[VOITriangle alloc] initWithPoints:p];
+        if (!t.degenerate) {
+            if (first == nil) {
+                first = t;
+            }
+            else {
+                convex = first.rightHanded == t.rightHanded;
+            }
+        }
+        return (BOOL)(!convex || i == self.pointCount - 3);
+    }];
+    
+    if (convex) {
+        VOITriangle *last = [self lastTriangle];
+        convex = (last.degenerate || first.rightHanded == last.rightHanded);
+    }
+    _convex = convex;
     _checkedConvex = YES;
     return _convex;
+}
+
+- (VOITriangle *)lastTriangle {
+    NSMutableIndexSet *indices = [NSMutableIndexSet indexSetWithIndex:0];
+    [indices addIndex:self.pointCount - 2];
+    [indices addIndex:self.pointCount - 1];
+    return [self triangleForIndexSet:indices];
 }
 
 @end
