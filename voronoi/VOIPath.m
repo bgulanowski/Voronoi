@@ -24,6 +24,15 @@
     return [super count] - (_closed ? 0 : 1);
 }
 
+- (NSUInteger)triangleCount {
+    if (self.pointCount == 3) {
+        return 1;
+    }
+    else {
+        return self.pointCount - (_closed ? 0 : 2);
+    }
+}
+
 - (BOOL)isConvex {
     return _convex || (!_checkedConvex && [self calculateConvex]);
 }
@@ -154,6 +163,25 @@
     return [[VOISegmentList alloc] _initWithData:data];
 }
 
+- (VOITriangle *)triangleAt:(NSUInteger)index {
+    const NSUInteger count = self.triangleCount;
+    NSUInteger indices[3] = {
+        index % count,
+        (index + 1) % count,
+        (index + 2) % count
+    };
+    return [self triangleForIndices:indices];
+}
+
+- (void)iterateTriangles:(VOITriangleIterator)iterator {
+    const NSUInteger count = self.triangleCount;
+    for (NSUInteger i = 0; i < count; ++i) {
+        if (iterator([self triangleAt:i], i)) {
+            break;
+        }
+    }
+}
+
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point {
     NSAssert(self.convex, @"Cannot determine visibility set for non-convex path");
     
@@ -178,37 +206,24 @@
 }
 
 - (BOOL)calculateConvex {
+
+    _convex = YES;
     
-    __block VOITriangle *first = nil;
-    __block BOOL convex = YES;
-    
-    [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
-        VOITriangle *t = [[VOITriangle alloc] initWithPoints:p];
-        if (!t.degenerate) {
-            if (first == nil) {
-                first = t;
+    __block VOITriangle *valid = nil;
+    [self iterateTriangles:^BOOL(VOITriangle *t, NSUInteger i) {
+        if(!t.degenerate) {
+            if (valid == nil) {
+                valid = t;
             }
             else {
-                convex = first.rightHanded == t.rightHanded;
+                self->_convex = valid.rightHanded == t.rightHanded;
             }
         }
-        return (BOOL)(!convex || i == self.pointCount - 3);
+        return !self->_convex;
     }];
-    
-    if (convex) {
-        VOITriangle *last = [self lastTriangle];
-        convex = (last.degenerate || first.rightHanded == last.rightHanded);
-    }
-    _convex = convex;
+
     _checkedConvex = YES;
     return _convex;
-}
-
-- (VOITriangle *)lastTriangle {
-    NSMutableIndexSet *indices = [NSMutableIndexSet indexSetWithIndex:0];
-    [indices addIndex:self.pointCount - 2];
-    [indices addIndex:self.pointCount - 1];
-    return [self triangleForIndexSet:indices];
 }
 
 @end

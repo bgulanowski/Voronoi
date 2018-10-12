@@ -26,6 +26,8 @@
 - (VOISegmentList *)asSegmentList;
 
 - (NSArray<VOISegment *> *)allSegments;
+- (VOITriangle *)triangleAt:(NSUInteger)index;
+- (void)iterateTriangles:(VOITriangleIterator)iterator;
 
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point;
 
