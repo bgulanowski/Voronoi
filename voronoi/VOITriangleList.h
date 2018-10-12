@@ -12,7 +12,7 @@
 
 @class VOITriangle;
 
-typedef BOOL (^VOITriangleIterator)(VOITriangle *, NSUInteger);
+typedef BOOL (^VOITriangleIterator)(VOITriangle *t, NSUInteger i);
 
 @interface VOITriangleList : VOIPointList
 
