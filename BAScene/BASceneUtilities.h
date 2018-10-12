@@ -83,7 +83,7 @@ static inline NSInteger BAmod(NSInteger dend, NSInteger div) {
 #define BARandomLongLong()             (((long long)random() << 32) | (long long)random())
 #define BARandomFloat()                ((float)random()/(float)INT_MAX)
 #define BARandomGLfloat()              ((GLfloat)random()/(GLfloat)INT_MAX)
-#if CGFLOAT_IS_CGFloat
+#if CGFLOAT_IS_DOUBLE
 #define BARandomCGFloat()              ((CGFloat)BARandomLongLong()/(CGFloat)LLONG_MAX)
 #else
 #define BARandomCGFloat                BARandomFloat
