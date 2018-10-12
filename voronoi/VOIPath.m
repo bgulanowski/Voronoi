@@ -25,7 +25,7 @@
 }
 
 - (BOOL)isConvex {
-    return (_checkedConvex && _convex) || [self calculateConvex];
+    return _convex || (!_checkedConvex && [self calculateConvex]);
 }
 
 #pragma mark - NSObject
