@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "VOIBox.h"
+#import "VOIPointList.h"
 
 @interface VOIBox (Testing)
 + (VOIPoint)regularizeOrigin:(VOIPoint)origin forSize:(VOISize)size;

@@ -10,6 +10,7 @@
 
 #import "VOIBox.h"
 #import "VOIPointList.h"
+#import "VOITriangle.h"
 
 @interface VOIPointListTester : XCTestCase
 

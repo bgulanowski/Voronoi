@@ -6,7 +6,10 @@
 //  Copyright © 2018 Lichen Labs. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import <simd/simd.h>
+
+#import "VOIPoint.h"
 
 #define AssertEqualFloats(f0, f1) do {\
 XCTAssertLessThan(ABS((f1) - (f0)), DBL_EPSILON * 2.0);\
