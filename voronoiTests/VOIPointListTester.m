@@ -10,6 +10,7 @@
 
 #import "VOIBox.h"
 #import "VOIPointList.h"
+#import "VOIPointListPrivate.h"
 #import "VOITriangle.h"
 
 @interface VOIPointListTester : XCTestCase
@@ -76,6 +77,29 @@ static VOIPoint points[4];
     VOIPoint a = [self.pointList pointClosestToPoint:vector2(-1.0, 4.0) index:&index];
     AssertEqualPoints(e, a);
     XCTAssertEqual(2, index);
+}
+
+- (void)testBinarySearch {
+    NSMutableData *data = [NSMutableData dataWithLength:sizeof(VOIPoint) * 100];
+    VOIBox *box = [[VOIBox alloc] initWithOrigin:vector2(-50.0, -50.0) size:vector2(100.0, 100.0)];
+    VOIPoint *pPoints = data.mutableBytes;
+    srandom(88);
+    for (NSUInteger i = 0; i < 100; ++i) {
+        pPoints[i] = [box randomPoint];
+    }
+    VOIPointList *list = [[[VOIPointList alloc] _initWithData:data] sortedPointList:^int(const VOIPoint *a, const VOIPoint *b) {
+        if (a->y < b->y) { return -1; }
+        if (a->y > b->y) { return 1; }
+        return 0;
+    }];
+    
+    VOIPoint e = pPoints[71];
+    NSUInteger index = [list binarySearch:^(VOIPoint *p) {
+        return p->y - e.y;
+    }];
+    VOIPoint a = [list pointAtIndex:index];
+    
+    AssertEqualPoints(e, a);
 }
 
 - (void)testReverseList {

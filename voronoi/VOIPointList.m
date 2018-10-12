@@ -148,6 +148,29 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return [self pointClosestToPoint:p index:pIndex ignoreIfEqual:YES];
 }
 
+- (NSUInteger)binarySearch:(VOIPointEvaluator)evaluator {
+    
+    NSUInteger min = 0, max = self.pointCount;
+    NSUInteger index = (min + max) / 2;
+    
+    do {
+        VOIPoint p = [self pointAtIndex:index];
+        double newValue = evaluator(&p);
+        if (newValue == 0) {
+            break;
+        }
+        if (newValue < 0) {
+            min = index;
+        }
+        else {
+            max = index;
+        }
+        index = (min + max) / 2;
+    } while (max - min > 1);
+    
+    return index;
+}
+
 - (VOIPointList *)reverseList {
     NSMutableData *data = [NSMutableData dataWithLength:self.pointsData.length];
     VOIPoint *points = self.pointsData.mutableBytes;

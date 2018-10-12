@@ -12,6 +12,7 @@
 
 typedef int (^VOIPointComparator)(const VOIPoint *, const VOIPoint *);
 typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
+typedef double (^VOIPointEvaluator)(VOIPoint *p);
 
 @class VOIBox;
 @class VOITriangle;
@@ -33,6 +34,10 @@ typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
 - (VOIPoint)pointAtIndex:(NSUInteger)index;
 - (VOIPoint)pointClosestToPoint:(VOIPoint)p index:(NSUInteger *)pIndex ignoreIfEqual:(BOOL)ignore;
 - (VOIPoint)pointClosestToPoint:(VOIPoint)p index:(NSUInteger *)index;
+
+// searches for minimum value
+// assumes continuous change between points
+- (NSUInteger)binarySearch:(VOIPointEvaluator)evaluator;
 
 - (VOIPointList *)reverseList;
 - (VOIPointList *)add:(VOIPointList *)other;
