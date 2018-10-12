@@ -81,9 +81,7 @@ static VOIPoint points[4];
 }
 
 - (void)testDegenerateRadius {
-    double e = (double)INFINITY;
-    double a = self.degenerate.radius;
-    XCTAssertEqual(e, a);
+    XCTAssertTrue(isnan(self.degenerate.radius));
 }
 
 - (void)testHandedness {
