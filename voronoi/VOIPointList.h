@@ -10,8 +10,8 @@
 
 #import <simd/simd.h>
 
-typedef int (^VOIPointComparator)(const VOIPoint *, const VOIPoint *);
-typedef BOOL (^VOIPointIterator)(const VOIPoint *, const NSUInteger);
+typedef int (^VOIPointComparator)(const VOIPoint *p1, const VOIPoint *p2);
+typedef BOOL (^VOIPointIterator)(const VOIPoint *p, const NSUInteger i);
 typedef double (^VOIPointEvaluator)(VOIPoint *p);
 
 @class VOIBox;

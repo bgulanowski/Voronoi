@@ -11,7 +11,7 @@
 @class VOISegment;
 @class VOITriangle;
 
-typedef BOOL (^VOISegmentIterator)(VOISegment *, NSUInteger);
+typedef BOOL (^VOISegmentIterator)(VOISegment *s, NSUInteger i);
 
 @interface VOISegmentList : VOIPointList
 
