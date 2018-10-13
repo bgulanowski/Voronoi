@@ -22,7 +22,7 @@
 
 @end
 
-static const NSUInteger COUNT = 6;
+static const NSUInteger COUNT = 12;
 static VOIPoint pathPoints[COUNT];
 
 @interface VOIPathTester : XCTestCase
@@ -37,8 +37,8 @@ static VOIPoint pathPoints[COUNT];
     const double length = 2.0;
     for (NSUInteger i = 0; i < COUNT; ++i) {
         double radians = [NSMeasurement radiansForDegrees:30.0 * (double)i];
-        double x = sin(radians);
-        double y = cos(radians);
+        double x = cos(radians);
+        double y = sin(radians);
         pathPoints[i] = vector2(x, y) * length;
     }
 }
@@ -178,20 +178,11 @@ static VOIPoint pathPoints[COUNT];
 }
 
 - (VOISegmentList *)segmentListClosed:(BOOL)closed {
-    VOIPoint segmentPoints[COUNT * 2] = {
-        pathPoints[0],
-        pathPoints[1],
-        pathPoints[1],
-        pathPoints[2],
-        pathPoints[2],
-        pathPoints[3],
-        pathPoints[3],
-        pathPoints[4],
-        pathPoints[4],
-        pathPoints[5],
-        pathPoints[5],
-        pathPoints[0]
-    };
+    VOIPoint segmentPoints[COUNT * 2];
+    for (NSUInteger i = 0; i < COUNT; ++i) {
+        segmentPoints[i * 2] = pathPoints[i];
+        segmentPoints[i * 2 + 1] = pathPoints[(i + 1) % COUNT];
+    }
     
     return [[VOISegmentList alloc] initWithPoints:segmentPoints count:(closed ? COUNT : COUNT - 1)];
 }
