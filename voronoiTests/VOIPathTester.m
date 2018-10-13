@@ -130,6 +130,14 @@ static VOIPoint pathPoints[COUNT];
     XCTAssertEqual(COUNT, closedPath.count);
 }
 
+- (void)testClosedPath {
+    VOIPath *path = [self.path closedPath];
+    XCTAssertTrue(path.closed);
+    path = [path openPath];
+    XCTAssertFalse(path.closed);
+    XCTAssertEqualObjects(self.path, path);
+}
+
 - (void)testSegmentAt {
     VOIPath *closedPath = [self.path closedPath];
     VOISegmentList *segmentList = [self segmentListClosed:YES];
