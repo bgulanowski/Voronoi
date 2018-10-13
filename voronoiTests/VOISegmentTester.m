@@ -101,4 +101,33 @@
     XCTAssertEqual(VOILineSideOn, [self.s2 sideForPoint:p]);
 }
 
+- (void)testVerticalPosition {
+    XCTAssertEqual(VOIUpward, [self.s1 verticalPosition:2.0]);
+    XCTAssertEqual(VOIDownward, [self.s2 verticalPosition:2.0]);
+    XCTAssertEqual(VOIUpward, [self.s1 verticalPosition:0.0]);
+    XCTAssertEqual(VOIDownward, [self.s2 verticalPosition:0.0]);
+    XCTAssertEqual(VOIUpward, [self.s1 verticalPosition:1.0]);
+    XCTAssertEqual(VOIDownward, [self.s2 verticalPosition:1.0]);
+    XCTAssertEqual(VOIAbove, [self.s1 verticalPosition:-1.0]);
+    XCTAssertEqual(VOIAbove, [self.s2 verticalPosition:-1.0]);
+    XCTAssertEqual(VOIBelow, [self.s1 verticalPosition:3.0]);
+    XCTAssertEqual(VOIBelow, [self.s2 verticalPosition:3.0]);
+
+    VOIPoint horiz[2] = { vector2(0.0, 0.0), vector2(2.0, 0.0) };
+    VOISegment *horizontal = [[VOISegment alloc] initWithPoints:horiz];
+    XCTAssertEqual(VOIHorizontalUpon, [horizontal verticalPosition:0.0]);
+}
+
+- (void)testHorizontalPosition {
+    XCTAssertEqual(VOILeft, [self.s1 horizontalPosition:3.0]);
+    XCTAssertEqual(VOIRightward, [self.s1 horizontalPosition:1.0]);
+
+    XCTAssertEqual(VOIRight, [self.s2 horizontalPosition:1.0]);
+    XCTAssertEqual(VOIRightward, [self.s2 horizontalPosition:3.0]);
+    
+    VOIPoint vert[2] = { vector2(0.0, 0.0), vector2(0.0, 2.0) };
+    VOISegment *vertical = [[VOISegment alloc] initWithPoints:vert];
+    XCTAssertEqual(VOIVerticalUpon, [vertical horizontalPosition:0.0]);
+}
+
 @end

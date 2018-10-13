@@ -16,6 +16,22 @@ typedef enum {
     VOILineSideLeft
 } VOILineSide;
 
+typedef enum {
+    VOIAbove,
+    VOIBelow,
+    VOIUpward,
+    VOIDownward,
+    VOIHorizontalUpon
+} VOIVerticalPosition;
+
+typedef enum {
+    VOILeft,
+    VOIRight,
+    VOILeftward,
+    VOIRightward,
+    VOIVerticalUpon
+} VOIHorizontalPosition;
+
 @interface VOISegment : NSObject
 
 @property (readonly) VOIPoint a;
@@ -31,5 +47,8 @@ typedef enum {
 
 // Forward is the direction of the vector b - a
 - (VOILineSide)sideForPoint:(VOIPoint)point;
+
+- (VOIVerticalPosition)verticalPosition:(double)y;
+- (VOIHorizontalPosition)horizontalPosition:(double)x;
 
 @end

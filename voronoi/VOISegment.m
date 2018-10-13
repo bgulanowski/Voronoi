@@ -77,4 +77,28 @@
     }
 }
 
+- (VOIVerticalPosition)verticalPosition:(double)y {
+    if (_a.y > y) {
+        return (_b.y <= y) ? VOIDownward : VOIAbove;
+    }
+    else if (_a.y < y) {
+        return (_b.y >= y) ? VOIUpward : VOIBelow;
+    }
+    else {
+        return (_b.y > y) ? VOIUpward : ((_b.y < y) ? VOIDownward : VOIHorizontalUpon);
+    }
+}
+
+- (VOIHorizontalPosition)horizontalPosition:(double)x {
+    if (_a.x > x) {
+        return (_b.x <= x) ? VOILeftward : VOIRight;
+    }
+    else if (_a.x < x) {
+        return (_b.x >= x) ? VOIRightward : VOILeft;
+    }
+    else {
+        return (_b.x > x) ? VOILeftward : ((_b.x < x) ? VOIRightward : VOIVerticalUpon);
+    }
+}
+
 @end
