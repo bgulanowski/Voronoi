@@ -36,7 +36,7 @@
 - (VOITriangleList *)asTriangleList;
 
 - (BOOL)pointInside:(VOIPoint)point;
-- (VOIPath *)pathVisibleToPoint:(VOIPoint)point;
+- (VOIPath *)pathVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex;
 
 @end
 

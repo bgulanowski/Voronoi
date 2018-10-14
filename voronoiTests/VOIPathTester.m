@@ -266,16 +266,25 @@ static const double Scale = 2.0;
 }
 
 - (void)testPathVisibleToPoint {
+    
+    VOIPoint point = vector2(2.0, 2.0);
+    XCTAssertNil([self.path pathVisibleToPoint:point closestSegmentIndex:NULL]);
+    
     VOIPath *closed = [self.path closedPath];
+    XCTAssertNil([closed pathVisibleToPoint:vector2(1.0, 1.0) closestSegmentIndex:NULL]);
+    
     VOIPath *e = [[VOIPath alloc] initWithPoints:pathPoints count:4];
-    VOIPath *a = [closed pathVisibleToPoint:vector2(2.0, 2.0)];
+    NSUInteger index = NSNotFound;
+    VOIPath *a = [closed pathVisibleToPoint:point closestSegmentIndex:&index];
     XCTAssertEqualObjects(e, a);
+    XCTAssertEqual(1, index);
     
     double angle = 45.0 * VOIPi / 180.0;
-    VOIPoint point = angle * Scale;
+    point = angle * Scale;
     e = [[VOIPath alloc] initWithPoints:&pathPoints[1] count:2];
-    a = [closed pathVisibleToPoint:point];
+    a = [closed pathVisibleToPoint:point closestSegmentIndex:&index];
     XCTAssertEqualObjects(e, a);
+    XCTAssertEqual(0, index);
 }
 
 @end

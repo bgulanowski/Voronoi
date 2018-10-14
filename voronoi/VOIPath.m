@@ -271,7 +271,7 @@
     return count != 0;
 }
 
-- (VOIPath *)pathVisibleToPoint:(VOIPoint)point {
+- (VOIPath *)pathVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex {
     if (!_closed || [self pointInside:point]) {
         return nil;
     }
@@ -293,6 +293,10 @@
     while([segment sideForPoint: point] == side) {
         last++;
         segment = [self segmentAt:last + 1];
+    }
+    
+    if (pIndex) {
+        *pIndex = closest - first;
     }
     
     return [[self pointListWithRange:NSMakeRange(first, last - first + 1)] asPath];
