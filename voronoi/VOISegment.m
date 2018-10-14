@@ -8,10 +8,16 @@
 
 #import "VOISegment.h"
 
+#import "VOIBox.h"
+
 @implementation VOISegment
 
 - (VOIPoint)midpoint {
     return simd_mix(_a, _b, vector2(0.5, 0.5));
+}
+
+- (VOIBox *)boundingBox {
+    return [[VOIBox alloc] initWithOrigin:_a size:(_b - _a)];
 }
 
 - (NSString *)description {
@@ -70,6 +76,18 @@
     }
     
     return _a + detA/detB * (_b - _a);
+}
+
+- (double)distanceFromPoint:(VOIPoint)point {
+    return simd_distance(point, self.midpoint);
+}
+
+- (double)distanceSquaredFromPoint:(VOIPoint)point {
+    return simd_distance_squared(point, self.midpoint);
+}
+
+- (BOOL)pointBetween:(VOIPoint)point {
+    return [self.boundingBox containsPoint:point];
 }
 
 - (VOILineSide)sideForPoint:(VOIPoint)point {
