@@ -23,6 +23,15 @@ static VOIPoint pathPoints[COUNT];
 
 static const double Scale = 2.0;
 
+@interface VOIPath (Tests)
+
++ (instancetype)sawtoothPath;
++ (instancetype)sawtoothPathOffset;
++ (instancetype)colinearPath;
++ (instancetype)concavePath;
+
+@end
+
 @interface VOIPathTester : XCTestCase
 
 @property (nonatomic) VOIPath *path;
@@ -45,52 +54,50 @@ static const double Scale = 2.0;
     self.path = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT];
 }
 
-- (void)testConvex {
-    
+- (void)testConvexOpen {
     XCTAssertFalse(self.path.convex);
-    
+}
+
+- (void)testConvexClosed {
     VOIPath *closedPath = [self.path closedPath];
     XCTAssertTrue(closedPath.convex);
     
     VOIPath *reversePath = (VOIPath *)[closedPath reverseList];
     XCTAssertTrue(reversePath.convex);
-    
+}
+
+- (void)testConvexPointListAsClosedPath {
     VOIPointList *pointList = [[VOIPointList alloc] initWithPoints:pathPoints count:COUNT];
     VOIPointList *reverseList = [pointList reverseList];
     VOIPath *listPath = [reverseList asClosedPath];
     XCTAssertTrue(listPath.convex);
-    
+}
+
+- (void)testConvexColinear {
     VOIPath *line = [[VOIPath alloc] initWithPoints:pathPoints count:2 close:YES];
     XCTAssertFalse(line.convex);
-    
-    VOIPath *triangle = [[VOIPath alloc] initWithPoints:pathPoints count:3 close:YES];
-    XCTAssertTrue(triangle.convex);
 
-    VOIPoint concavePoints[5] = {
-        vector2(0.0, 0.0),
-        vector2(1.0, 1.0),
-        vector2(1.0, 0.0),
-        vector2(2.0, 1.0),
-        vector2(0.0, 0.0)
-    };
-    
+    XCTAssertTrue([VOIPath colinearPath].convex);
+}
+
+- (void)testConvexTriangle {
+    VOIPath *triangle = [[self.path triangleAt:0] asPath];
+    XCTAssertTrue(triangle.convex);
+}
+
+- (void)testConvexConcave {
     // orientation reverses on second point
-    VOIPath *concave = [[VOIPath alloc] initWithPoints:concavePoints count:4 close:YES];
-    XCTAssertFalse(concave.convex);
+    VOIPath *sawtooth = [VOIPath sawtoothPath];
+    XCTAssertFalse(sawtooth.convex);
     
     // orientation reverses on third point
-    concave = [[VOIPath alloc] initWithPoints:&concavePoints[1] count:4 close:YES];
-    XCTAssertFalse(concave.convex);
+    sawtooth = [VOIPath sawtoothPathOffset];
+    XCTAssertFalse(sawtooth.convex);
+}
 
-    VOIPoint colinearPoints[4] = {
-        vector2(0.0, 0.0),
-        vector2(1.0, 0.0),
-        vector2(2.0, 0.0),
-        vector2(1.0, 1.0)
-    };
-    
-    VOIPath *colinear = [[VOIPath alloc] initWithPoints:colinearPoints count:4 close:YES];
-    XCTAssertTrue(colinear.convex);
+- (void)testConvex {
+    VOIPath *triangle = [[VOIPath alloc] initWithPoints:pathPoints count:3 close:YES];
+    XCTAssertTrue(triangle.convex);
 }
 
 - (void)testIsEqual {
@@ -285,6 +292,50 @@ static const double Scale = 2.0;
     a = [closed pathVisibleToPoint:point closestSegmentIndex:&index];
     XCTAssertEqualObjects(e, a);
     XCTAssertEqual(0, index);
+}
+
+@end
+
+static VOIPoint sawtooth[5] = {
+    { 0.0, 0.0 },
+    { 1.0, 1.0 },
+    { 1.0, 0.0 },
+    { 2.0, 1.0 },
+    { 0.0, 0.0 }
+};
+
+static VOIPoint concave[6] = {
+    {  0.0,  0.0 },
+    {  1.0, -1.0 },
+    {  0.0, -0.5 },
+    { -1.0,  0.0 },
+    {  0.0,  1.0 },
+    {  1.0,  0.0 }
+};
+
+static VOIPoint colinearPoints[4] = {
+    { 0.0, 0.0 },
+    { 1.0, 0.0 },
+    { 2.0, 0.0 },
+    { 1.0, 1.0 }
+};
+
+@implementation VOIPath (Tests)
+
++ (instancetype)sawtoothPath {
+    return [[VOIPath alloc] initWithPoints:sawtooth count:4 close:YES];
+}
+
++ (instancetype)sawtoothPathOffset {
+    return [[VOIPath alloc] initWithPoints:&sawtooth[1] count:4 close:YES];
+}
+
++ (instancetype)concavePath {
+    return [[VOIPath alloc] initWithPoints:concave count:6 close:YES];
+}
+
++ (instancetype)colinearPath {
+    return [[VOIPath alloc] initWithPoints:colinearPoints count:4 close:YES];
 }
 
 @end
