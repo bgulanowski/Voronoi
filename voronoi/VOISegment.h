@@ -38,8 +38,8 @@ typedef enum {
 @property (readonly) VOIPoint b;
 @property (readonly) VOIPoint midpoint;
 
-// must be two points
-- (instancetype)initWithPoints:(const VOIPoint *)points;
+- (instancetype)initWithPoint:(VOIPoint)point otherPoint:(VOIPoint)other NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithPoints:(const VOIPoint[2])points;
 - (BOOL)isEqualToSegment:(VOISegment *)other;
 - (VOISegment *)perpendicular;
 // Treat point b like a vector

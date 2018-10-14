@@ -22,13 +22,21 @@
     return [object isKindOfClass:[self class]] && [self isEqualToSegment:object];
 }
 
-- (instancetype)initWithPoints:(const VOIPoint *)points {
+- (instancetype)init {
+    return [self initWithPoint:vector2(0.0, 0.0) otherPoint:vector2(0.0, 0.0)];
+}
+
+- (instancetype)initWithPoint:(VOIPoint)point otherPoint:(VOIPoint)other {
     self = [super init];
     if (self) {
-        _a = points[0];
-        _b = points[1];
+        _a = point;
+        _b = other;
     }
     return self;
+}
+
+- (instancetype)initWithPoints:(const VOIPoint *)points {
+    return [self initWithPoint:points[0] otherPoint:points[1]];
 }
 
 - (BOOL)isEqualToSegment:(VOISegment *)other {
