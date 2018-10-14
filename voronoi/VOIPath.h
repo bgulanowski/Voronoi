@@ -33,6 +33,7 @@
 - (NSArray<VOITriangle *> *)allTriangles;
 - (VOITriangleList *)asTriangleList;
 
+- (BOOL)pointInside:(VOIPoint)point;
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point;
 
 @end

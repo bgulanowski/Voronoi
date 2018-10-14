@@ -220,6 +220,28 @@
     return triangles;
 }
 
+- (BOOL)pointInside:(VOIPoint)point {
+    if (!_closed) {
+        return NO;
+    }
+    __block NSUInteger count = 0;
+    // Calculate the winding number by counting the number of times
+    // segments cross a horizontal line through provided point
+    // 0 means outside, otherwise inside.
+    [self iterateSegments:^BOOL(VOISegment *s, NSUInteger i) {
+        VOIVerticalPosition pos = [s verticalPosition:point.y];
+        VOILineSide side = [s sideForPoint:point];
+        if (pos == VOIUpward && side == VOILineSideLeft) {
+            count++;
+        }
+        else if(pos == VOIDownward && side == VOILineSideRight) {
+            count--;
+        }
+        return NO;
+    }];
+    return count != 0;
+}
+
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point {
     NSAssert(self.convex, @"Cannot determine visibility set for non-convex path");
     

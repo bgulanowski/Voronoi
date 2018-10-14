@@ -211,4 +211,25 @@ static VOIPoint pathPoints[COUNT];
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testPointInside {
+
+    XCTAssertFalse([self.path pointInside:vector2(0.0, 0.0)]);
+
+    VOIBox *box = [[VOIBox alloc] initWithOrigin:vector2(-2.0, -2.0) size:vector2(4.0, 4.0)];
+    NSArray<VOIPath *> *paths = @[[box asPath], [self.path closedPath]];
+
+    for (VOIPath *path in paths) {
+        for (double i = -1.0; i < 2.0; i += 1.0) {
+            for (double j = -1.0; j < 2.0; j += 1.0) {
+                VOIPoint p = vector2(j, i);
+                XCTAssertTrue([path pointInside:p], @"%@: %@", path, VOIPointToString(p));
+                if (i != 0.0 || j != 0.0) {
+                    p = vector2(j * 3.0, i * 3.0);
+                    XCTAssertFalse([path pointInside:p], @"%@: %@", path, VOIPointToString(p));
+                }
+            }
+        }
+    }
+}
+
 @end
