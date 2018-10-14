@@ -16,6 +16,8 @@
     BOOL _convex;
 }
 
+@synthesize boundingBox=_boundingBox;
+
 #pragma mark - Properties
 
 - (NSUInteger)count {
@@ -270,9 +272,30 @@
 }
 
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point {
-    NSAssert(self.convex, @"Cannot determine visibility set for non-convex path");
+    if (!_closed || [self pointInside:point]) {
+        return nil;
+    }
     
-    return nil;
+    // point must be on the same side of all segments
+    // find start and end indices
+    NSUInteger closest;
+    VOISegment *segment = [self closestSegmentToPoint:point index:&closest];
+
+    NSUInteger first = closest;
+    VOILineSide side = [segment sideForPoint:point];
+    segment = [self segmentAt:first - 1];
+    while ([segment sideForPoint:point] == side) {
+        first--;
+        segment = [self segmentAt:first - 1];
+    }
+    NSUInteger last = closest + 1;
+    segment = [self segmentAt:last];
+    while([segment sideForPoint: point] == side) {
+        last++;
+        segment = [self segmentAt:last + 1];
+    }
+    
+    return [[self pointListWithRange:NSMakeRange(first, last - first + 1)] asPath];
 }
 
 #pragma mark - Private

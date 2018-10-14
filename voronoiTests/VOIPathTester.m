@@ -21,6 +21,8 @@ static inline double Align(double f) {
 static const NSUInteger COUNT = 12;
 static VOIPoint pathPoints[COUNT];
 
+static const double Scale = 2.0;
+
 @interface VOIPathTester : XCTestCase
 
 @property (nonatomic) VOIPath *path;
@@ -30,12 +32,11 @@ static VOIPoint pathPoints[COUNT];
 @implementation VOIPathTester
 
 + (void)setUp {
-    const double length = 2.0;
     for (NSUInteger i = 0; i < COUNT; ++i) {
         double radians = (30.0 * (double)i * VOIPi / 180.0);
         double x = Align(cos(radians));
         double y = Align(sin(radians));
-        pathPoints[i] = vector2(x, y) * length;
+        pathPoints[i] = vector2(x, y) * Scale;
     }
 }
 
@@ -261,6 +262,19 @@ static VOIPoint pathPoints[COUNT];
     
     e = [[VOISegment alloc] initWithPoints:conv];
     a = [convex closestSegmentToPoint:point index:NULL];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testPathVisibleToPoint {
+    VOIPath *closed = [self.path closedPath];
+    VOIPath *e = [[VOIPath alloc] initWithPoints:pathPoints count:4];
+    VOIPath *a = [closed pathVisibleToPoint:vector2(2.0, 2.0)];
+    XCTAssertEqualObjects(e, a);
+    
+    double angle = 45.0 * VOIPi / 180.0;
+    VOIPoint point = angle * Scale;
+    e = [[VOIPath alloc] initWithPoints:&pathPoints[1] count:2];
+    a = [closed pathVisibleToPoint:point];
     XCTAssertEqualObjects(e, a);
 }
 
