@@ -143,11 +143,25 @@
     VOISegment *result = nil;
     if (side0 == side1) {
         // choose the closest by midpoint
-        result = ([s0 distanceSquaredFromPoint:point] < [s1 distanceSquaredFromPoint:point]) ? s0 : s1;
+        double d0 = [s0 distanceSquaredFromPoint:point];
+        double d1 = [s1 distanceSquaredFromPoint:point];
+        if (d0 < d1) {
+            result = s0;
+            --index;
+        }
+        else {
+            result = s1;
+        }
     }
     else {
         // if s0.a is on the same side of s1 as point, then it's s0. otherwise, s1.
-        result = ([s1 sideForPoint:s0.a] == side1) ? s0 : s1;
+        if ([s1 sideForPoint:s0.a] == side1) {
+            result = s0;
+            --index;
+        }
+        else {
+            result = s1;
+        }
     }
     
     if(pIndex) {

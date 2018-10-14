@@ -241,35 +241,32 @@ static const double Scale = 2.0;
 }
 
 - (void)testClosestSegmentToPoint {
-    VOIPath *closed = [self.path closedPath];
-    VOISegment *e = [[VOISegment alloc] initWithPoints:pathPoints];
-    VOISegment *a = [closed closestSegmentToPoint:vector2(2.0, 0.5) index:NULL];
-    XCTAssertEqualObjects(e, a);
     
-    e = [[VOISegment alloc] initWithPoints:&pathPoints[6]];
-    a = [closed closestSegmentToPoint:vector2(-2.0, -0.5) index:NULL];
-    XCTAssertEqualObjects(e, a);
-    
-    VOIPoint conv[6] = {
-        vector2(0.0, 0.0),
-        vector2(1.0, -1.0),
-        vector2(0.0, -0.5),
-        vector2(-1.0, 0.0),
-        vector2(0.0, 1.0),
-        vector2(1.0, 0.0)
-    };
-    
-    VOIPath *convex = [[VOIPath alloc] initWithPoints:conv count:6 close:YES];
-    VOIPoint point = vector2(0.8, -0.8);
+    VOIPath *path = [self.path closedPath];
+    VOIPoint point = vector2(2.0, 0.5);
     NSUInteger index;
-    [convex pointClosestToPoint:point index:&index];
-    XCTAssertEqual(1, index);
-    XCTAssertGreaterThan([[convex segmentAt:0] distanceSquaredFromPoint:point],
-                         [[convex segmentAt:1] distanceSquaredFromPoint:point]);
-    
-    e = [[VOISegment alloc] initWithPoints:conv];
-    a = [convex closestSegmentToPoint:point index:NULL];
+    VOISegment *e = [path segmentAt:0];
+    VOISegment *a = [path closestSegmentToPoint:point index:&index];
     XCTAssertEqualObjects(e, a);
+    XCTAssertEqual(0, index);
+    
+    point = vector2(-2.0, -0.5);
+    e = [path segmentAt:6];
+    a = [path closestSegmentToPoint:point index:&index];
+    XCTAssertEqualObjects(e, a);
+    XCTAssertEqual(6, index);
+    
+    path = [VOIPath concavePath];
+    point = vector2(0.8, -0.8);
+    [path pointClosestToPoint:point index:&index];
+    XCTAssertEqual(1, index);
+    XCTAssertGreaterThan([[path segmentAt:0] distanceSquaredFromPoint:point],
+                         [[path segmentAt:1] distanceSquaredFromPoint:point]);
+    
+    e = [path segmentAt:0];
+    a = [path closestSegmentToPoint:point index:&index];
+    XCTAssertEqualObjects(e, a);
+    XCTAssertEqual(0, index);
 }
 
 - (void)testPathVisibleToPoint {
