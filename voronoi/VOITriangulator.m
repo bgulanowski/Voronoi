@@ -35,30 +35,35 @@
 
 - (VOITriangleList *)generateTriangulation {
     
-    NSIndexSet *indexSet = [self indicesForSeedTrianglePoints];
-    VOITriangle *firstTriangle = [_pointList triangleForIndexSet:indexSet];
-    VOIPointList *remaining = [_pointList pointListByDeletingPointsAtIndices:indexSet];
-    NSArray<VOITriangle *> *triangles = [NSMutableArray arrayWithObject:firstTriangle];
+    NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
+    VOITriangle *firstTriangle = [self seedTriangleIndices:indices];
+    VOIPointList *remaining = [_pointList pointListByDeletingPointsAtIndices:indices];
+    remaining = [remaining sortedByDistanceFrom:firstTriangle.centre];
     
+    NSArray<VOITriangle *> *triangles = [NSMutableArray arrayWithObject:firstTriangle];
     [self addTriangles:triangles fromPoints:remaining];
 
     _triangulation = [[VOITriangleList alloc] initWithTriangles:triangles];
     return _triangulation;
 }
 
-- (NSIndexSet *)indicesForSeedTrianglePoints {
+- (VOITriangle *)seedTriangleIndices:(NSMutableIndexSet *)indices {
     
-    NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
     VOIPoint points[3];
     NSUInteger index = NSNotFound;
     
+    // The first point is arbitrary. Chose the closest to centre for aesthetic reasons.
     points[0] = [_pointList pointClosestToPoint:_pointList.centre index:&index ignoreIfEqual:NO];
     [indices addIndex:index];
+    // The second point is the closest to the first point
     points[1] = [_pointList pointClosestToPoint:points[0] index:&index];
     [indices addIndex:index];
     
     VOIPoint *pPoints = points;
+    __block NSUInteger index3 = NSNotFound;
     __block double delta = (double)INFINITY;
+    // Find a third point that creates the triangle with the smallest circumcircle (centre)
+    // All other points will be outside of this circle, seeding our triangulation
     [_pointList iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
         if (![indices containsIndex:i]) {
             pPoints[2] = *p;
@@ -66,13 +71,15 @@
             double d = simd_distance_squared(*p, c);
             if (d < delta) {
                 delta = d;
-                [indices addIndex:i];
+                index3 = i;
             }
         }
         return NO;
     }];
     
-    return indices;
+    [indices addIndex:index3];
+
+    return [_pointList triangleForIndexSet:indices];
 }
 
 - (void)addTriangles:(NSArray<VOITriangle *> *)triangles fromPoints:(VOIPointList *)points {
