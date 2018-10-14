@@ -320,3 +320,11 @@
 }
 
 @end
+
+@implementation VOIBox (VOIPath)
+
+- (VOIPath *)asPath {
+    return [[self asPointList] asClosedPath];
+}
+
+@end

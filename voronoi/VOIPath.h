@@ -8,6 +8,7 @@
 
 #import "VOIPointList.h"
 
+#import "VOIBox.h"
 #import "VOISegmentList.h"
 #import "VOITriangle.h"
 #import "VOITriangleList.h"
@@ -48,6 +49,12 @@
 @interface VOITriangle (VOIPath)
 
 - (instancetype)initWithPath:(VOIPath *)path;
+- (VOIPath *)asPath;
+
+@end
+
+@interface VOIBox (VOIPath)
+
 - (VOIPath *)asPath;
 
 @end
