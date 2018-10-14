@@ -11,16 +11,12 @@
 #import "VOIPath.h"
 #import "VOISegment.h"
 
-@interface NSMeasurement (DegreesToRadians)
+#define ALIGN_UNIT 0x1p+32
+#define ALIGN_UNIT_INV 0x1p-32
 
-+ (instancetype)angleInDegrees:(double)degrees;
-+ (instancetype)angleInRadians:(double)radians;
-- (NSMeasurement *)inDegress;
-- (NSMeasurement *)inRadians;
-+ (double)radiansForDegrees:(double)degrees;
-+ (double)degreesForRadians:(double)radians;
-
-@end
+static inline double Align(double f) {
+    return round(f * ALIGN_UNIT) * ALIGN_UNIT_INV;
+}
 
 static const NSUInteger COUNT = 12;
 static VOIPoint pathPoints[COUNT];
@@ -36,9 +32,9 @@ static VOIPoint pathPoints[COUNT];
 + (void)setUp {
     const double length = 2.0;
     for (NSUInteger i = 0; i < COUNT; ++i) {
-        double radians = [NSMeasurement radiansForDegrees:30.0 * (double)i];
-        double x = cos(radians);
-        double y = sin(radians);
+        double radians = (30.0 * (double)i * VOIPi / 180.0);
+        double x = Align(cos(radians));
+        double y = Align(sin(radians));
         pathPoints[i] = vector2(x, y) * length;
     }
 }
@@ -213,46 +209,6 @@ static VOIPoint pathPoints[COUNT];
     VOITriangle *triangle = [[VOITriangle alloc] initWithPoints:pathPoints];
     VOIPath *a = [triangle asPath];
     XCTAssertEqualObjects(e, a);
-}
-
-@end
-
-static NSUnit *Degrees;
-static NSUnit *Radians;
-static NSUnitAngle *AngleUnit;
-
-@implementation NSMeasurement (DegreesToRadians)
-
-+ (void)load {
-    @autoreleasepool {
-        Degrees = [NSUnitAngle degrees];
-        Radians = [NSUnitAngle radians];
-        AngleUnit = [NSUnitAngle baseUnit];
-    }
-}
-
-+ (instancetype)angleInDegrees:(double)degrees {
-    return [[NSMeasurement alloc] initWithDoubleValue:degrees unit:Degrees];
-}
-
-+ (instancetype)angleInRadians:(double)radians {
-    return [[NSMeasurement alloc] initWithDoubleValue:radians unit:Radians];
-}
-
-- (NSMeasurement *)inDegress {
-    return [self measurementByConvertingToUnit:Radians];
-}
-
-- (NSMeasurement *)inRadians {
-    return [self measurementByConvertingToUnit:Radians];
-}
-
-+ (double)radiansForDegrees:(double)degrees {
-    return [[self angleInDegrees:degrees] inRadians].doubleValue;
-}
-
-+ (double)degreesForRadians:(double)radians {
-    return [[self angleInRadians:radians] inDegress].doubleValue;
 }
 
 @end
