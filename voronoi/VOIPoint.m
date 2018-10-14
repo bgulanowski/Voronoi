@@ -10,6 +10,9 @@
 
 #import "VOISegment.h"
 
+const double VOIPi = M_PI;
+const double VOIEpsilon = VOI_EPSILON;
+
 VOIPoint VOICentrePoint(VOIPoint points[3]) {
     VOISegment *p0 = [[VOISegment alloc] initWithPoints:&points[0]].perpendicular;
     VOISegment *p1 = [[VOISegment alloc] initWithPoints:&points[1]].perpendicular;

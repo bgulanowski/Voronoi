@@ -9,6 +9,9 @@
 
 #define VOI_EPSILON (2 * DBL_EPSILON)
 
+extern const double VOIEpsilon;
+extern const double VOIPi;
+
 typedef vector_double2 VOIPoint;
 
 typedef vector_double2 VOISize;
