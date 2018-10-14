@@ -296,7 +296,7 @@
     }
     
     if (pIndex) {
-        *pIndex = closest - first;
+        *pIndex = closest;
     }
     
     return [[self pointListWithRange:NSMakeRange(first, last - first + 1)] asPath];

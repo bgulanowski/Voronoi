@@ -291,7 +291,7 @@ static const double Scale = 2.0;
     e = [[VOIPath alloc] initWithPoints:&pathPoints[1] count:2];
     a = [closed pathVisibleToPoint:point closestSegmentIndex:&index];
     XCTAssertEqualObjects(e, a);
-    XCTAssertEqual(0, index);
+    XCTAssertEqual(1, index);
 }
 
 @end
