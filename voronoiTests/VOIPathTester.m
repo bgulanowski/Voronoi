@@ -232,4 +232,36 @@ static VOIPoint pathPoints[COUNT];
     }
 }
 
+- (void)testClosestSegmentToPoint {
+    VOIPath *closed = [self.path closedPath];
+    VOISegment *e = [[VOISegment alloc] initWithPoints:pathPoints];
+    VOISegment *a = [closed closestSegmentToPoint:vector2(2.0, 0.5) index:NULL];
+    XCTAssertEqualObjects(e, a);
+    
+    e = [[VOISegment alloc] initWithPoints:&pathPoints[6]];
+    a = [closed closestSegmentToPoint:vector2(-2.0, -0.5) index:NULL];
+    XCTAssertEqualObjects(e, a);
+    
+    VOIPoint conv[6] = {
+        vector2(0.0, 0.0),
+        vector2(1.0, -1.0),
+        vector2(0.0, -0.5),
+        vector2(-1.0, 0.0),
+        vector2(0.0, 1.0),
+        vector2(1.0, 0.0)
+    };
+    
+    VOIPath *convex = [[VOIPath alloc] initWithPoints:conv count:6 close:YES];
+    VOIPoint point = vector2(0.8, -0.8);
+    NSUInteger index;
+    [convex pointClosestToPoint:point index:&index];
+    XCTAssertEqual(1, index);
+    XCTAssertGreaterThan([[convex segmentAt:0] distanceSquaredFromPoint:point],
+                         [[convex segmentAt:1] distanceSquaredFromPoint:point]);
+    
+    e = [[VOISegment alloc] initWithPoints:conv];
+    a = [convex closestSegmentToPoint:point index:NULL];
+    XCTAssertEqualObjects(e, a);
+}
+
 @end

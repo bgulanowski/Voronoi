@@ -25,6 +25,7 @@
 - (VOIPath *)openPath;
 
 - (VOISegment *)segmentAt:(NSUInteger)index;
+- (VOISegment *)closestSegmentToPoint:(VOIPoint)point index:(NSUInteger *)pIndex;
 - (void)iterateSegments:(VOISegmentIterator)iterator;
 - (NSArray<VOISegment *> *)allSegments;
 - (VOISegmentList *)asSegmentList;

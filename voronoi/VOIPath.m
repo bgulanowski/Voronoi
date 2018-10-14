@@ -127,6 +127,33 @@
     return [[VOISegment alloc] initWithPoints:points];
 }
 
+- (VOISegment *)closestSegmentToPoint:(VOIPoint)point index:(NSUInteger *)pIndex {
+    NSUInteger index;
+    [self pointClosestToPoint:point index:&index];
+    
+    VOISegment *s0 = [self segmentAt:index - 1];
+    VOISegment *s1 = [self segmentAt:index];
+    
+    // Which segment is right?
+    VOILineSide side0 = [s0 sideForPoint:point];
+    VOILineSide side1 = [s1 sideForPoint:point];
+    
+    VOISegment *result = nil;
+    if (side0 == side1) {
+        // choose the closest by midpoint
+        result = ([s0 distanceSquaredFromPoint:point] < [s1 distanceSquaredFromPoint:point]) ? s0 : s1;
+    }
+    else {
+        // if s0.a is on the same side of s1 as point, then it's s0. otherwise, s1.
+        result = ([s1 sideForPoint:s0.a] == side1) ? s0 : s1;
+    }
+    
+    if(pIndex) {
+        *pIndex = index;
+    }
+    return result;
+}
+
 - (void)iterateSegments:(VOISegmentIterator)iterator {
     const NSUInteger last = self.pointCount - 1;
     [self iteratePoints:^(const VOIPoint *points, const NSUInteger i) {
