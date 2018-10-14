@@ -31,6 +31,7 @@
 - (instancetype)initWithOrigin:(VOIPoint)origin size:(VOISize)size NS_DESIGNATED_INITIALIZER;
 // clockwise starting at origin
 - (VOIPointList *)asPointList;
+- (BOOL)containsPoint:(VOIPoint)point;
 - (VOIPoint)randomPoint;
 
 + (VOIPoint)regularizeOrigin:(VOIPoint)origin forSize:(VOISize)size;

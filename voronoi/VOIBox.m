@@ -92,6 +92,15 @@
     return _size.x <= DBL_EPSILON || _size.y <= DBL_EPSILON;
 }
 
+- (BOOL)containsPoint:(VOIPoint)point {
+    return (
+            point.x >= self.minX &&
+            point.x <= self.maxX &&
+            point.y >= self.minY &&
+            point.y <= self.maxY
+            );
+}
+
 - (VOIPoint)randomPoint {
     return VOIRandomPointBetween(_origin, _size);
 }

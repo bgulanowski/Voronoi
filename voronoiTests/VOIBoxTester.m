@@ -100,4 +100,17 @@
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testContainsPoint {
+    XCTAssertTrue([self.box containsPoint:self.box.origin]);
+    XCTAssertTrue([self.box containsPoint:(self.box.origin + self.box.size)]);
+    XCTAssertTrue([self.box containsPoint:self.box.centre]);
+    XCTAssertFalse([self.box containsPoint:self.box.origin - vector2(1.0, 1.0)]);
+    XCTAssertFalse([self.box containsPoint:self.box.origin - vector2(1.0, 0.0)]);
+    XCTAssertFalse([self.box containsPoint:self.box.origin - vector2(0.0, 1.0)]);
+}
+
+- (void)testRandomPoint {
+    [self.box randomPoint];
+}
+
 @end
