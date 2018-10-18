@@ -77,6 +77,14 @@
     return path;
 }
 
+- (instancetype)substitutePoints:(VOIPointList *)points inRange:(NSRange)range {
+    VOIPath *path = (VOIPath *)[super substitutePoints:points inRange:range];
+    path->_closed = _closed;
+    path->_convex = _convex;
+    path->_checkedConvex = _checkedConvex;
+    return path;
+}
+
 #pragma mark - VOIPath
 
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count close:(BOOL)closed {
@@ -347,11 +355,7 @@
         
         VOIPointList *list = [[VOIPointList alloc] initWithPoints:&point count:1];
         NSRange subRange = NSMakeRange(visRange.location + 1, visRange.length - 2);
-        VOIPath *hull = (VOIPath *)[self substitutePoints:list inRange:subRange];
-        hull->_closed = YES;
-        hull->_convex = YES;
-        hull->_checkedConvex = YES;
-        return hull;
+        return [self substitutePoints:list inRange:subRange];
     }
     
     return self;
