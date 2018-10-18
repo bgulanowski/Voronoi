@@ -61,6 +61,10 @@
 
 #pragma mark - VOIPointList
 
+- (instancetype)_initWithData:(NSMutableData *)data {
+    return [self _initWithData:data close:NO];
+}
+
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count {
     return [self initWithPoints:points count:count close:NO];
 }
