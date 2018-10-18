@@ -171,7 +171,7 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return index;
 }
 
-- (VOIPointList *)reverseList {
+- (instancetype)reverseList {
     NSMutableData *data = [NSMutableData dataWithLength:self.pointsData.length];
     VOIPoint *points = self.pointsData.mutableBytes;
     VOIPoint *reversePoints = data.mutableBytes;
@@ -182,13 +182,13 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return [[[self class] alloc] _initWithData:data];
 }
 
-- (VOIPointList *)add:(VOIPointList *)other {
+- (instancetype)add:(VOIPointList *)other {
     NSMutableData *copy = [_pointsData mutableCopy];
     [copy appendData:other.pointsData];
     return [[[self class] alloc] _initWithData:copy];
 }
 
-- (VOIPointList *)selectRange:(NSRange)range {
+- (instancetype)selectRange:(NSRange)range {
     
     range.location %= _count;
     
@@ -196,7 +196,7 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     NSUInteger count = MIN(range.length, _count - range.location);
     
     while (count) {
-        VOIPointList *next = [[VOIPointList alloc] initWithPoints:&_points[range.location] count:count];
+        VOIPointList *next = [[[self class] alloc] initWithPoints:&_points[range.location] count:count];
         result = [result add:next];
         range.location = 0;
         range.length -= count;
@@ -206,18 +206,18 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return result;
 }
 
-- (VOIPointList *)deleteRange:(NSRange)range {
+- (instancetype)deleteRange:(NSRange)range {
     NSRange a = NSMakeRange(0, range.location);
     NSUInteger end = NSMaxRange(range);
     NSRange b = NSMakeRange(end, _count - end);
     return [[self selectRange:a] add:[self selectRange:b]];
 }
 
-- (VOIPointList *)deleteIndex:(NSUInteger)index {
+- (instancetype)deleteIndex:(NSUInteger)index {
     return [self deleteRange:NSMakeRange(index, 1)];
 }
 
-- (VOIPointList *)deleteIndices:(NSIndexSet *)indexSet {
+- (instancetype)deleteIndices:(NSIndexSet *)indexSet {
 
     NSMutableData *data = [[NSMutableData alloc]  initWithLength:(_count - indexSet.count) * sizeof(VOIPoint)];
     VOIPoint *points = data.mutableBytes;
@@ -232,14 +232,14 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return [[[self class] alloc] _initWithData:data];
 }
 
-- (VOIPointList *)substitutePoint:(VOIPoint)point atIndex:(NSUInteger)index {
+- (instancetype)substitutePoint:(VOIPoint)point atIndex:(NSUInteger)index {
     NSMutableData *data = [self.pointsData mutableCopy];
     VOIPoint *points = data.mutableBytes;
     points[index] = point;
     return [[[self class] alloc] _initWithData:data];
 }
 
-- (VOIPointList *)substitutePoints:(VOIPointList *)points inRange:(NSRange)range {
+- (instancetype)substitutePoints:(VOIPointList *)points inRange:(NSRange)range {
     NSRange bytesRange = NSMakeRange(range.location * sizeof(VOIPoint), range.length * sizeof(VOIPoint));
     NSMutableData *data = [self.pointsData mutableCopy];
     NSMutableData *replacement = points.pointsData;
@@ -253,11 +253,11 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return [[[self class] alloc] _initWithData:data];
 }
 
-- (VOIPointList *)sortedByLength {
+- (instancetype)sortedByLength {
     return [self sortedPointList:[length copy]];
 }
 
-- (VOIPointList *)sortedByDistanceFrom:(VOIPoint)p {
+- (instancetype)sortedByDistanceFrom:(VOIPoint)p {
     return [self sortedPointList:distanceFrom(p)];
 }
 

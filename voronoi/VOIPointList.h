@@ -39,21 +39,21 @@ typedef double (^VOIPointEvaluator)(VOIPoint *p);
 // assumes continuous change between points
 - (NSUInteger)binarySearch:(VOIPointEvaluator)evaluator;
 
-- (VOIPointList *)reverseList;
-- (VOIPointList *)add:(VOIPointList *)other;
+- (instancetype)reverseList;
+- (instancetype)add:(VOIPointList *)other;
 
 // range can be anything; indices will be truncated with %
-- (VOIPointList *)selectRange:(NSRange)range;
-- (VOIPointList *)deleteRange:(NSRange)range;
-- (VOIPointList *)deleteIndex:(NSUInteger)index;
-- (VOIPointList *)deleteIndices:(NSIndexSet *)indexSet;
+- (instancetype)selectRange:(NSRange)range;
+- (instancetype)deleteRange:(NSRange)range;
+- (instancetype)deleteIndex:(NSUInteger)index;
+- (instancetype)deleteIndices:(NSIndexSet *)indexSet;
 
-- (VOIPointList *)substitutePoint:(VOIPoint)point atIndex:(NSUInteger)index;
-- (VOIPointList *)substitutePoints:(VOIPointList *)points inRange:(NSRange)range;
+- (instancetype)substitutePoint:(VOIPoint)point atIndex:(NSUInteger)index;
+- (instancetype)substitutePoints:(VOIPointList *)points inRange:(NSRange)range;
 
-- (VOIPointList *)sortedPointList:(VOIPointComparator)comparator;
-- (VOIPointList *)sortedByLength;
-- (VOIPointList *)sortedByDistanceFrom:(VOIPoint)p;
+- (instancetype)sortedPointList:(VOIPointComparator)comparator;
+- (instancetype)sortedByLength;
+- (instancetype)sortedByDistanceFrom:(VOIPoint)p;
 
 - (VOITriangle *)triangleForIndices:(NSUInteger[3])indices;
 - (VOITriangle *)triangleForIndexSet:(NSIndexSet *)indexSet;

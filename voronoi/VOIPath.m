@@ -69,7 +69,7 @@
     return [self initWithPoints:points count:count close:NO];
 }
 
-- (VOIPointList *)reverseList {
+- (instancetype)reverseList {
     VOIPath *path = (VOIPath *)[super reverseList];
     path->_checkedConvex = _checkedConvex;
     path->_convex = _convex;
