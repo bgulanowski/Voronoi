@@ -12,6 +12,14 @@
 #import "VOISegment.h"
 #import "VOISegmentList.h"
 
+static inline void OrderPoints(const VOIPoint *points, NSUInteger *indices) {
+    if (points[indices[0]].x > points[indices[1]].x) {
+        NSUInteger t = indices[1];
+        indices[1] = indices[0];
+        indices[0] = t;
+    }
+}
+
 @implementation VOITriangle {
     VOIPoint _points[3];
     VOIPoint _centre;
@@ -119,19 +127,11 @@
     return [[VOITriangle alloc] initWithPoints:reordered];
 }
 
-static inline void OrderPointsX(VOIPoint *points, NSUInteger *indices) {
-    if (points[indices[0]].x > points[indices[1]].x) {
-        NSUInteger t = indices[1];
-        indices[1] = indices[0];
-        indices[0] = t;
-    }
-}
-
 - (VOITriangle *)standardize {
     NSUInteger indices[3] = { 0, 1, 2 };
-    OrderPointsX(_points, &indices[1]);
-    OrderPointsX(_points, &indices[0]);
-    OrderPointsX(_points, &indices[1]);
+    OrderPoints(_points, &indices[1]);
+    OrderPoints(_points, &indices[0]);
+    OrderPoints(_points, &indices[1]);
 
     VOIPoint points[3] = {
         _points[indices[0]],
