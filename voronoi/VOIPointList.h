@@ -43,10 +43,10 @@ typedef double (^VOIPointEvaluator)(VOIPoint *p);
 - (VOIPointList *)add:(VOIPointList *)other;
 
 // range can be anything; indices will be truncated with %
-- (VOIPointList *)pointListWithRange:(NSRange)range;
-- (VOIPointList *)pointListByDeletingRange:(NSRange)range;
-- (VOIPointList *)pointListByDeletingPointAtIndex:(NSUInteger)index;
-- (VOIPointList *)pointListByDeletingPointsAtIndices:(NSIndexSet *)indexSet;
+- (VOIPointList *)selectRange:(NSRange)range;
+- (VOIPointList *)deleteRange:(NSRange)range;
+- (VOIPointList *)deleteIndex:(NSUInteger)index;
+- (VOIPointList *)deleteIndices:(NSIndexSet *)indexSet;
 
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator;
 - (VOIPointList *)sortedByLength;

@@ -207,13 +207,13 @@ static const double Scale = 2.0;
 
 - (void)testInitTriangleWithPath {
     VOITriangle *e = [[VOITriangle alloc] initWithPoints:pathPoints];
-    VOIPath *path = [[self.path pointListWithRange:NSMakeRange(0, 3)] asClosedPath];
+    VOIPath *path = [[self.path selectRange:NSMakeRange(0, 3)] asClosedPath];
     VOITriangle *a = [[VOITriangle alloc] initWithPath:path];
     XCTAssertEqualObjects(e, a);
 }
 
 - (void)testTriangleAsPath {
-    VOIPath *e = [[self.path pointListWithRange:NSMakeRange(0, 3)] asClosedPath];
+    VOIPath *e = [[self.path selectRange:NSMakeRange(0, 3)] asClosedPath];
     VOITriangle *triangle = [[VOITriangle alloc] initWithPoints:pathPoints];
     VOIPath *a = [triangle asPath];
     XCTAssertEqualObjects(e, a);
