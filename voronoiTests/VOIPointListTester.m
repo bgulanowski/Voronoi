@@ -201,6 +201,65 @@ static VOIPoint points[4];
     AssertEqualPoints(points[2], [list pointAtIndex:1]);
 }
 
+- (void)testSubstitutePoint {
+    VOIPoint other = vector2(-1.0, -1.0);
+    VOIPoint ep[] = {
+        points[0],
+        points[1],
+        other,
+        points[3]
+    };
+    VOIPointList *e = [[VOIPointList alloc] initWithPoints:ep count:4];
+    VOIPointList *a = [self.pointList substitutePoint:other atIndex:2];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testSubstitutePoints_Null {
+    VOIPointList *e = self.pointList;
+    VOIPointList *a = [self.pointList substitutePoints:nil inRange:NSMakeRange(0, 0)];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testSubstitutePoints_Start {
+    VOIPoint p = vector2(-1.0, -1.0);
+    VOIPointList *sub = [[VOIPointList alloc] initWithPoints:&p count:1];
+    VOIPointList *e = [sub add:[self.pointList selectRange:NSMakeRange(1, 3)]];
+    VOIPointList *a = [self.pointList substitutePoints:sub inRange:NSMakeRange(0, 1)];
+    XCTAssertEqualObjects(e, a);
+    XCTAssertEqual(4, a.count);
+    AssertEqualPoints(p, [a pointAtIndex:0]);
+}
+
+- (void)testSubstitutePoints_End {
+    VOIPoint p = vector2(-1.0, -1.0);
+    VOIPointList *sub = [[VOIPointList alloc] initWithPoints:&p count:1];
+    VOIPointList *e = [[self.pointList selectRange:NSMakeRange(0, 3)] add:sub];
+    VOIPointList *a = [self.pointList substitutePoints:sub inRange:NSMakeRange(3, 1)];
+    XCTAssertEqualObjects(e, a);
+    XCTAssertEqual(4, a.count);
+    AssertEqualPoints(p, [a pointAtIndex:3]);
+}
+
+- (void)testSubstitutePoints_Middle {
+    VOIPoint p = vector2(-1.0, -1.0);
+    VOIPointList *sub = [[VOIPointList alloc] initWithPoints:&p count:1];
+    VOIPointList *e = [[[self.pointList selectRange:NSMakeRange(0, 2)] add:sub] add:[self.pointList selectRange:NSMakeRange(3, 1)]];
+    VOIPointList *a = [self.pointList substitutePoints:sub inRange:NSMakeRange(2, 1)];
+    XCTAssertEqualObjects(e, a);
+    XCTAssertEqual(4, a.count);
+    AssertEqualPoints(p, [a pointAtIndex:2]);
+}
+
+- (void)testSubstitutePoints_Insert {
+    VOIPoint p = vector2(-1.0, -1.0);
+    VOIPointList *sub = [[VOIPointList alloc] initWithPoints:&p count:1];
+    VOIPointList *e = [[[self.pointList selectRange:NSMakeRange(0, 1)] add:sub] add:[self.pointList selectRange:NSMakeRange(1, 3)]];
+    VOIPointList *a = [self.pointList substitutePoints:sub inRange:NSMakeRange(1, 0)];
+    XCTAssertEqualObjects(e, a);
+    XCTAssertEqual(5, a.count);
+    AssertEqualPoints(p, [a pointAtIndex:1]);
+}
+
 - (void)testSortedByLength {
     
     VOIPoint sorted[] = {
@@ -211,7 +270,7 @@ static VOIPoint points[4];
     };
     
     VOIPointList *e = [[VOIPointList alloc] initWithPoints:sorted count:4];
-    VOIPointList *a = [_pointList sortedByLength];
+    VOIPointList *a = [self.pointList sortedByLength];
     
     XCTAssertEqualObjects(e, a);
 }

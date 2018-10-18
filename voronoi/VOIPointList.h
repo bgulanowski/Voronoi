@@ -48,6 +48,9 @@ typedef double (^VOIPointEvaluator)(VOIPoint *p);
 - (VOIPointList *)deleteIndex:(NSUInteger)index;
 - (VOIPointList *)deleteIndices:(NSIndexSet *)indexSet;
 
+- (VOIPointList *)substitutePoint:(VOIPoint)point atIndex:(NSUInteger)index;
+- (VOIPointList *)substitutePoints:(VOIPointList *)points inRange:(NSRange)range;
+
 - (VOIPointList *)sortedPointList:(VOIPointComparator)comparator;
 - (VOIPointList *)sortedByLength;
 - (VOIPointList *)sortedByDistanceFrom:(VOIPoint)p;
