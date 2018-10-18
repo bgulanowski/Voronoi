@@ -325,6 +325,38 @@
     return range.length > 0 ? [[self selectRange:range] asPath] : nil;
 }
 
+- (VOIPath *)convexHullByAddingPoint:(VOIPoint)point triangles:(VOITriangleList **)pTriangles {
+    if (!self.convex) {
+        return nil;
+    }
+    
+    NSUInteger index;
+    NSRange visRange = [self rangeVisibleToPoint:point closestSegmentIndex:&index];
+    if (visRange.length > 0) {
+        if (pTriangles) {
+            NSUInteger triCount = (visRange.length - 1);
+            NSMutableData *data = [NSMutableData dataWithLength:sizeof(VOIPoint) * triCount * 3];
+            VOIPoint *points = data.mutableBytes;
+            for (NSUInteger i = 0; i < triCount; ++i) {
+                points[i * 3] = [self pointAtIndex:visRange.location + i];
+                points[i * 3 + 1] = point;
+                points[i * 3 + 2] = [self pointAtIndex:visRange.location + i + 1];
+            }
+            *pTriangles = [[VOITriangleList alloc] _initWithData:data];
+        }
+        
+        VOIPointList *list = [[VOIPointList alloc] initWithPoints:&point count:1];
+        NSRange subRange = NSMakeRange(visRange.location + 1, visRange.length - 2);
+        VOIPath *hull = (VOIPath *)[self substitutePoints:list inRange:subRange];
+        hull->_closed = YES;
+        hull->_convex = YES;
+        hull->_checkedConvex = YES;
+        return hull;
+    }
+    
+    return self;
+}
+
 #pragma mark - Private
 
 - (void)quickCheckConvex {

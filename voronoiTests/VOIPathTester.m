@@ -291,6 +291,14 @@ static const double Scale = 2.0;
     XCTAssertEqual(1, index);
 }
 
+- (void)testConvexHull {
+    VOIPath *triangle = [[self.path triangleAt:0] asPath];
+    VOITriangleList *pTriangles = NULL;
+    VOIPath *hull = [triangle convexHullByAddingPoint:pathPoints[3] triangles:&pTriangles];
+    VOIPath *e = [[VOIPath alloc] initWithPoints:pathPoints count:4 close:YES];
+    XCTAssertEqualObjects(e, hull);
+}
+
 @end
 
 static VOIPoint sawtooth[5] = {

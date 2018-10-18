@@ -38,6 +38,7 @@
 - (BOOL)pointInside:(VOIPoint)point;
 - (NSRange)rangeVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex;
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex;
+- (VOIPath *)convexHullByAddingPoint:(VOIPoint)point triangles:(VOITriangleList **)pTriangles;
 
 @end
 
