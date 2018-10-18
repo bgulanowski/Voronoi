@@ -57,6 +57,10 @@ static VOIPoint points[4];
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testCentre {
+    AssertEqualPoints(vector2(1.5, 2.0), self.pointList.centre);
+}
+
 - (void)testDescription {
     NSString *e = @"VOIPointList: points: [(3.00, 0.00), (1.00, 0.50), (0.00, 4.00), (0.50, 2.00), ...] count: 4";
     NSString *a = [_pointList description];
