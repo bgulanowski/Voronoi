@@ -35,9 +35,12 @@
 - (NSArray<VOITriangle *> *)allTriangles;
 - (VOITriangleList *)asTriangleList;
 
+- (VOITriangleList *)triangleFanWithCentre:(VOIPoint)point range:(NSRange)range;
+
 - (BOOL)pointInside:(VOIPoint)point;
 - (NSRange)rangeVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex;
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex;
+- (VOIPath *)substitutePoint:(VOIPoint)point forSegmentsInRange:(NSRange)range;
 - (VOIPath *)convexHullByAddingPoint:(VOIPoint)point triangles:(VOITriangleList **)pTriangles;
 
 @end

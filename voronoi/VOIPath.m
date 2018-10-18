@@ -133,6 +133,8 @@
     return path;
 }
 
+#pragma mark - Segments
+
 - (VOISegment *)segmentAt:(NSUInteger)index {
     const NSUInteger count = self.count;
     VOIPoint points[2];
@@ -222,6 +224,8 @@
     return [[VOISegmentList alloc] _initWithData:data];
 }
 
+#pragma mark - Triangles
+
 - (VOITriangle *)triangleAt:(NSUInteger)index {
     const NSUInteger count = self.triangleCount;
     NSUInteger indices[3] = {
@@ -274,6 +278,20 @@
     }];
     return triangles;
 }
+
+- (VOITriangleList *)triangleFanWithCentre:(VOIPoint)point range:(NSRange)range {
+    NSUInteger triCount = (range.length - 1);
+    NSMutableData *data = [NSMutableData dataWithLength:sizeof(VOIPoint) * triCount * 3];
+    VOIPoint *points = data.mutableBytes;
+    for (NSUInteger i = 0; i < triCount; ++i) {
+        points[i * 3] = [self pointAtIndex:range.location + i];
+        points[i * 3 + 1] = point;
+        points[i * 3 + 2] = [self pointAtIndex:range.location + i + 1];
+    }
+    return [[VOITriangleList alloc] _initWithData:data];
+}
+
+#pragma mark - Points
 
 - (BOOL)pointInside:(VOIPoint)point {
     if (!_closed) {
@@ -333,29 +351,23 @@
     return range.length > 0 ? [[self selectRange:range] asPath] : nil;
 }
 
+- (VOIPath *)substitutePoint:(VOIPoint)point forSegmentsInRange:(NSRange)range {
+    VOIPointList *list = [[VOIPointList alloc] initWithPoints:&point count:1];
+    NSRange subRange = NSMakeRange(range.location + 1, range.length - 2);
+    return [self substitutePoints:list inRange:subRange];
+}
+
 - (VOIPath *)convexHullByAddingPoint:(VOIPoint)point triangles:(VOITriangleList **)pTriangles {
     if (!self.convex) {
         return nil;
     }
     
-    NSUInteger index;
-    NSRange visRange = [self rangeVisibleToPoint:point closestSegmentIndex:&index];
-    if (visRange.length > 0) {
+    NSRange range = [self rangeVisibleToPoint:point closestSegmentIndex:NULL];
+    if (range.length > 0) {
         if (pTriangles) {
-            NSUInteger triCount = (visRange.length - 1);
-            NSMutableData *data = [NSMutableData dataWithLength:sizeof(VOIPoint) * triCount * 3];
-            VOIPoint *points = data.mutableBytes;
-            for (NSUInteger i = 0; i < triCount; ++i) {
-                points[i * 3] = [self pointAtIndex:visRange.location + i];
-                points[i * 3 + 1] = point;
-                points[i * 3 + 2] = [self pointAtIndex:visRange.location + i + 1];
-            }
-            *pTriangles = [[VOITriangleList alloc] _initWithData:data];
+            *pTriangles = [self triangleFanWithCentre:point range:range];
         }
-        
-        VOIPointList *list = [[VOIPointList alloc] initWithPoints:&point count:1];
-        NSRange subRange = NSMakeRange(visRange.location + 1, visRange.length - 2);
-        return [self substitutePoints:list inRange:subRange];
+        return [self substitutePoint:point forSegmentsInRange:range];
     }
     
     return self;
