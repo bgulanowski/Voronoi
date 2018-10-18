@@ -12,6 +12,12 @@
 #import "VOISegment.h"
 #import "VOISegmentList.h"
 
+static inline void CopyPoints(const VOIPoint src[3], VOIPoint dst[3]) {
+    dst[0] = src[0];
+    dst[1] = src[1];
+    dst[2] = src[2];
+}
+
 static inline void OrderPoints(const VOIPoint *points, NSUInteger *indices) {
     if (points[indices[0]].x > points[indices[1]].x) {
         NSUInteger t = indices[1];
@@ -20,18 +26,40 @@ static inline void OrderPoints(const VOIPoint *points, NSUInteger *indices) {
     }
 }
 
-static inline void CopyPoints(const VOIPoint src[3], VOIPoint dst[3]) {
-    dst[0] = src[0];
-    dst[1] = src[1];
-    dst[2] = src[2];
+// Return true/YES if already standard
+static inline BOOL StandardizePoints(const VOIPoint src[3], VOIPoint dst[3]) {
+    
+    NSUInteger indices[3] = { 0, 1, 2 };
+    OrderPoints(src, &indices[1]);
+    OrderPoints(src, &indices[0]);
+    OrderPoints(src, &indices[1]);
+    
+    if (simd_cross((src[indices[1]] - src[indices[0]]), (src[indices[2]] - src[indices[0]])).z > DBL_EPSILON) {
+        NSUInteger t = indices[1];
+        indices[1] = indices[2];
+        indices[2] = t;
+    }
+    
+    dst[0] = src[indices[0]];
+    dst[1] = src[indices[1]];
+    dst[2] = src[indices[2]];
+    
+    return (indices[0] == 0 && indices[1] == 1);
+}
+
+static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
+    return simd_normalize(simd_cross((points[1] - points[0]), (points[2] - points[0])));
 }
 
 @implementation VOITriangle {
     VOIPoint _points[3];
-    VOIPoint _centre;
-    double _radius;
     vector_double3 _normal;
 }
+
+@synthesize centre=_centre;
+@synthesize radius=_radius;
+@synthesize ordered=_ordered;
+@synthesize standard=_standard;
 
 #pragma mark - Properties
 
@@ -71,10 +99,6 @@ static inline void CopyPoints(const VOIPoint src[3], VOIPoint dst[3]) {
     return _points[0].x < _points[1].x && _points[0].x < _points[2].x;
 }
 
-- (BOOL)isStandard {
-    return [self isOrdered] && ![self isLeftHanded];
-}
-
 #pragma mark - NSObject
 
 - (NSString *)description {
@@ -93,15 +117,27 @@ static inline void CopyPoints(const VOIPoint src[3], VOIPoint dst[3]) {
             );
 }
 
-- (instancetype)initWithPoints:(const VOIPoint *)points {
+#pragma mark - VOITriangle
+
+- (instancetype)initWithPoints:(const VOIPoint *)points standardize:(BOOL)standardize {
     self = [super init];
     if (self) {
-        CopyPoints(points, _points);
-        _normal = simd_normalize(simd_cross((_points[1] - _points[0]), (_points[2] - _points[0])));
+        if (standardize) {
+            StandardizePoints(points, _points);
+        }
+        else {
+            CopyPoints(points, _points);
+        }
+        _normal = CalculateNormal(_points);
+        _standard = standardize || (self.ordered && self.leftHanded);
         _centre = vector2((double)NAN, (double)NAN);
         _radius = (double)NAN;
     }
     return self;
+}
+
+- (instancetype)initWithPoints:(const VOIPoint *)points {
+    return [self initWithPoints:points standardize:NO];
 }
 
 - (BOOL)isEqualToTriangle:(VOITriangle *)other {
@@ -113,16 +149,18 @@ static inline void CopyPoints(const VOIPoint src[3], VOIPoint dst[3]) {
 }
 
 - (BOOL)isEquivalentToTriangle:(VOITriangle *)other {
-    VOITriangle *a = [self isStandard] ? self : [self standardize];
-    VOITriangle *b = [other isStandard] ? other : [other standardize];
-    return [a isEqualToTriangle:b];
+    return [[self standardize] isEqualToTriangle:[other standardize]];
 }
 
 - (VOIPoint)pointAt:(NSUInteger)index {
     return _points[index%3];
 }
 
-- (VOITriangle *)reorder {
+- (VOISegment *)segmentAt:(NSUInteger)index {
+    return [[VOISegment alloc] initWithPoint:_points[(index + 1)%3] otherPoint:_points[(index + 2)%3]];
+}
+
+- (VOITriangle *)reverseOrder {
     VOIPoint reordered[3] = {
         _points[0],
         _points[2],
@@ -132,19 +170,21 @@ static inline void CopyPoints(const VOIPoint src[3], VOIPoint dst[3]) {
 }
 
 - (VOITriangle *)standardize {
-    NSUInteger indices[3] = { 0, 1, 2 };
-    OrderPoints(_points, &indices[1]);
-    OrderPoints(_points, &indices[0]);
-    OrderPoints(_points, &indices[1]);
 
-    VOIPoint points[3] = {
-        _points[indices[0]],
-        _points[indices[1]],
-        _points[indices[2]]
-    };
+    VOIPoint points[3];
+    VOITriangle *t;
     
-    VOITriangle *t = [[VOITriangle alloc] initWithPoints:points];
-    return t.rightHanded ? [t reorder] : t;
+    if (_standard || StandardizePoints(_points, points)) {
+        t = self;
+    }
+    else {
+        t = [[VOITriangle alloc] initWithPoints:points];
+        NSAssert([t isLeftHanded], @"Error");
+    }
+    
+    t->_standard = YES;
+    
+    return t;
 }
 
 #pragma mark - Private

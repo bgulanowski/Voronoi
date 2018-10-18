@@ -32,6 +32,13 @@ static VOIPoint points[4];
     self.degenerate = [[VOITriangle alloc] initWithPoints:&points[1]];
 }
 
+- (void)testInitStandardize {
+    VOITriangle *t = [[VOITriangle alloc] initWithPoints:points standardize:YES];
+    XCTAssertTrue(t.standard);
+    XCTAssertTrue(t.leftHanded);
+    XCTAssertEqualObjects(self.triangle, t);
+}
+
 - (void)testPoints {
     AssertEqualPoints(points[0], self.triangle.p0);
     AssertEqualPoints(points[1], self.triangle.p1);
@@ -84,19 +91,45 @@ static VOIPoint points[4];
     XCTAssertTrue(isnan(self.degenerate.radius));
 }
 
-- (void)testHandedness {
+- (void)testRightHandedness {
+    XCTAssertTrue(self.triangle.leftHanded);
     XCTAssertFalse(self.triangle.rightHanded);
-    XCTAssertTrue([self.triangle reorder].rightHanded);
+    XCTAssertTrue([self.triangle reverseOrder].rightHanded);
 }
 
-- (void)testReorder {
+- (void)testOrdered {
+    XCTAssertTrue(self.triangle.ordered);
+    VOIPoint scrambled[3] = {
+        points[1],
+        points[2],
+        points[0]
+    };
+    VOITriangle *t = [[VOITriangle alloc] initWithPoints:scrambled];
+    XCTAssertFalse(t.ordered);
+}
+
+- (void)testStandard {
+    XCTAssertTrue(self.triangle.standard);
+    VOITriangle *t = [self.triangle reverseOrder];
+    XCTAssertFalse(t.standard);
+    t = [t standardize];
+    XCTAssertTrue(t.standard);
+
+    XCTAssertEqualObjects(self.triangle, t);
+
+    AssertEqualPoints(self.triangle.p0, t.p0);
+    AssertEqualPoints(self.triangle.p1, t.p1);
+    AssertEqualPoints(self.triangle.p2, t.p2);
+}
+
+- (void)testReverse {
     VOIPoint other[3] = {
         points[0],
         points[2],
         points[1]
     };
     VOITriangle *e = [[VOITriangle alloc] initWithPoints:other];
-    VOITriangle *a = [self.triangle reorder];
+    VOITriangle *a = [self.triangle reverseOrder];
     XCTAssertEqualObjects(e, a);
 }
 
