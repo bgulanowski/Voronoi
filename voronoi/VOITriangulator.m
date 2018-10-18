@@ -37,10 +37,10 @@
     
     NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
     VOITriangle *firstTriangle = [self seedTriangleIndices:indices];
-    VOIPointList *remaining = [_pointList pointListByDeletingPointsAtIndices:indices];
+    VOIPointList *remaining = [_pointList deleteIndices:indices];
     remaining = [remaining sortedByDistanceFrom:firstTriangle.centre];
     
-    NSArray<VOITriangle *> *triangles = [NSMutableArray arrayWithObject:firstTriangle];
+    NSMutableArray<VOITriangle *> *triangles = [NSMutableArray arrayWithObject:firstTriangle];
     [self addTriangles:triangles fromPoints:remaining];
 
     _triangulation = [[VOITriangleList alloc] initWithTriangles:triangles];
@@ -82,14 +82,19 @@
     return [_pointList triangleForIndexSet:indices];
 }
 
-- (void)addTriangles:(NSArray<VOITriangle *> *)triangles fromPoints:(VOIPointList *)points {
+// Points should already be sorted by distance from
+- (void)addTriangles:(NSMutableArray<VOITriangle *> *)triangles fromPoints:(VOIPointList *)points {
     
-    VOIPath *hull = [triangles[0] asPath];
-    
+    __block VOIPath *hull = [triangles[0] asPath];
     [points iteratePoints:^BOOL(const VOIPoint *p, const NSUInteger i) {
-        
+        VOITriangleList *tList;
+        hull = [hull convexHullByAddingPoint:*p triangles:&tList];
+        NSArray<VOITriangle *> *newTriangles = [tList allTriangles];
+        NSLog(@"Adding triangles: %@", newTriangles);
+        [triangles addObjectsFromArray:newTriangles];
         return NO;
     }];
+    NSLog(@"Hull: %@", hull);
 }
 
 @end
