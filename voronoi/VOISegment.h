@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "VOIPointList.h"
-
 typedef enum {
     VOILineSideRight,
     VOILineSideOn,
