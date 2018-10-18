@@ -285,9 +285,9 @@
     return count != 0;
 }
 
-- (VOIPath *)pathVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex {
+- (NSRange)rangeVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex {
     if (!_closed || [self pointInside:point]) {
-        return nil;
+        return NSMakeRange(0, 0);
     }
     
     // point must be on the same side of all segments
@@ -313,7 +313,12 @@
         *pIndex = closest;
     }
     
-    return [[self pointListWithRange:NSMakeRange(first, last - first + 1)] asPath];
+    return NSMakeRange(first, last - first + 1);
+}
+
+- (VOIPath *)pathVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex {
+    NSRange range = [self rangeVisibleToPoint:point closestSegmentIndex:pIndex];
+    return range.length > 0 ? [[self selectRange:range] asPath] : nil;
 }
 
 #pragma mark - Private
