@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		842C20322171356E009B8E2D /* VOIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C20302171356E009B8E2D /* VOIPoint.h */; };
 		842C20332171356E009B8E2D /* VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C20312171356E009B8E2D /* VOIPoint.m */; };
+		842C203E217829F9009B8E2D /* VOITriangleNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C203C217829F9009B8E2D /* VOITriangleNet.h */; };
+		842C203F217829F9009B8E2D /* VOITriangleNet.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C203D217829F9009B8E2D /* VOITriangleNet.m */; };
 		847F31D316497C120068A102 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847F31D216497C120068A102 /* Cocoa.framework */; };
 		847F31DD16497C120068A102 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 847F31DB16497C120068A102 /* InfoPlist.strings */; };
 		847F31DF16497C120068A102 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847F31DE16497C120068A102 /* main.m */; };
@@ -100,6 +102,8 @@
 /* Begin PBXFileReference section */
 		842C20302171356E009B8E2D /* VOIPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPoint.h; sourceTree = "<group>"; };
 		842C20312171356E009B8E2D /* VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPoint.m; sourceTree = "<group>"; };
+		842C203C217829F9009B8E2D /* VOITriangleNet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOITriangleNet.h; sourceTree = "<group>"; };
+		842C203D217829F9009B8E2D /* VOITriangleNet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOITriangleNet.m; sourceTree = "<group>"; };
 		847F31CE16497C120068A102 /* VoronoiDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoronoiDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847F31D216497C120068A102 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		847F31D516497C120068A102 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -396,6 +400,8 @@
 				84D9058821653EFE00EA72FC /* VOITriangle.m */,
 				84D9058B2165403C00EA72FC /* VOITriangleList.h */,
 				84D9058C2165403C00EA72FC /* VOITriangleList.m */,
+				842C203C217829F9009B8E2D /* VOITriangleNet.h */,
+				842C203D217829F9009B8E2D /* VOITriangleNet.m */,
 				8480972421673B3300912E79 /* VOITriangulator.h */,
 				8480972521673B3300912E79 /* VOITriangulator.m */,
 			);
@@ -505,6 +511,7 @@
 				848097392167B4AD00912E79 /* VOIBox.h in Headers */,
 				84AD3355164DB72A00E37EDE /* DBoundary.h in Headers */,
 				84D3FAF616642B3500A05727 /* BABitArray.h in Headers */,
+				842C203E217829F9009B8E2D /* VOITriangleNet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,6 +660,7 @@
 				84D905AF2166641100EA72FC /* VOISegment.m in Sources */,
 				84AD3337164C3E8100E37EDE /* DTriad.m in Sources */,
 				84D9058621653D8900EA72FC /* VOIPointList.m in Sources */,
+				842C203F217829F9009B8E2D /* VOITriangleNet.m in Sources */,
 				84AD3339164C3E8100E37EDE /* NSArray+Voronoi.m in Sources */,
 				84AD333B164C3E8100E37EDE /* Voronoi.m in Sources */,
 				84D9058E2165403C00EA72FC /* VOITriangleList.m in Sources */,
