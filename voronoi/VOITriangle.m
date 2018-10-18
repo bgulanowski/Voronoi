@@ -20,6 +20,12 @@ static inline void OrderPoints(const VOIPoint *points, NSUInteger *indices) {
     }
 }
 
+static inline void CopyPoints(const VOIPoint src[3], VOIPoint dst[3]) {
+    dst[0] = src[0];
+    dst[1] = src[1];
+    dst[2] = src[2];
+}
+
 @implementation VOITriangle {
     VOIPoint _points[3];
     VOIPoint _centre;
@@ -90,9 +96,7 @@ static inline void OrderPoints(const VOIPoint *points, NSUInteger *indices) {
 - (instancetype)initWithPoints:(const VOIPoint *)points {
     self = [super init];
     if (self) {
-        _points[0] = points[0];
-        _points[1] = points[1];
-        _points[2] = points[2];
+        CopyPoints(points, _points);
         _normal = simd_normalize(simd_cross((_points[1] - _points[0]), (_points[2] - _points[0])));
         _centre = vector2((double)NAN, (double)NAN);
         _radius = (double)NAN;
