@@ -20,7 +20,7 @@ VOIPoint VOICentrePoint(VOIPoint points[3]) {
 }
 
 NSString *VOIPointToString(VOIPoint p) {
-    return [NSString stringWithFormat:@"(%.4f, %.4f)", p.x, p.y];
+    return [NSString stringWithFormat:@"(%.2f, %.2f)", p.x, p.y];
 }
 
 VOIPoint VOIPointFromString(NSString *s) {
