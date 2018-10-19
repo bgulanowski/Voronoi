@@ -42,13 +42,13 @@ typedef enum {
 - (instancetype)initWithPoint:(VOIPoint)point otherPoint:(VOIPoint)other NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPoints:(const VOIPoint[2])points;
 - (BOOL)isEqualToSegment:(VOISegment *)other;
+- (BOOL)isEquivalentToSegment:(VOISegment *)other;
 - (VOISegment *)perpendicular;
 // Treat point b like a vector
 - (VOIPoint)intersectWithSegment:(VOISegment *)other;
 // distance from midpoint
 - (double)distanceFromPoint:(VOIPoint)point;
 - (double)distanceSquaredFromPoint:(VOIPoint)point;
-- (BOOL)pointBetween:(VOIPoint)point;
 
 // Forward is the direction of the vector b - a
 - (VOILineSide)sideForPoint:(VOIPoint)point;

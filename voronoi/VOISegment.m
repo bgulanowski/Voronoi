@@ -21,7 +21,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@; [(%.2f, %.2f) -> (%.2f, %.2f)]", [self className], _a.x, _a.y, _b.x, _b.y];
+    return [NSString stringWithFormat:@"%@: [%@ -> %@]", [self className], VOIPointToString(_a), VOIPointToString(_b)];
 }
 
 - (BOOL)isEqual:(id)object {
@@ -47,6 +47,13 @@
 
 - (BOOL)isEqualToSegment:(VOISegment *)other {
     return simd_equal(_a, other->_a) && simd_equal(_b, other->_b);
+}
+
+- (BOOL)isEquivalentToSegment:(VOISegment *)other {
+    return (
+            (simd_equal(_a, other->_a) && simd_equal(_b, other->_b)) ||
+            (simd_equal(_a, other->_b) && simd_equal(_b, other->_a))
+            );
 }
 
 - (VOISegment *)perpendicular {
@@ -84,10 +91,6 @@
 
 - (double)distanceSquaredFromPoint:(VOIPoint)point {
     return simd_distance_squared(point, self.midpoint);
-}
-
-- (BOOL)pointBetween:(VOIPoint)point {
-    return [self.boundingBox containsPoint:point];
 }
 
 - (VOILineSide)sideForPoint:(VOIPoint)point {

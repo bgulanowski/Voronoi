@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "VOIBox.h"
 #import "VOISegment.h"
 
 @interface VOISegmentTester : XCTestCase
@@ -34,6 +35,31 @@
     VOIPoint e = vector2(1.0, 1.0);
     VOIPoint a = self.s1.midpoint;
     AssertEqualPoints(e, a);
+}
+
+- (void)testBoundingBox {
+    VOIBox *e = [[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(2.0, 2.0)];
+    VOIBox *a = self.s1.boundingBox;
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testDescription {
+    NSString *e = @"VOISegment: [(0.00, 0.00) -> (2.00, 2.00)]";
+    NSString *a = self.s1.description;
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testInit {
+    VOISegment *e = [[VOISegment alloc] initWithPoint:vector2(0.0, 0.0) otherPoint:vector2(0.0, 0.0)];
+    VOISegment *a = [[VOISegment alloc] init];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testEquivalentToSegment {
+    XCTAssertFalse([self.s1 isEquivalentToSegment:self.s2]);
+    XCTAssertTrue([self.s1 isEquivalentToSegment:self.s1]);
+    VOISegment *s = [[VOISegment alloc] initWithPoint:self.s1.b otherPoint:self.s1.a];
+    XCTAssertTrue([self.s1 isEquivalentToSegment:s]);
 }
 
 - (void)testPerpendicular {
@@ -99,6 +125,22 @@
     XCTAssertEqual(VOILineSideOn, [self.s1 sideForPoint:p]);
     p = vector2(3.0, 1.0);
     XCTAssertEqual(VOILineSideOn, [self.s2 sideForPoint:p]);
+}
+
+- (void)testDistanceFromPoint {
+    
+    VOIPoint m = (self.s1.b - self.s1.a) / 2.0;
+    VOISize v = m - self.s2.b;
+    
+    double e = v.x * v.x + v.y * v.y;
+    double a = [self.s1 distanceSquaredFromPoint:self.s2.b];
+    
+    XCTAssertEqual(e, a);
+    
+    e = sqrt(e);
+    a = [self.s1 distanceFromPoint:self.s2.b];
+
+    XCTAssertEqual(e, a);
 }
 
 - (void)testVerticalPosition {
