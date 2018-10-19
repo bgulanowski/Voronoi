@@ -26,6 +26,12 @@
     self.box = [[VOIBox alloc] initWithOrigin:vector2(4.0, -5.0) size:vector2(-3.0, 7.0)];
 }
 
+- (void)testDescription {
+    NSString *e = @"VOIBox: [(1.00, -5.00) : (3.00, 7.00)]";
+    NSString *a = self.box.description;
+    XCTAssertEqualObjects(e, a);
+}
+
 - (void)testIsEqual {
     XCTAssertFalse([self.box isEqual:nil]);
     XCTAssertFalse([self.box isEqual:[NSObject new]]);

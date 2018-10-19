@@ -13,7 +13,7 @@
 @implementation VOIBox
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"VOIBox: [%@ : %@]", VOIPointToString(_origin), VOIPointToString(_size)];
+    return [NSString stringWithFormat:@"%@: [%@ : %@]", [self className], VOIPointToString(_origin), VOIPointToString(_size)];
 }
 
 - (BOOL)isEqual:(id)object {
