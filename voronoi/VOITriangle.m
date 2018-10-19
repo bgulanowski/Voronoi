@@ -19,7 +19,8 @@ static inline void CopyPoints(const VOIPoint src[3], VOIPoint dst[3]) {
 }
 
 static inline void OrderPoints(const VOIPoint *points, NSUInteger *indices) {
-    if (points[indices[0]].x > points[indices[1]].x) {
+    NSComparisonResult ordering = VOIComparePoints(points[indices[0]], points[indices[1]]);
+    if (ordering == NSOrderedDescending) {
         NSUInteger t = indices[1];
         indices[1] = indices[0];
         indices[0] = t;
@@ -184,6 +185,9 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 }
 
 - (VOISegment *)segmentInCommonWith:(VOITriangle *)other indices:(NSUInteger[2])indices {
+    if (other == nil) {
+        return nil;
+    }
     for (NSUInteger i = 0; i < 3; ++i) {
         VOISegment *segment = [self segmentAt:i];
         NSUInteger otherIndex = [other indexForSegment:segment];

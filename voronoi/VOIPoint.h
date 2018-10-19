@@ -41,6 +41,16 @@ NS_INLINE BOOL VOIPointsEqual(VOIPoint a, VOIPoint b) {
     return ABS(a.x - b.x) < VOI_EPSILON && ABS(a.y - b.y) < VOI_EPSILON;
 }
 
+static inline NSComparisonResult VOIComparePoints(VOIPoint a, VOIPoint b) {
+    if (fabs(a.x - b.x) < DBL_EPSILON) {
+        if (fabs(a.y - b.y) < DBL_EPSILON) {
+            return NSOrderedSame;
+        }
+        return (a.y < b.y) ? NSOrderedAscending : NSOrderedDescending;
+    }
+    return (a.x < b.x) ? NSOrderedAscending : NSOrderedDescending;
+}
+
 NS_INLINE long long VOIRandomLongLong() {
     return (((long long)random() << 32) | (long long)random());
 }
