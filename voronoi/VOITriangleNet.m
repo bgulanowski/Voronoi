@@ -27,23 +27,33 @@
 
 @implementation VOITriangleNet
 
-- (instancetype)initWithTriangle:(VOITriangle *)triangle net0:(VOITriangleNet *)n0 net1:(VOITriangleNet *)n1 net2:(VOITriangleNet *)n2 {
+- (NSArray<VOITriangleNet *> *)adjacentNets {
+    NSMutableArray *nets = [NSMutableArray array];
+    if (_n0) { [nets addObject:_n0]; }
+    if (_n1) { [nets addObject:_n1]; }
+    if (_n2) { [nets addObject:_n2]; }
+    return nets;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@: %@ (n0:%@ n1:%@ n2:%@)", [self className], _triangle, _n0.triangle, _n1.triangle, _n2.triangle];
+}
+
+- (instancetype)initWithTriangle:(VOITriangle *)triangle adjacentNets:(NSArray<VOITriangleNet *> *)nets {
     self = [super init];
     if (self) {
-        _triangle = triangle;
-        _n0 = n0 ?: [VOITriangleNet emptyNet];
-        _n1 = n1 ?: [VOITriangleNet emptyNet];
-        _n2 = n2 ?: [VOITriangleNet emptyNet];
+        _triangle = [triangle standardize];
+        [self addAdjacentNets:nets];
     }
     return self;
 }
 
-+ (instancetype)netWithTriangle:(VOITriangle *)triangle adjacentNets:(__weak VOITriangleNet *[3])nets {
-    return [[self alloc] initWithTriangle:triangle net0:nets[0] net1:nets[1] net2:nets[2]];
++ (instancetype)netWithTriangle:(VOITriangle *)triangle adjacentNets:(NSArray<VOITriangleNet *> *)nets {
+    return [[self alloc] initWithTriangle:triangle adjacentNets:nets];
 }
 
 + (instancetype)netWithTriangle:(VOITriangle *)triangle {
-    return [[self alloc] initWithTriangle:triangle net0:nil net1:nil net2:nil];
+    return [[self alloc] initWithTriangle:triangle adjacentNets:nil];
 }
 
 + (instancetype)emptyNet {
@@ -64,6 +74,22 @@
     [self setAdjacency:nil atIndex:index];
 }
 
+- (void)addAdjacentNet:(VOITriangleNet *)net {
+    VOIAdjacency *a = [self adjacencyForNet:net];
+    if (!a.empty) {
+        [self setNet:net atIndex:a.t0Index];
+        [self setAdjacency:a atIndex:a.t0Index];
+        [net setNet:self atIndex:a.t1Index];
+        [net setAdjacency:a atIndex:a.t1Index];
+    }
+}
+
+- (void)addAdjacentNets:(NSArray<VOITriangleNet *> *)nets {
+    for (VOITriangleNet *net in nets) {
+        [self addAdjacentNet:net];
+    }
+}
+
 - (NSUInteger)indexOf:(VOITriangleNet *)net {
     for (NSUInteger i = 0; i < 3; ++i) {
         if ([self netAtIndex:i] == net) {
@@ -79,7 +105,7 @@
 }
 
 - (VOIAdjacency *)adjacencyForNet:(VOITriangleNet *)net {
-    return [[VOIAdjacency alloc] initWithTriangle:_triangle triangle:net.triangle];
+    return [VOIAdjacency adjacencyWithTriangle:_triangle triangle:net.triangle];
 }
 
 - (void)setAdjacency:(VOIAdjacency *)adjacency atIndex:(NSUInteger)index {
@@ -90,6 +116,14 @@
     VOITriangleNet *net = [self netAtIndex:netIndex];
     VOITriangle *complement = net.triangle;
     // Which edge is complement matches which edge in _triangle?
+}
+
+- (VOIAdjacency *)createAdjacencyAtIndex:(NSUInteger)index {
+    VOITriangleNet *net = [self netAtIndex:index];
+    VOIAdjacency *ta = [VOIAdjacency adjacencyWithTriangle:self.triangle triangle:net.triangle];
+    [self setAdjacency:ta atIndex:index];
+    // TODO: set the adjacency of adjacent net
+    return ta;
 }
 
 @end

@@ -14,12 +14,9 @@
 @interface VOITriangleNet : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithTriangle:(VOITriangle *)triangle
-                            net0:(VOITriangleNet *)n0
-                            net1:(VOITriangleNet *)n1
-                            net2:(VOITriangleNet *)n2 NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTriangle:(VOITriangle *)triangle adjacentNets:(NSArray<VOITriangleNet *> *)nets NS_DESIGNATED_INITIALIZER;
 
-+ (instancetype)netWithTriangle:(VOITriangle *)triangle adjacentNets:(__weak VOITriangleNet *[3])nets;
++ (instancetype)netWithTriangle:(VOITriangle *)triangle adjacentNets:(NSArray<VOITriangleNet *> *)nets;
 + (instancetype)netWithTriangle:(VOITriangle *)triangle;
 + (instancetype)emptyNet;
 
@@ -34,9 +31,11 @@
 @property (readonly) VOIAdjacency *a1;
 @property (readonly) VOIAdjacency *a2;
 
+@property (readonly) NSArray<VOITriangleNet *> *adjacentNets;
+
 - (VOITriangleNet *)netAtIndex:(NSUInteger)index;
-- (void)setNet:(VOITriangleNet *)net atIndex:(NSUInteger)index;
-- (NSUInteger)indexOf:(VOITriangleNet *)net;
+- (void)addAdjacentNet:(VOITriangleNet *)net;
+- (void)addAdjacentNets:(NSArray<VOITriangleNet *> *)nets;
 
 - (VOIAdjacency *)adjacencyAtIndex:(NSUInteger)index;
 
