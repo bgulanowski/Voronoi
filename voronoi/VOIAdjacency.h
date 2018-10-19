@@ -20,6 +20,8 @@
 @property (readonly) NSUInteger t0Index;
 @property (readonly) NSUInteger t1Index;
 
+@property (readonly, getter=isEmpty) BOOL empty;
+
 - (instancetype)initWithTriangle:(VOITriangle *)t0
                            index:(NSUInteger)t0Idx
                         triangle:(VOITriangle *)t1
@@ -29,5 +31,8 @@
 
 + (instancetype)adjacencyWithTriangle:(VOITriangle *)t0 triangle:(VOITriangle *)t1;
 + (instancetype)emptyAdjacency;
+
+- (BOOL)isEqualToAdjacency:(VOIAdjacency *)other;
+- (BOOL)isEquivalentToAdjacency:(VOIAdjacency *)other;
 
 @end
