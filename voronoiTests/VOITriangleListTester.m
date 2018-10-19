@@ -43,6 +43,10 @@ static VOIPoint trianglePoints[9];
     XCTAssertEqual((NSUInteger)9, self.triangleList.pointCount);
 }
 
+- (void)testIsEqualToTriangleList {
+    XCTAssertTrue([self.triangleList isEqualToTriangleList:self.triangleList]);
+}
+
 - (void)testInitWithTriangles {
     NSArray *triangles = @[
                            [[VOITriangle alloc] initWithPoints:&trianglePoints[0]],

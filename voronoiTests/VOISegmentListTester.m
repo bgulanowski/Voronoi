@@ -61,6 +61,13 @@ static VOIPoint points[6];
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testEqualToSegmentList {
+    XCTAssertFalse([self.segmentList isEqualToSegmentList:[[VOISegmentList alloc] init]]);
+    XCTAssertTrue([self.segmentList isEqualToSegmentList:self.segmentList]);
+    VOISegmentList *s = [[[VOIPointList alloc] initWithPoints:points count:6] asSegmentList];
+    XCTAssertTrue([self.segmentList isEqualToSegmentList:s]);
+}
+
 - (void)testSegmentAt {
     VOISegment *e = [[VOISegment alloc] initWithPoints:&points[4]];
     VOISegment *a = [self.segmentList segmentAt:2];
@@ -100,6 +107,9 @@ static VOIPoint points[6];
                           ];
     VOISegmentList *e = [[VOISegmentList alloc] initWithSegments:segments];
     VOISegmentList *a = [self.segmentList sortedByLength];
+    XCTAssertEqualObjects(e, a);
+    
+    a = [e sortedByLength];
     XCTAssertEqualObjects(e, a);
 }
 
