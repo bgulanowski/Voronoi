@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "VOISegment.h"
 #import "VOITriangle.h"
 
 @interface VOITriangleTester : XCTestCase
@@ -122,7 +123,39 @@ static VOIPoint points[4];
     AssertEqualPoints(self.triangle.p2, t.p2);
 }
 
-- (void)testReverse {
+- (void)testSegments {
+    VOISegment *e = [[VOISegment alloc] initWithPoint:points[1] otherPoint:points[2]];
+    XCTAssertEqualObjects(e, self.triangle.s0);
+    e = [[VOISegment alloc] initWithPoint:points[2] otherPoint:points[0]];
+    XCTAssertEqualObjects(e, self.triangle.s1);
+    e = [[VOISegment alloc] initWithPoint:points[0] otherPoint:points[1]];
+    XCTAssertEqualObjects(e, self.triangle.s2);
+}
+
+- (void)testSegmentAt {
+    VOISegment *e = [[VOISegment alloc] initWithPoint:points[1] otherPoint:points[2]];
+    VOISegment *a = [self.triangle segmentAt:0];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testIndexForSegment {
+    XCTAssertEqual(NSNotFound, [self.triangle indexForSegment:nil]);
+    VOISegment *s = [[VOISegment alloc] initWithPoint:points[0] otherPoint:points[1]];
+    XCTAssertEqual(2, [self.triangle indexForSegment:s]);
+    s = [[VOISegment alloc] initWithPoint:points[2] otherPoint:points[3]];
+    XCTAssertEqual(NSNotFound, [self.triangle indexForSegment:s]);
+}
+
+- (void)testSegmentInCommon {
+    VOISegment *e = [[VOISegment alloc] initWithPoint:points[1] otherPoint:points[2]];
+    NSUInteger indices[2];
+    VOISegment *a = [self.triangle segmentInCommonWith:self.degenerate indices:indices];
+    XCTAssertTrue([a isEquivalentToSegment:e]);
+    XCTAssertEqual(0, indices[0]);
+    XCTAssertEqual(2, indices[1]);
+}
+
+- (void)testReverseOrder {
     VOIPoint other[3] = {
         points[0],
         points[2],

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class VOISegment;
+
 @interface VOITriangle : NSObject
 
 @property (readonly) VOIPoint p0;
@@ -21,6 +23,11 @@
 @property (readonly, getter=isOrdered) BOOL ordered; // point with smallest x is at p0
 @property (readonly, getter=isStandard) BOOL standard; // ordered && leftHanded
 
+// Segments are opposite their similarly named point
+@property (readonly) VOISegment *s0;
+@property (readonly) VOISegment *s1;
+@property (readonly) VOISegment *s2;
+
 // must be 3 points
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithPoints:(const VOIPoint *)points standardize:(BOOL)standardize NS_DESIGNATED_INITIALIZER;
@@ -32,6 +39,10 @@
 // any index will do - uses %3
 - (VOIPoint)pointAt:(NSUInteger)index;
 - (VOISegment *)segmentAt:(NSUInteger)index;
+- (NSUInteger)indexForSegment:(VOISegment *)segment;
+
+// compare two triangles to see if they are adjacent, returning details
+- (VOISegment *)segmentInCommonWith:(VOITriangle *)other indices:(NSUInteger[2])indices;
 
 // Switches handedness by changing point ordering
 - (VOITriangle *)reverseOrder;

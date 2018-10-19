@@ -99,14 +99,26 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
     return _points[0].x < _points[1].x && _points[0].x < _points[2].x;
 }
 
+- (VOISegment *)s0 {
+    return [self segmentAt:0];
+}
+
+- (VOISegment *)s1 {
+    return [self segmentAt:1];
+}
+
+- (VOISegment *)s2 {
+    return [self segmentAt:2];
+}
+
 #pragma mark - NSObject
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@: <(%.2f, %.2f) - (%.2f, %.2f) - (%.2f, %.2f)>",
+    return [NSString stringWithFormat:@"%@: <%@:%@:%@>",
             [self className],
-            _points[0].x, _points[0].y,
-            _points[1].x, _points[1].y,
-            _points[2].x, _points[2].y
+            VOIPointToString(_points[0]),
+            VOIPointToString(_points[1]),
+            VOIPointToString(_points[2])
             ];
 }
 
@@ -158,6 +170,32 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 
 - (VOISegment *)segmentAt:(NSUInteger)index {
     return [[VOISegment alloc] initWithPoint:_points[(index + 1)%3] otherPoint:_points[(index + 2)%3]];
+}
+
+- (NSUInteger)indexForSegment:(VOISegment *)segment {
+    NSUInteger index = NSNotFound;
+    for (NSUInteger i = 0; i < 3; ++i) {
+        if ([[self segmentAt:i] isEquivalentToSegment:segment]) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+- (VOISegment *)segmentInCommonWith:(VOITriangle *)other indices:(NSUInteger[2])indices {
+    for (NSUInteger i = 0; i < 3; ++i) {
+        VOISegment *segment = [self segmentAt:i];
+        NSUInteger otherIndex = [other indexForSegment:segment];
+        if (otherIndex != NSNotFound) {
+            if (indices) {
+                indices[0] = i;
+                indices[1] = otherIndex;
+            }
+            return segment;
+        }
+    }
+    return nil;
 }
 
 - (VOITriangle *)reverseOrder {
