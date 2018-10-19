@@ -33,7 +33,6 @@
 - (VOITriangle *)triangleAt:(NSUInteger)index;
 - (void)iterateTriangles:(VOITriangleIterator)iterator;
 - (NSArray<VOITriangle *> *)allTriangles;
-- (VOITriangleList *)asTriangleList;
 
 - (VOITriangleList *)triangleFanWithCentre:(VOIPoint)point range:(NSRange)range;
 

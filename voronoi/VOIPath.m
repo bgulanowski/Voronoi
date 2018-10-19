@@ -227,7 +227,7 @@
 #pragma mark - Triangles
 
 - (VOITriangle *)triangleAt:(NSUInteger)index {
-    const NSUInteger count = self.triangleCount;
+    const NSUInteger count = self.pointCount;
     NSUInteger indices[3] = {
         index % count,
         (index + 1) % count,
@@ -243,31 +243,6 @@
             break;
         }
     }
-}
-
-- (VOITriangleList *)asTriangleList {
-    
-    const NSUInteger count = [self triangleCount];
-    NSMutableData *data;
-    
-    if (count == 1) {
-        data = self.pointsData;
-    }
-    else {
-        data = [NSMutableData dataWithLength:count * 3];
-        VOIPoint *points = data.mutableBytes;
-        const BOOL closed = _closed;
-        for (NSUInteger j = 0; j < 3; ++j) {
-            [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
-                if (!closed || i > j) {
-                    points[(i * 3 + count - j) % count] = *p;
-                }
-                return (BOOL)(i == count - 1);
-            }];
-        }
-    }
-    
-    return [[VOITriangleList alloc] _initWithData:data];
 }
 
 - (NSArray<VOITriangle *> *)allTriangles {

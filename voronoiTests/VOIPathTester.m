@@ -54,6 +54,10 @@ static const double Scale = 2.0;
     self.path = [[VOIPath alloc] initWithPoints:pathPoints count:COUNT];
 }
 
+- (void)testClosed {
+    XCTAssertFalse(self.path.closed);
+}
+
 - (void)testConvexOpen {
     XCTAssertFalse(self.path.convex);
 }
@@ -178,6 +182,65 @@ static const double Scale = 2.0;
 - (void)testAllSegmentsClosed {
     NSArray *e = [[self segmentListClosed:YES] allSegments];
     NSArray *a = [[self.path closedPath] allSegments];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testTriangleAt {
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:pathPoints];
+    VOITriangle *a = [self.path triangleAt:0];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testIterateTriangles {
+    const NSUInteger e = self.path.pointCount - 2;
+    __block NSUInteger a = 0;
+    [self.path iterateTriangles:^(VOITriangle *t, NSUInteger i) {
+        XCTAssertNotNil(t);
+        XCTAssertEqual(i, a);
+        ++a;
+        return NO;
+    }];
+    XCTAssertEqual(e, a);
+}
+
+- (void)testIterateTrianglesEarlyExit {
+    __block NSUInteger a = 0;
+    [self.path iterateTriangles:^(VOITriangle *t, NSUInteger i) {
+        ++a;
+        return YES;
+    }];
+    XCTAssertEqual(1, a);
+}
+
+static VOIPoint trianglePoints[12] = {
+    { 0.0, 0.0 },
+    { 1.0, 1.0 },
+    { 1.0, 0.0 },
+    { 1.0, 1.0 },
+    { 1.0, 0.0 },
+    { 2.0, 1.0 },
+    { 1.0, 0.0 },
+    { 2.0, 1.0 },
+    { 0.0, 0.0 },
+    { 2.0, 1.0 },
+    { 0.0, 0.0 },
+    { 1.0, 1.0 }
+};
+
+- (void)testAllTriangles {
+    VOIPath *p = [VOIPath sawtoothPath];
+    NSArray *e = @[
+                   [[VOITriangle alloc] initWithPoints:&trianglePoints[0]],
+                   [[VOITriangle alloc] initWithPoints:&trianglePoints[3]],
+                   [[VOITriangle alloc] initWithPoints:&trianglePoints[6]],
+                   [[VOITriangle alloc] initWithPoints:&trianglePoints[9]]
+                   ];
+    NSArray *a = [p allTriangles];
+    XCTAssertEqualObjects(e, a);
+    
+    p = [[VOIPath sawtoothPath] openPath];
+    e = [e subarrayWithRange:NSMakeRange(0, 2)];
+    a = [p allTriangles];
     XCTAssertEqualObjects(e, a);
 }
 
