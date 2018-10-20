@@ -39,6 +39,9 @@
 
 - (VOIAdjacency *)adjacencyAtIndex:(NSUInteger)index;
 
+// divide the combined quad along the alternate axis
+// replace existing triangles with two new triangles
+// update the adjacent nets to match
 - (void)flipWith:(NSUInteger)netIndex;
 
 @end

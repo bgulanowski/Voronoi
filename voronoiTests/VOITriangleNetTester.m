@@ -128,4 +128,87 @@ NSUInteger indices[18];
     XCTAssertTrue([e isEquivalentToSegment:a]);
 }
 
+- (void)testFlipNone {
+    XCTAssertNoThrow([self.net012 flipWith:0]);
+}
+
+- (void)testFlipTwo {
+    VOIPoint tp[4] = {
+        points[2],
+        points[0],
+        points[3],
+        points[1]
+    };
+
+    [self.net012 addAdjacentNet:self.net132];
+    [self.net012 flipWith:0];
+    
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:tp standardize:YES];
+    VOITriangle *a = self.net012.triangle;
+    XCTAssertEqualObjects(e, a);
+    
+    e = [[VOITriangle alloc] initWithPoints:&tp[1] standardize:YES];
+    a = self.net132.triangle;
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testFlipTwoOpposite {
+    VOIPoint tp[4] = {
+        points[2],
+        points[0],
+        points[3],
+        points[1]
+    };
+    
+    [self.net132 addAdjacentNet:self.net012];
+    [self.net132 flipWith:1];
+    
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:tp standardize:YES];
+    VOITriangle *a = self.net012.triangle;
+    XCTAssertEqualObjects(e, a);
+    
+    e = [[VOITriangle alloc] initWithPoints:&tp[1] standardize:YES];
+    a = self.net132.triangle;
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testFlipThree {
+    [self.net132 addAdjacentNet:self.net012];
+    [self.net012 addAdjacentNet:self.net051];
+    [self.net012 flipWith:0];
+    
+    XCTAssertEqualObjects(@[self.net132], self.net012.adjacentNets);
+    NSArray *nets = @[self.net051, self.net012];
+    XCTAssertEqualObjects(nets, self.net132.adjacentNets);
+    
+    XCTAssertEqualObjects(@[], self.net012.adjacentNets);
+    XCTAssertEqualObjects(self.net051, [self.net132 adjacencyAtIndex:1]);
+    XCTAssertEqualObjects(self.net132, [self.net051 adjacencyAtIndex:2]);
+}
+
+- (void)_testFlip {
+    [self.net012 flipWith:0];
+    VOIPoint tp[4] = {
+        points[2],
+        points[0],
+        points[3],
+        points[1]
+    };
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:tp standardize:YES];
+    VOITriangle *a = self.net012.triangle;
+    XCTAssertEqualObjects(e, a);
+    
+    e = [[VOITriangle alloc] initWithPoints:&tp[1] standardize:YES];
+    a = self.net132.triangle;
+    XCTAssertEqualObjects(e, a);
+    
+    XCTAssertEqualObjects(self.net132, self.net012.n0);
+    XCTAssertEqualObjects(self.net372, self.net012.n1);
+    XCTAssertEqualObjects(self.net024, self.net012.n2);
+    
+    XCTAssertEqualObjects(self.net163, self.net132.n0);
+    XCTAssertEqualObjects(self.net012, self.net132.n1);
+    XCTAssertEqualObjects(self.net051, self.net132.n2);
+}
+
 @end
