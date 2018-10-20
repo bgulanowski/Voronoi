@@ -22,12 +22,7 @@
 
 @property (readonly, getter=isEmpty) BOOL empty;
 
-- (instancetype)initWithTriangle:(VOITriangle *)t0
-                           index:(NSUInteger)t0Idx
-                        triangle:(VOITriangle *)t1
-                           index:(NSUInteger)t1Idx
-                         segment:(VOISegment *)s NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithTriangle:(VOITriangle *)t0 triangle:(VOITriangle *)t1;
+- (instancetype)initWithTriangle:(VOITriangle *)t0 triangle:(VOITriangle *)t1 NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)adjacencyWithTriangle:(VOITriangle *)t0 triangle:(VOITriangle *)t1;
 + (instancetype)emptyAdjacency;

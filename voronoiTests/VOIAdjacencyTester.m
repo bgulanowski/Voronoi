@@ -64,6 +64,17 @@ static VOIPoint points[6] = {
     VOIAdjacency *a1 = [VOIAdjacency emptyAdjacency];
     VOIAdjacency *a2 = [VOIAdjacency emptyAdjacency];
     XCTAssertEqual(a1, a2);
+    XCTAssertTrue(a1.empty);
+    
+    VOIAdjacency *a = [[VOIAdjacency alloc] initWithTriangle:nil triangle:nil];
+    XCTAssertTrue(a.empty);
+    XCTAssertEqualObjects(a1, a);
+    
+    a = [[VOIAdjacency alloc] initWithTriangle:self.t0 triangle:nil];
+    XCTAssertTrue(a.empty);
+    
+    a = [[VOIAdjacency alloc] initWithTriangle:nil triangle:self.t1];
+    XCTAssertTrue(a.empty);
 }
 
 - (void)testIsEqualToAdjacency {

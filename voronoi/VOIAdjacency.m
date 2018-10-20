@@ -26,25 +26,19 @@
 }
 
 - (instancetype)init {
-    return [self initWithTriangle:nil index:NSNotFound triangle:nil index:NSNotFound segment:nil];
-}
-
-- (instancetype)initWithTriangle:(VOITriangle *)t0 index:(NSUInteger)t0Idx triangle:(VOITriangle *)t1 index:(NSUInteger)t1Idx segment:(VOISegment *)s {
-    self = [super init];
-    if (self) {
-        _t0 = t0;
-        _t1 = t1;
-        _s = s;
-        _t0Index = t0Idx;
-        _t1Index = t1Idx;
-    }
-    return self;
+    return [self initWithTriangle:nil triangle:nil];
 }
 
 - (instancetype)initWithTriangle:(VOITriangle *)t0 triangle:(VOITriangle *)t1 {
     NSUInteger indices[2];
-    VOISegment *s = [t0 segmentInCommonWith:t1 indices:indices];
-    return [self initWithTriangle:t0 index:indices[0] triangle:t1 index:indices[1] segment:s];
+    if (self) {
+        _s = [t0 segmentInCommonWith:t1 indices:indices];
+        _t0 = t0;
+        _t1 = t1;
+        _t0Index = indices[0];
+        _t1Index = indices[1];
+    }
+    return self;
 }
 
 + (instancetype)adjacencyWithTriangle:(VOITriangle *)t0 triangle:(VOITriangle *)t1 {
