@@ -130,6 +130,10 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
             );
 }
 
+- (BOOL)isEquivalent:(id)object {
+    return [object isKindOfClass:[VOITriangle class]] && [self isEquivalentToTriangle:object];
+}
+
 #pragma mark - VOITriangle
 
 - (instancetype)initWithPoints:(const VOIPoint *)points standardize:(BOOL)standardize {

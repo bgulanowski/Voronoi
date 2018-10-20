@@ -6,8 +6,17 @@
     #import <Foundation/Foundation.h>
     #import <simd/simd.h>
 
+    #import "NSObject+Equivalence.h"
     #import "VOIPoint.h"
 
 #define NO_METHOD_IMP [NSException raise:NSInternalInconsistencyException format:@"Method %@ is not implemented.", NSStringFromSelector(_cmd)]
 
 #endif
+
+static inline BOOL VOIIsEqual(id a, id b) {
+    return (!a && !b) || [a isEqual:b];
+}
+
+static inline BOOL VOIIsEquiv(id a, id b) {
+    return (!a && !b) || [a isEquivalent:b];
+}

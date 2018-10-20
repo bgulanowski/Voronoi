@@ -28,6 +28,10 @@
     return [object isKindOfClass:[self class]] && [self isEqualToSegment:object];
 }
 
+- (BOOL)isEquivalent:(id)object {
+    return [object isKindOfClass:[VOISegment class]] && [self isEquivalentToSegment:object];
+}
+
 - (instancetype)init {
     return [self initWithPoint:vector2(0.0, 0.0) otherPoint:vector2(0.0, 0.0)];
 }

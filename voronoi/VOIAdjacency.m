@@ -25,6 +25,10 @@
     return [object isKindOfClass:[VOIAdjacency class]] && [self isEqualToAdjacency:object];
 }
 
+- (BOOL)isEquivalent:(id)object {
+    return [object isKindOfClass:[VOIAdjacency class]] && [self isEquivalentToAdjacency:object];
+}
+
 - (instancetype)init {
     return [self initWithTriangle:nil triangle:nil];
 }
@@ -55,33 +59,31 @@
     return empty;
 }
 
+// s and indices are derived, so no need to verify equality/equivalence
 - (BOOL)isEqualToAdjacency:(VOIAdjacency *)other {
     return (
             other != nil &&
-            _t0Index == other->_t0Index &&
-            _t1Index == other->_t1Index &&
-            [_t0 isEqualToTriangle:other->_t0] &&
-            [_t1 isEqualToTriangle:other->_t1] &&
-            [_s isEqualToSegment:other->_s]
+            VOIIsEqual(_t0, other->_t0) &&
+            VOIIsEqual(_t1, other->_t1)
             );
+}
+
+NS_INLINE BOOL SameTriangles(VOIAdjacency *a, VOIAdjacency *b) {
+    return (VOIIsEquiv(a->_t0, b->_t0) && VOIIsEquiv(a->_t1, b->_t1));
+}
+
+NS_INLINE BOOL SwappedTriangles(VOIAdjacency *a, VOIAdjacency *b) {
+    return (VOIIsEquiv(a->_t0, b->_t1) && VOIIsEquiv(a->_t1, b->_t0));
+}
+
+NS_INLINE BOOL EquivalentTriangles(VOIAdjacency *a, VOIAdjacency *b) {
+    return SameTriangles(a, b) || SwappedTriangles(a, b);
 }
 
 - (BOOL)isEquivalentToAdjacency:(VOIAdjacency *)other {
     return (
             other != nil &&
-            ((
-              _t0Index == other->_t0Index &&
-              _t1Index == other->_t1Index &&
-              [_t0 isEquivalentToTriangle:other->_t0] &&
-              [_t1 isEquivalentToTriangle:other->_t1]
-             ) ||
-             (
-              _t0Index == other->_t1Index &&
-              _t1Index == other->_t0Index &&
-              [_t0 isEquivalentToTriangle:other->_t1] &&
-              [_t1 isEquivalentToTriangle:other->_t0]
-             )) &&
-            [_s isEquivalentToSegment:other->_s]
+            EquivalentTriangles(self, other)
             );
 }
 
