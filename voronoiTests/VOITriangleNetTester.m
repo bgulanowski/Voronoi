@@ -16,7 +16,7 @@
 
 @interface VOITriangleNetTester : XCTestCase
 
-@property (nonatomic) VOITriangleList *triangles;
+@property (nonatomic) NSArray<VOITriangle *> *triangles;
 @property (nonatomic) VOITriangleNet *net012;
 @property (nonatomic) VOITriangleNet *net132;
 @property (nonatomic) VOITriangleNet *net024;
@@ -80,42 +80,49 @@ NSUInteger indices[18];
         };
         [triangles addObject:[[VOITriangle alloc] initWithPoints:tp]];
     }
+    self.triangles = triangles;
     
-    VOITriangleList *triangleList = [[VOITriangleList alloc] initWithTriangles:triangles];
-    self.triangles = triangleList;
-    
-    VOITriangleNet *net012 = [VOITriangleNet netWithTriangle:triangles[0]];
-    VOITriangleNet *net132 = [VOITriangleNet netWithTriangle:triangles[1]];
-    VOITriangleNet *net024 = [VOITriangleNet netWithTriangle:triangles[2]];
-    VOITriangleNet *net051 = [VOITriangleNet netWithTriangle:triangles[3]];
-    VOITriangleNet *net163 = [VOITriangleNet netWithTriangle:triangles[4]];
-    VOITriangleNet *net372 = [VOITriangleNet netWithTriangle:triangles[5]];
-    
-    [net372 setNet:net132 atIndex:1];
-    [net132 setNet:net372 atIndex:0];
+    self.net012 = [VOITriangleNet netWithTriangle:triangles[0]];
+    self.net132 = [VOITriangleNet netWithTriangle:triangles[1]];
+    self.net024 = [VOITriangleNet netWithTriangle:triangles[2]];
+    self.net051 = [VOITriangleNet netWithTriangle:triangles[3]];
+    self.net163 = [VOITriangleNet netWithTriangle:triangles[4]];
+    self.net372 = [VOITriangleNet netWithTriangle:triangles[5]];
+}
 
-    [net163 setNet:net132 atIndex:0];
-    [net132 setNet:net163 atIndex:2];
+- (void)testTriangle {
+    VOITriangle *e = [self.triangles[0] standardize];
+    VOITriangle *a = self.net012.triangle;
+    XCTAssertEqualObjects(e, a);
+}
 
-    [net051 setNet:net012 atIndex:1];
-    [net012 setNet:net051 atIndex:2];
+- (void)testAddAdjacentNet {
+    [self.net012 addAdjacentNet:self.net132];
+    XCTAssertEqualObjects(self.net132, self.net012.n0);
+    XCTAssertNil(self.net012.n1);
+    XCTAssertNil(self.net012.n2);
+    XCTAssertEqualObjects(@[self.net132], self.net012.adjacentNets);
+    
+    XCTAssertEqualObjects(self.net012, self.net132.n1);
+    XCTAssertNil(self.net132.n0);
+    XCTAssertNil(self.net132.n2);
+    XCTAssertEqualObjects(@[self.net012], self.net132.adjacentNets);
 
-    [net024 setNet:net012 atIndex:1];
-    [net012 setNet:net024 atIndex:2];
+    [self.net012 addAdjacentNet:self.net372];
+    XCTAssertEqualObjects(self.net132, self.net012.n0);
+    XCTAssertNil(self.net012.n1);
+    XCTAssertNil(self.net012.n2);
+    XCTAssertEqualObjects(@[self.net132], self.net012.adjacentNets);
     
-    [net132 setNet:net012 atIndex:1];
-    [net012 setNet:net132 atIndex:1];
-    
-    self.net012 = net012;
-    self.net132 = net132;
-    self.net024 = net024;
-    self.net051 = net051;
-    self.net163 = net163;
-    self.net372 = net372;
+    XCTAssertNil(self.net372.n0);
+    XCTAssertNil(self.net372.n1);
+    XCTAssertNil(self.net372.n2);
+    XCTAssertEqualObjects(@[], self.net372.adjacentNets);
 }
 
 - (void)testAdjacencyAtIndex {
-    VOIAdjacency *adj = [self.net051 adjacencyAtIndex:1];
+    [self.net012 addAdjacentNet:self.net051];
+    VOIAdjacency *adj = [self.net051 adjacencyAtIndex:2];
     VOISegment *e = [[VOISegment alloc] initWithPoint:points[0] otherPoint:points[1]];
     VOISegment *a = adj.s;
     XCTAssertTrue([e isEquivalentToSegment:a]);
