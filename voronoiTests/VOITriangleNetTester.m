@@ -78,7 +78,7 @@ NSUInteger indices[18];
             points[indices[i * 3 + 1]],
             points[indices[i * 3 + 2]]
         };
-        [triangles addObject:[[VOITriangle alloc] initWithPoints:tp]];
+        [triangles addObject:[[VOITriangle alloc] initWithPoints:tp standardize:YES]];
     }
     self.triangles = triangles;
     
@@ -182,8 +182,13 @@ NSUInteger indices[18];
     XCTAssertEqualObjects(nets, self.net132.adjacentNets);
 }
 
-- (void)_testFlip {
+- (void)testFlip {
+
+    [self.net012 addAdjacentNets:@[self.net024, self.net051, self.net132]];
+    [self.net132 addAdjacentNets:@[self.net163, self.net372]];
+    
     [self.net012 flipWith:0];
+
     VOIPoint tp[4] = {
         points[2],
         points[0],
@@ -198,13 +203,14 @@ NSUInteger indices[18];
     a = self.net132.triangle;
     XCTAssertEqualObjects(e, a);
     
-    XCTAssertEqualObjects(self.net132, self.net012.n0);
-    XCTAssertEqualObjects(self.net372, self.net012.n1);
+    
+    XCTAssertEqualObjects(self.net372, self.net012.n0);
+    XCTAssertEqualObjects(self.net132, self.net012.n1);
     XCTAssertEqualObjects(self.net024, self.net012.n2);
     
     XCTAssertEqualObjects(self.net163, self.net132.n0);
-    XCTAssertEqualObjects(self.net012, self.net132.n1);
-    XCTAssertEqualObjects(self.net051, self.net132.n2);
+    XCTAssertEqualObjects(self.net051, self.net132.n1);
+    XCTAssertEqualObjects(self.net012, self.net132.n2);
 }
 
 @end
