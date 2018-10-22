@@ -180,10 +180,6 @@ NSUInteger indices[18];
     XCTAssertEqualObjects(@[self.net132], self.net012.adjacentNets);
     NSArray *nets = @[self.net051, self.net012];
     XCTAssertEqualObjects(nets, self.net132.adjacentNets);
-    
-    XCTAssertEqualObjects(@[], self.net012.adjacentNets);
-    XCTAssertEqualObjects(self.net051, [self.net132 adjacencyAtIndex:1]);
-    XCTAssertEqualObjects(self.net132, [self.net051 adjacencyAtIndex:2]);
 }
 
 - (void)_testFlip {

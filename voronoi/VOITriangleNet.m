@@ -133,28 +133,18 @@
         // Which triangle is assigned to which Net is arbitrary
         
         // FIXME: cannot assume that t0 == self.triangle
-        VOITriangle *t0;
-        VOITriangle *t1;
-        if (self.triangle == adjacency.t0) {
-            t0 = self.triangle;
-            t1 = net.triangle;
-        }
-        else {
-            t0 = net.triangle;
-            t1 = self.triangle;
+        if (self.triangle == adjacency.t1) {
+            adjacency = [adjacency invert];
         }
         VOIPoint points[4] = {
-            [t0 pointAt:adjacency.t0Index + 1],
-            [t0 pointAt:adjacency.t0Index],
-            [t1 pointAt:adjacency.t1Index],
-            [t1 pointAt:adjacency.t1Index + 1]
+            [adjacency.t0 pointAt:adjacency.t0Index + 1],
+            [adjacency.t0 pointAt:adjacency.t0Index],
+            [adjacency.t1 pointAt:adjacency.t1Index],
+            [adjacency.t1 pointAt:adjacency.t1Index + 1]
         };
         
-        t0 = [[VOITriangle alloc] initWithPoints:points];
-        t1 = [[VOITriangle alloc] initWithPoints:&points[1]];
-        
-        self.triangle = [t0 standardize];
-        net.triangle = [t1 standardize];
+        self.triangle = [[[VOITriangle alloc] initWithPoints:points] standardize];
+        net.triangle = [[[VOITriangle alloc] initWithPoints:&points[1]] standardize];
         
 #if 1
         
