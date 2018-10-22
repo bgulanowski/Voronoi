@@ -192,7 +192,7 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 }
 
 - (VOISegment *)segmentInCommonWith:(VOITriangle *)other indices:(NSUInteger[2])indices {
-    if (other == nil) {
+    if (other == nil || [other isEquivalentToTriangle:self]) {
         return nil;
     }
     for (NSUInteger i = 0; i < 3; ++i) {
