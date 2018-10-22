@@ -30,4 +30,6 @@
 - (BOOL)isEqualToAdjacency:(VOIAdjacency *)other;
 - (BOOL)isEquivalentToAdjacency:(VOIAdjacency *)other;
 
+- (VOIAdjacency *)invert;
+
 @end

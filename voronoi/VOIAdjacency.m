@@ -91,4 +91,14 @@ NS_INLINE BOOL EquivalentTriangles(VOIAdjacency *a, VOIAdjacency *b) {
             );
 }
 
+- (VOIAdjacency *)invert {
+    VOIAdjacency *invert = [[VOIAdjacency alloc] init];
+    invert->_t0 = _t1;
+    invert->_t0Index = _t1Index;
+    invert->_t1 = _t0;
+    invert->_t1Index = _t0Index;
+    invert->_s = _s;
+    return invert;
+}
+
 @end
