@@ -50,13 +50,16 @@
 }
 
 - (BOOL)isEqualToSegment:(VOISegment *)other {
-    return simd_equal(_a, other->_a) && simd_equal(_b, other->_b);
+    return other == self || (simd_equal(_a, other->_a) && simd_equal(_b, other->_b));
 }
 
 - (BOOL)isEquivalentToSegment:(VOISegment *)other {
-    return (other != nil &&
-            ((simd_equal(_a, other->_a) && simd_equal(_b, other->_b)) ||
-             (simd_equal(_a, other->_b) && simd_equal(_b, other->_a)))
+    return (
+            other == self ||
+            (other != nil &&
+             ((simd_equal(_a, other->_a) && simd_equal(_b, other->_b)) ||
+              (simd_equal(_a, other->_b) && simd_equal(_b, other->_a)))
+             )
             );
 }
 

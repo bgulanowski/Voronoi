@@ -62,9 +62,11 @@
 // s and indices are derived, so no need to verify equality/equivalence
 - (BOOL)isEqualToAdjacency:(VOIAdjacency *)other {
     return (
-            other != nil &&
-            VOIIsEqual(_t0, other->_t0) &&
-            VOIIsEqual(_t1, other->_t1)
+            other == self ||
+            (other != nil &&
+             VOIIsEqual(_t0, other->_t0) &&
+             VOIIsEqual(_t1, other->_t1)
+             )
             );
 }
 
@@ -82,8 +84,10 @@ NS_INLINE BOOL EquivalentTriangles(VOIAdjacency *a, VOIAdjacency *b) {
 
 - (BOOL)isEquivalentToAdjacency:(VOIAdjacency *)other {
     return (
-            other != nil &&
-            EquivalentTriangles(self, other)
+            other == self ||
+            (other != nil &&
+             EquivalentTriangles(self, other)
+             )
             );
 }
 

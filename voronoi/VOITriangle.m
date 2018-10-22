@@ -158,15 +158,18 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 }
 
 - (BOOL)isEqualToTriangle:(VOITriangle *)other {
-    return (other != nil &&
-            simd_equal(_points[0], other->_points[0]) &&
-            simd_equal(_points[1], other->_points[1]) &&
-            simd_equal(_points[2], other->_points[2])
+    return (
+            other == self ||
+            (other != nil &&
+             simd_equal(_points[0], other->_points[0]) &&
+             simd_equal(_points[1], other->_points[1]) &&
+             simd_equal(_points[2], other->_points[2])
+             )
             );
 }
 
 - (BOOL)isEquivalentToTriangle:(VOITriangle *)other {
-    return [[self standardize] isEqualToTriangle:[other standardize]];
+    return other == self || [[self standardize] isEqualToTriangle:[other standardize]];
 }
 
 - (VOIPoint)pointAt:(NSUInteger)index {
