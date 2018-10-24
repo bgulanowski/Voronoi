@@ -13,8 +13,20 @@
 
 @implementation VOIAdjacency
 
+- (double)sumOfOppositeAngles {
+    return [_t0 angleAt:_t0Index] + [_t1 angleAt:_t1Index];
+}
+
+- (double)sumOfAdjacentAngles {
+    return (VOIPi * 2) - [self sumOfOppositeAngles];
+}
+
 - (BOOL)isEmpty {
     return _s == nil;
+}
+
+- (BOOL)isMinimized {
+    return [self sumOfOppositeAngles] < VOIPi;
 }
 
 - (NSString *)description {
@@ -99,6 +111,21 @@ NS_INLINE BOOL EquivalentTriangles(VOIAdjacency *a, VOIAdjacency *b) {
     invert->_t1Index = _t0Index;
     invert->_s = _s;
     return invert;
+}
+
+- (VOIAdjacency *)flip {
+    
+    VOIPoint points[4] = {
+        [_t0 pointAt:_t0Index + 1],
+        [_t0 pointAt:_t0Index],
+        [_t1 pointAt:_t1Index],
+        [_t1 pointAt:_t1Index + 1]
+    };
+    
+    VOITriangle *t0 = [[[VOITriangle alloc] initWithPoints:points] standardize];
+    VOITriangle *t1 = [[[VOITriangle alloc] initWithPoints:&points[1]] standardize];
+
+    return [VOIAdjacency adjacencyWithTriangle:t0 triangle:t1];
 }
 
 @end

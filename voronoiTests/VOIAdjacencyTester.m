@@ -60,6 +60,29 @@ static VOIPoint points[6] = {
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testSumOfOppositeAngles {
+    AssertEqualFloats(M_PI, self.adjacency.sumOfOppositeAngles);
+}
+
+- (void)testMinimized {
+    
+    VOIPoint obtuse[5] = {
+        vector2(0.0, 0.0),
+        vector2(2.0, -1.0),
+        vector2(4.0, 0.0),
+        vector2(2.0, 1.0),
+        vector2(0.0, 0.0),
+    };
+    
+    VOITriangle *t0 = [[VOITriangle alloc] initWithPoints:obtuse];
+    VOITriangle *t1 = [[VOITriangle alloc] initWithPoints:&obtuse[2]];
+    VOIAdjacency *a = [[VOIAdjacency alloc] initWithTriangle:t0 triangle:t1];
+
+    XCTAssertFalse(a.minimized);
+    VOIAdjacency *m = [a flip];
+    XCTAssertTrue(m.minimized);
+}
+
 - (void)testEmpty {
     VOIAdjacency *a1 = [VOIAdjacency emptyAdjacency];
     VOIAdjacency *a2 = [VOIAdjacency emptyAdjacency];

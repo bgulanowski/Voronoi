@@ -20,7 +20,11 @@
 @property (readonly) NSUInteger t0Index;
 @property (readonly) NSUInteger t1Index;
 
+@property (readonly) double sumOfOppositeAngles;
+@property (readonly) double sumOfAdjacentAngles;
+
 @property (readonly, getter=isEmpty) BOOL empty;
+@property (readonly, getter=isMinimized) BOOL minimized;
 
 - (instancetype)initWithTriangle:(VOITriangle *)t0 triangle:(VOITriangle *)t1 NS_DESIGNATED_INITIALIZER;
 
@@ -31,5 +35,6 @@
 - (BOOL)isEquivalentToAdjacency:(VOIAdjacency *)other;
 
 - (VOIAdjacency *)invert;
+- (VOIAdjacency *)flip;
 
 @end

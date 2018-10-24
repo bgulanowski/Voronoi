@@ -108,6 +108,11 @@
     _a2 = nil;
 }
 
+- (void)updateNets:(NSArray<VOITriangleNet *> *)nets {
+    [self removeAllAdjacentNets];
+    [self addAdjacentNets:nets];
+}
+
 - (VOIAdjacency *)adjacencyAtIndex:(NSUInteger)index {
     VOIAdjacency *ta = (__weak VOIAdjacency *[3]){ _a0, _a1, _a2 }[index % 3];
     return ta ?: [self createAdjacencyAtIndex:index];
@@ -122,53 +127,32 @@
 }
 
 - (void)flipWith:(NSUInteger)netIndex {
-    
     VOIAdjacency *adjacency = [self adjacencyAtIndex:netIndex];
     if (!adjacency.empty) {
         VOITriangleNet *net = [self netAtIndex:netIndex];
-        
-        // self.triangle and net.triangle are composed out of four points (two shared)
-        // We have to switch the adjacent edge from the current points to the other two
-        // We know the indices of the current adjacent edges; those are the other points.
-        // Which triangle is assigned to which Net is arbitrary
-        
-        // FIXME: cannot assume that t0 == self.triangle
         if (self.triangle == adjacency.t1) {
-            adjacency = [adjacency invert];
+            [net flipAdjacency:adjacency withNet:self];
         }
-        VOIPoint points[4] = {
-            [adjacency.t0 pointAt:adjacency.t0Index + 1],
-            [adjacency.t0 pointAt:adjacency.t0Index],
-            [adjacency.t1 pointAt:adjacency.t1Index],
-            [adjacency.t1 pointAt:adjacency.t1Index + 1]
-        };
-        
-        self.triangle = [[[VOITriangle alloc] initWithPoints:points] standardize];
-        net.triangle = [[[VOITriangle alloc] initWithPoints:&points[1]] standardize];
-        
-#if 1
-        
-        // lazy but safe
-        NSArray *nets = [[self adjacentNets] arrayByAddingObjectsFromArray:[net adjacentNets]];
-        [self removeAllAdjacentNets];
-        [self addAdjacentNets:nets];
-        [net removeAllAdjacentNets];
-        [net addAdjacentNets:nets];
-        
-#else
-        // other nets have to be switched to match the new adjacent edges
-//        VOITriangleNet *n1 = [self netAtIndex:netIndex + 1];
-        VOITriangleNet *n2 = [self netAtIndex:netIndex + 2];
-        
-        NSUInteger me = [net indexOf:self];
-//        VOITriangleNet *n3 = [net netAtIndex:me + 1];
-        VOITriangleNet *n4 = [net netAtIndex:me + 2];
-        
-        // swap n2 with n4
-        [self setNet:n2 atIndex:netIndex + 2];
-        [net setNet:n4 atIndex:me + 2];
-#endif
+        else {
+            [self flipAdjacency:adjacency withNet:net];
+        }
     }
+}
+
+
+#pragma mark - Private
+
+- (void)flipAdjacency:(VOIAdjacency *)adjacency withNet:(VOITriangleNet *)net {
+    
+    adjacency = [adjacency flip];
+    self.triangle = adjacency.t0;
+    net.triangle = adjacency.t1;
+    [self setAdjacency:adjacency atIndex:adjacency.t0Index];
+    [net setAdjacency:adjacency atIndex:adjacency.t1Index];
+    
+    NSArray *nets = [[self adjacentNets] arrayByAddingObjectsFromArray:[net adjacentNets]];
+    [self updateNets:nets];
+    [net updateNets:nets];
 }
 
 - (VOIAdjacency *)createAdjacencyAtIndex:(NSUInteger)index {
