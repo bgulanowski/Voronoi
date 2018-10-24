@@ -92,6 +92,13 @@ static VOIPoint points[4];
     XCTAssertTrue([e isEquivalentToTriangle:a]);
 }
 
+- (void)testCompare {
+    XCTAssertEqual(NSOrderedSame, [self.triangle compare:self.triangle]);
+    XCTAssertEqual(NSOrderedSame, [self.triangle compare:[[VOITriangle alloc] initWithPoints:points]]);
+    
+    XCTAssertEqual(NSOrderedAscending, [self.triangle compare:self.degenerate]);
+}
+
 - (void)testCentre {
     VOIPoint e = vector2(3.0, 1.5 + 1.0 / 3.0);
     VOIPoint a = self.triangle.centre;
@@ -112,6 +119,18 @@ static VOIPoint points[4];
 
 - (void)testDegenerateRadius {
     XCTAssertTrue(isnan(self.degenerate.radius));
+}
+
+- (void)testCentroid {
+    VOIPoint e = vector2(3.0, 2.0);
+    VOIPoint a = self.triangle.centroid;
+    AssertEqualPoints(e, a);
+}
+
+- (void)testCentroidDegenerate {
+    VOIPoint e = vector2(5.0, 1.0);
+    VOIPoint a = self.degenerate.centroid;
+    AssertEqualPoints(e, a);
 }
 
 - (void)testRightHandedness {

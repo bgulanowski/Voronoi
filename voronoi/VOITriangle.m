@@ -58,6 +58,7 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 }
 
 @synthesize centre=_centre;
+@synthesize centroid=_centroid;
 @synthesize radius=_radius;
 @synthesize ordered=_ordered;
 @synthesize standard=_standard;
@@ -76,8 +77,28 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
     return _points[2];
 }
 
+- (double)minX {
+    return MIN(_points[0].x, MIN(_points[1].x, _points[2].x));
+}
+
+- (double)maxX {
+    return MAX(_points[0].x, MAX(_points[1].x, _points[2].x));
+}
+
+- (double)minY {
+    return MIN(_points[0].y, MIN(_points[1].y, _points[2].y));
+}
+
+- (double)maxY {
+    return MAX(_points[0].y, MAX(_points[1].y, _points[2].y));
+}
+
 - (VOIPoint)centre {
     return (!self.degenerate && isnan(_centre.x)) ? [self calculateCentre] : _centre;
+}
+
+- (VOIPoint)centroid {
+    return isnan(_centroid.x) ? [self calculateCentroid] : _centroid;
 }
 
 - (double)radius {
@@ -110,6 +131,18 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 
 - (VOISegment *)s2 {
     return [self segmentAt:2];
+}
+
+- (VOISegment *)m0 {
+    return [self medianAt:0];
+}
+
+- (VOISegment *)m1 {
+    return [self medianAt:1];
+}
+
+- (VOISegment *)m2 {
+    return [self medianAt:2];
 }
 
 #pragma mark - NSObject
@@ -147,7 +180,7 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
         }
         _normal = CalculateNormal(_points);
         _standard = standardize || (self.ordered && self.leftHanded);
-        _centre = vector2((double)NAN, (double)NAN);
+        _centroid = _centre = vector2((double)NAN, (double)NAN);
         _radius = (double)NAN;
     }
     return self;
@@ -170,6 +203,11 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 
 - (BOOL)isEquivalentToTriangle:(VOITriangle *)other {
     return other == self || [[self standardize] isEqualToTriangle:[other standardize]];
+}
+
+- (NSComparisonResult)compare:(VOITriangle *)other {
+    NSComparisonResult cr = VOIComparePoints(self.centroid, other.centroid);
+    return cr ?: VOICompareDoubles(self.radius, other.radius);
 }
 
 - (VOIPoint)pointAt:(NSUInteger)index {
@@ -230,6 +268,10 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
     return nil;
 }
 
+- (VOISegment *)medianAt:(NSUInteger)index {
+    return [[VOISegment alloc] initWithPoint:_points[index] otherPoint:[self segmentAt:index].midpoint];
+}
+
 - (VOITriangle *)reverseOrder {
     VOIPoint reordered[3] = {
         _points[0],
@@ -261,6 +303,15 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 
 - (VOIPoint)calculateCentre {
     return (_centre = VOICentrePoint(_points));
+}
+
+- (VOIPoint)calculateCentroid {
+    if (self.degenerate) {
+        return (_centroid = vector2((self.minX + self.maxX) * 0.5, (self.minY + self.maxY) * 0.5));
+    }
+    else {
+        return (_centroid = [self.m0 intersectWithSegment:self.m1]);
+    }
 }
 
 - (double)calculateRadius {
