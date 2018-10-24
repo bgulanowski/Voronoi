@@ -26,7 +26,7 @@
 }
 
 - (BOOL)isMinimized {
-    return [self sumOfOppositeAngles] < VOIPi;
+    return [self sumOfOppositeAngles] <= VOIPi;
 }
 
 - (NSString *)description {
