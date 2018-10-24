@@ -25,7 +25,11 @@
 
 @end
 
-@implementation VOITriangleNet
+@implementation VOITriangleNet {
+    BOOL _minimizing;
+}
+
+#pragma mark - Properties
 
 - (NSArray<VOITriangleNet *> *)adjacentNets {
     NSMutableArray *nets = [NSMutableArray array];
@@ -35,9 +39,22 @@
     return nets;
 }
 
+- (BOOL)minimized {
+    for (NSUInteger i = 0; i < 3; ++i) {
+        if (![self isMinimizedAt:i]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+#pragma mark - NSObject
+
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@: %@ (n0:%@ n1:%@ n2:%@)", [self className], _triangle, _n0.triangle, _n1.triangle, _n2.triangle];
 }
+
+#pragma mark - Instantiation
 
 - (instancetype)initWithTriangle:(VOITriangle *)triangle adjacentNets:(NSArray<VOITriangleNet *> *)nets {
     self = [super init];
@@ -162,6 +179,35 @@
     }
 }
 
+- (BOOL)isMinimizedAt:(NSUInteger)index {
+    VOIAdjacency *adj = [self adjacencyAtIndex:index];
+    return adj ? adj.minimized : YES;
+}
+
+- (void)minimizeRecurse:(BOOL)recurse {
+    if (_minimizing) {
+        return;
+    }
+    
+    BOOL flipped = NO;
+    for (NSUInteger i = 0; i < 3; ++i) {
+        if (![self isMinimizedAt:i]) {
+            [self flipWith:i];
+            flipped = YES;
+            break;
+        }
+    }
+    if (recurse && flipped) {
+        for (NSUInteger i = 0; i < 3; ++i) {
+            [[self netAtIndex:i] minimizeRecurse:YES];
+        }
+    }
+    _minimizing = NO;
+}
+
+- (void)minimize {
+    [self minimizeRecurse:YES];
+}
 
 #pragma mark - Private
 

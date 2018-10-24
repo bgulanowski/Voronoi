@@ -33,6 +33,8 @@
 
 @property (readonly) NSArray<VOITriangleNet *> *adjacentNets;
 
+@property (readonly) BOOL minimized;
+
 - (VOITriangleNet *)netAtIndex:(NSUInteger)index;
 - (void)addAdjacentNet:(VOITriangleNet *)net;
 - (void)addAdjacentNets:(NSArray<VOITriangleNet *> *)nets;
@@ -43,5 +45,9 @@
 // replace existing triangles with two new triangles
 // update the adjacent nets to match
 - (void)flipWith:(NSUInteger)netIndex;
+
+- (BOOL)isMinimizedAt:(NSUInteger)index;
+- (void)minimizeRecurse:(BOOL)recurse;
+- (void)minimize;
 
 @end

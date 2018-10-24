@@ -187,6 +187,7 @@ NSUInteger indices[18];
     [self.net012 addAdjacentNets:@[self.net024, self.net051, self.net132]];
     [self.net132 addAdjacentNets:@[self.net163, self.net372]];
     
+    // net012.n0 is adjacent to net132
     [self.net012 flipWith:0];
 
     VOIPoint tp[4] = {
@@ -203,7 +204,6 @@ NSUInteger indices[18];
     a = self.net132.triangle;
     XCTAssertEqualObjects(e, a);
     
-    
     XCTAssertEqualObjects(self.net372, self.net012.n0);
     XCTAssertEqualObjects(self.net132, self.net012.n1);
     XCTAssertEqualObjects(self.net024, self.net012.n2);
@@ -211,6 +211,51 @@ NSUInteger indices[18];
     XCTAssertEqualObjects(self.net163, self.net132.n0);
     XCTAssertEqualObjects(self.net051, self.net132.n1);
     XCTAssertEqualObjects(self.net012, self.net132.n2);
+}
+
+- (void)testMinimize {
+    
+    [self.net012 addAdjacentNets:@[self.net024, self.net051, self.net132]];
+    [self.net132 addAdjacentNets:@[self.net163, self.net372]];
+
+    XCTAssertTrue(self.net012.minimized);
+    // net012.n2 is adjacent to net024
+    [self.net012 flipWith:2];
+    XCTAssertFalse(self.net012.minimized);
+
+    VOIPoint tp[3] = { points[4], points[1], points[0] };
+    VOITriangle *e = [[VOITriangle alloc] initWithPoints:tp];
+    VOITriangle *a = self.net012.triangle;
+    XCTAssertEqualObjects(e, a);
+    
+    tp[0] = points[4]; tp[1] = points[2]; tp[2] = points[1];
+    e = [[VOITriangle alloc] initWithPoints:tp];
+    a = self.net024.triangle;
+    XCTAssertEqualObjects(e, a);
+    
+    XCTAssertTrue(self.net132.minimized);
+    // net132.n2 is adjacent to net372
+    [self.net132 flipWith:2];
+    XCTAssertFalse(self.net132.minimized);
+    
+    tp[0] = points[2]; tp[1] = points[7]; tp[2] = points[1];
+    e = [[VOITriangle alloc] initWithPoints:tp];
+    a = self.net132.triangle;
+    XCTAssertEqualObjects(e, a);
+
+    tp[0] = points[7]; tp[1] = points[3]; tp[2] = points[1];
+    e = [[VOITriangle alloc] initWithPoints:tp];
+    a = self.net372.triangle;
+    XCTAssertEqualObjects(e, a);
+    
+    [self.net012 minimize];
+    [self.net132 minimize];
+    
+    NSArray *et = [[self.triangles valueForKey:@"standardize"] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray *nets = @[self.net012, self.net132, self.net024, self.net051, self.net163, self.net372];
+    NSArray *at = [[nets valueForKey:@"triangle"] sortedArrayUsingSelector:@selector(compare:)];
+    
+    XCTAssertEqualObjects(et, at);
 }
 
 @end
