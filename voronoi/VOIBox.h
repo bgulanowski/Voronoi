@@ -29,6 +29,9 @@
 @property (readonly, getter = isDegenerate) BOOL degenerate;
 
 - (instancetype)initWithOrigin:(VOIPoint)origin size:(VOISize)size NS_DESIGNATED_INITIALIZER;
+
+- (NSComparisonResult)compare:(VOIBox *)box;
+
 // clockwise starting at origin
 - (VOIPointList *)asPointList;
 - (BOOL)containsPoint:(VOIPoint)point;

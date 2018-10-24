@@ -92,6 +92,11 @@
     return _size.x <= DBL_EPSILON || _size.y <= DBL_EPSILON;
 }
 
+- (NSComparisonResult)compare:(VOIBox *)box {
+    NSComparisonResult cr = VOIComparePoints(self.origin, box.origin);
+    return cr ?: VOIComparePoints(self.centre, box.centre);
+}
+
 - (BOOL)containsPoint:(VOIPoint)point {
     return (
             point.x >= self.minX &&

@@ -94,6 +94,17 @@
     XCTAssertTrue([[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(1.0, 0.0)].degenerate);
 }
 
+- (void)testCompare {
+    VOIBox *b0 = [[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(2.0, 2.0)];
+    VOIBox *b1 = [[VOIBox alloc] initWithOrigin:vector2(0.5, 0.5) size:vector2(1.0, 1.0)];
+    VOIBox *b2 = [[VOIBox alloc] initWithOrigin:vector2(-2.0, -2.0) size:vector2(2.0, 2.0)];
+    VOIBox *b3 = [[VOIBox alloc] initWithOrigin:vector2(0.0, 1.0) size:vector2(1.0, 1.0)];
+    NSArray *e = @[ b2, b0, b3, b1 ];
+    NSArray *a = [@[ b0, b1, b2, b3] sortedArrayUsingSelector:@selector(compare:)];
+    
+    XCTAssertEqualObjects(e, a);
+}
+
 - (void)testAsPointList {
     VOIPoint points[4] = {
         vector2(1.0, -5.0),
