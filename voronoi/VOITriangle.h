@@ -38,10 +38,14 @@
 
 // any index will do - uses %3
 - (VOIPoint)pointAt:(NSUInteger)index;
+- (double)angleAt:(NSUInteger)index;
+
 - (VOISegment *)segmentAt:(NSUInteger)index;
 - (NSUInteger)indexForSegment:(VOISegment *)segment;
 
 // compare two triangles to see if they are adjacent, returning details
+- (double)lengthOfSegmentAt:(NSUInteger)index;
+- (double)squareLengthOfSegmentAt:(NSUInteger)index;
 - (VOISegment *)segmentInCommonWith:(VOITriangle *)other indices:(NSUInteger[2])indices;
 
 // Switches handedness by changing point ordering

@@ -52,6 +52,28 @@ static VOIPoint points[4];
     }
 }
 
+- (void)testAngleAt {
+    double e = 0.982793723247329;
+    double a = [self.triangle angleAt:0];
+    AssertEqualFloats(e, a);
+    
+    e = M_PI - (2 * e);
+    a = [self.triangle angleAt:1];
+    AssertEqualFloats(e, a);
+}
+
+- (void)testLengthOf {
+    double e = 3.605551275463989;
+    double a = [self.triangle lengthOfSegmentAt:0];
+    AssertEqualFloats(e, a);
+    XCTAssertEqual(4.0, [self.triangle lengthOfSegmentAt:1]);
+}
+
+- (void)testSquareLengthOf {
+    XCTAssertEqual(13.0, [self.triangle squareLengthOfSegmentAt:0]);
+    XCTAssertEqual(16.0, [self.triangle squareLengthOfSegmentAt:1]);
+}
+
 - (void)testIsEqualToTriangle {
     VOITriangle *other = [[VOITriangle alloc] initWithPoints:points];
     XCTAssertTrue([other isEqualToTriangle:self.triangle]);

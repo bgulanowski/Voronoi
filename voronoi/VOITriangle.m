@@ -176,6 +176,15 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
     return _points[index%3];
 }
 
+- (double)angleAt:(NSUInteger)index {
+    // law of cosines
+    double a = [self lengthOfSegmentAt:index + 1];
+    double b = [self lengthOfSegmentAt:index + 2];
+    double cc = [self squareLengthOfSegmentAt:index];
+    double cosc = (a * a + b * b - cc) / (2 * a * b);
+    return acos(cosc);
+}
+
 - (VOISegment *)segmentAt:(NSUInteger)index {
     return [[VOISegment alloc] initWithPoint:_points[(index + 1)%3] otherPoint:_points[(index + 2)%3]];
 }
@@ -189,6 +198,18 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
         }
     }
     return index;
+}
+
+- (double)lengthOfSegmentAt:(NSUInteger)index {
+    VOIPoint a = [self pointAt:index + 1];
+    VOIPoint b = [self pointAt:index + 2];
+    return simd_length(b - a);
+}
+
+- (double)squareLengthOfSegmentAt:(NSUInteger)index {
+    VOIPoint a = [self pointAt:index + 1];
+    VOIPoint b = [self pointAt:index + 2];
+    return simd_length_squared(b - a);
 }
 
 - (VOISegment *)segmentInCommonWith:(VOITriangle *)other indices:(NSUInteger[2])indices {
