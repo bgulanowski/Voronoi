@@ -7,7 +7,7 @@
 //
 
 
-#define VOI_EPSILON (2 * DBL_EPSILON)
+#define VOI_EPSILON (DBL_EPSILON)
 
 extern const double VOIEpsilon;
 extern const double VOIPi;
@@ -37,18 +37,24 @@ typedef union {
     VOIPoint points[3];
 } VOIPoints3;
 
-NS_INLINE BOOL VOIPointsEqual(VOIPoint a, VOIPoint b) {
-    return ABS(a.x - b.x) < VOI_EPSILON && ABS(a.y - b.y) < VOI_EPSILON;
+NS_INLINE BOOL VOIDoublesEqual(double a, double b) {
+    int _ae, _ab;
+    a = frexp(a, &_ae);
+    b = frexp(b, &_ab);
+    return _ae == _ab && fabs(a - b) <= VOIEpsilon;
 }
 
-static inline NSComparisonResult VOIComparePoints(VOIPoint a, VOIPoint b) {
-    if (fabs(a.x - b.x) < DBL_EPSILON) {
-        if (fabs(a.y - b.y) < DBL_EPSILON) {
-            return NSOrderedSame;
-        }
-        return (a.y < b.y) ? NSOrderedAscending : NSOrderedDescending;
-    }
-    return (a.x < b.x) ? NSOrderedAscending : NSOrderedDescending;
+NS_INLINE NSComparisonResult VOICompareDoubles(double a, double b) {
+    return VOIDoublesEqual(a, b) ? NSOrderedSame : (a < b ? NSOrderedAscending : NSOrderedDescending);
+}
+
+NS_INLINE BOOL VOIPointsEqual(VOIPoint a, VOIPoint b) {
+    return VOIDoublesEqual(a.x, b.x) && VOIDoublesEqual(a.y, b.y);
+}
+
+NS_INLINE NSComparisonResult VOIComparePoints(VOIPoint a, VOIPoint b) {
+    NSComparisonResult cr = VOICompareDoubles(a.x, b.x);
+    return cr ?: VOICompareDoubles(a.y, b.y);
 }
 
 NS_INLINE long long VOIRandomLongLong() {

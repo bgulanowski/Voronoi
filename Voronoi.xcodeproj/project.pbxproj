@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8407B1CE2180B93B006AEDF0 /* VOIPointTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */; };
 		842C20322171356E009B8E2D /* VOIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C20302171356E009B8E2D /* VOIPoint.h */; };
 		842C20332171356E009B8E2D /* VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C20312171356E009B8E2D /* VOIPoint.m */; };
 		842C203E217829F9009B8E2D /* VOITriangleNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C203C217829F9009B8E2D /* VOITriangleNet.h */; };
@@ -106,6 +107,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPointTester.m; sourceTree = "<group>"; };
 		842C20302171356E009B8E2D /* VOIPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPoint.h; sourceTree = "<group>"; };
 		842C20312171356E009B8E2D /* VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPoint.m; sourceTree = "<group>"; };
 		842C203C217829F9009B8E2D /* VOITriangleNet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOITriangleNet.h; sourceTree = "<group>"; };
@@ -447,6 +449,7 @@
 				8444AD53217938DE003E374F /* VOITriangleNetTester.m */,
 				8480973D2169717500912E79 /* VOITriangleTester.m */,
 				8480973F2169AADD00912E79 /* VOITriangulatorTester.m */,
+				8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */,
 			);
 			path = voronoiTests;
 			sourceTree = "<group>";
@@ -703,6 +706,7 @@
 				84D905A7216632BA00EA72FC /* SegmentTester.m in Sources */,
 				8444AD56217A6028003E374F /* VOIAdjacencyTester.m in Sources */,
 				84D905B52166700F00EA72FC /* VOISegmentListTester.m in Sources */,
+				8407B1CE2180B93B006AEDF0 /* VOIPointTester.m in Sources */,
 				84D905BE2166A5EE00EA72FC /* VOIPathTester.m in Sources */,
 				848097362167A85600912E79 /* VOISegmentTester.m in Sources */,
 				8444AD54217938DE003E374F /* VOITriangleNetTester.m in Sources */,
