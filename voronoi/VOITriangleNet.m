@@ -65,12 +65,24 @@
     return empty;
 }
 
+#pragma mark - VOITriangleNet
+
 - (VOITriangleNet *)netAtIndex:(NSUInteger)index {
-    return ((__weak VOITriangleNet *[3]){ _n0, _n1, _n2 }[index % 3]);
+    switch (index % 3) {
+        case 0: return _n0;
+        case 1: return _n1;
+        case 2: return _n2;
+        default: return nil;
+    }
 }
 
 - (void)setNet:(VOITriangleNet *)net atIndex:(NSUInteger)index {
-    *((__weak VOITriangleNet **[3]){ &_n0, &_n1, &_n2 }[index % 3]) = net;
+    switch (index % 3) {
+        case 0: _n0 = net; break;
+        case 1: _n1 = net; break;
+        case 2: _n2 = net; break;
+        default: break;
+    }
     [self setAdjacency:nil atIndex:index];
 }
 
@@ -114,8 +126,14 @@
 }
 
 - (VOIAdjacency *)adjacencyAtIndex:(NSUInteger)index {
-    VOIAdjacency *ta = (__weak VOIAdjacency *[3]){ _a0, _a1, _a2 }[index % 3];
-    return ta ?: [self createAdjacencyAtIndex:index];
+    VOIAdjacency *a = nil;
+    switch (index % 3) {
+        case 0: a = _a0;
+        case 1: a = _a1;
+        case 2: a = _a2;
+        default: a = nil;
+    }
+    return a ?: [self createAdjacencyAtIndex:index];
 }
 
 - (VOIAdjacency *)adjacencyForNet:(VOITriangleNet *)net {
@@ -123,7 +141,12 @@
 }
 
 - (void)setAdjacency:(VOIAdjacency *)adjacency atIndex:(NSUInteger)index {
-    *((__strong VOIAdjacency **[3]) { &_a0, &_a1, &_a2 }[index % 3]) = adjacency;
+    switch (index % 3) {
+        case 0: _a0 = adjacency; break;
+        case 1: _a1 = adjacency; break;
+        case 2: _a2 = adjacency; break;
+        default: break;
+    }
 }
 
 - (void)flipWith:(NSUInteger)netIndex {
