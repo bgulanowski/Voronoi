@@ -159,7 +159,7 @@
     VOITriangleNet *net = [self netAtIndex:index];
     VOIAdjacency *ta = [VOIAdjacency adjacencyWithTriangle:self.triangle triangle:net.triangle];
     [self setAdjacency:ta atIndex:index];
-    // TODO: set the adjacency of adjacent net
+    [net setAdjacency:ta atIndex:ta.t1Index];
     return ta;
 }
 
