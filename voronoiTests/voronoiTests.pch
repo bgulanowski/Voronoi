@@ -12,10 +12,9 @@
 #import "VOIPoint.h"
 
 #define AssertEqualFloats(f0, f1) do {\
-XCTAssertLessThan(ABS((f1) - (f0)), DBL_EPSILON * 2.0);\
+XCTAssertTrue(VOIDoublesEqual(f0, f1));\
 } while (0)
 
 #define AssertEqualPoints(p0, p1) do {\
-AssertEqualFloats((p0).x, (p1).x); \
-AssertEqualFloats((p0).y, (p1).y); \
+XCTAssertTrue(VOIPointsEqual(p0, p1)); \
 } while (0)
