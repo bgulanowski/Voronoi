@@ -10,6 +10,8 @@
 
 #import "VOIBox.h"
 
+#import "NSValue+VOIPoint.h"
+
 @implementation VOISegment {
     NSUInteger _hash;
 }
@@ -20,6 +22,18 @@
 
 - (VOIBox *)boundingBox {
     return [[VOIBox alloc] initWithOrigin:_a size:(_b - _a)];
+}
+
+- (id<NSCopying>)hashKey {
+#if FAST_HASH
+    return @(self.hash);
+#else
+    return [NSValue valueWithPoints2:self.points];
+#endif
+}
+
+- (VOIPoints2)points {
+    return (VOIPoints2) { _a, _b };
 }
 
 - (NSString *)description {

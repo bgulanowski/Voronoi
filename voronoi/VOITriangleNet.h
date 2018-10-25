@@ -33,6 +33,8 @@
 
 @property (readonly) NSArray<VOITriangleNet *> *adjacentNets;
 
+@property (readonly) id<NSCopying> hashKey;
+
 @property (readonly) BOOL minimized;
 
 - (VOITriangleNet *)netAtIndex:(NSUInteger)index;

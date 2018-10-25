@@ -50,4 +50,14 @@
     };
     return [self valueWithBytes:v objCType:@encode(double[6])];
 }
+
++ (instancetype)valueWithThreePoints:(VOIPoint[3])points {
+    double v[6] = {
+        points[0].x, points[0].y,
+        points[1].x, points[1].y,
+        points[2].x, points[2].y
+    };
+    return [self valueWithBytes:v objCType:@encode(double[6])];
+}
+
 @end

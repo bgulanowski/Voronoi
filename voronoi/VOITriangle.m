@@ -12,6 +12,8 @@
 #import "VOISegment.h"
 #import "VOISegmentList.h"
 
+#import "NSValue+VOIPoint.h"
+
 static inline void CopyPoints(const VOIPoint src[3], VOIPoint dst[3]) {
     dst[0] = src[0];
     dst[1] = src[1];
@@ -123,7 +125,11 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 }
 
 - (id<NSCopying>)hashKey {
+#if FAST_HASH
     return @(self.hash);
+#else
+    return [NSValue valueWithThreePoints:_points];
+#endif
 }
 
 - (VOISegment *)s0 {

@@ -29,6 +29,8 @@
     BOOL _minimizing;
 }
 
+@synthesize hashKey=_hashKey;
+
 #pragma mark - Properties
 
 - (NSArray<VOITriangleNet *> *)adjacentNets {
@@ -48,10 +50,23 @@
     return YES;
 }
 
+- (id<NSCopying>)hashKey {
+    return _hashKey ?: (_hashKey = _triangle.hashKey);
+}
+
 #pragma mark - NSObject
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@: %@ (n0:%@ n1:%@ n2:%@)", [self className], _triangle, _n0.triangle, _n1.triangle, _n2.triangle];
+}
+
+- (NSUInteger)hash {
+    return _triangle.hash;
+}
+
+- (BOOL)isEqual:(id)object {
+    return (self == object) ||
+    ([object isKindOfClass:[self class]] && [self isEqualToTriangleNet:object]);
 }
 
 #pragma mark - Instantiation
@@ -83,6 +98,10 @@
 }
 
 #pragma mark - VOITriangleNet
+
+- (BOOL)isEqualToTriangleNet:(VOITriangleNet *)other {
+    return [self.triangle isEqualToTriangle:other.triangle];
+}
 
 - (VOITriangleNet *)netAtIndex:(NSUInteger)index {
     switch (index % 3) {

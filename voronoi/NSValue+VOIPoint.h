@@ -20,5 +20,6 @@
 
 @property (readonly) VOIPoints3 points3;
 + (instancetype)valueWithPoints3:(VOIPoints3)points3;
++ (instancetype)valueWithThreePoints:(VOIPoint[3])points;
 
 @end

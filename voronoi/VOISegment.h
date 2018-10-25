@@ -39,6 +39,9 @@ typedef enum {
 @property (readonly) VOIPoint midpoint;
 @property (readonly) VOIBox *boundingBox;
 
+@property (readonly) id<NSCopying> hashKey;
+@property (readonly) VOIPoints2 points;
+
 - (instancetype)initWithPoint:(VOIPoint)point otherPoint:(VOIPoint)other NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPoints:(const VOIPoint[2])points;
 - (BOOL)isEqualToSegment:(VOISegment *)other;
