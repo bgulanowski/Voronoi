@@ -111,9 +111,8 @@ static VOIPoint points[4];
 }
 
 - (void)testCentreDegenerate {
-    VOIPoint e = vector2((double)INFINITY, (double)INFINITY);
     VOIPoint a = self.degenerate.centre;
-    AssertEqualPoints(e, a);
+    XCTAssertTrue(isnan(a.x) && isnan(a.y));
 }
 
 - (void)testRadius {
