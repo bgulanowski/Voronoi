@@ -18,3 +18,19 @@ XCTAssertTrue(VOIDoublesEqual(f0, f1));\
 #define AssertEqualPoints(p0, p1) do {\
 XCTAssertTrue(VOIPointsEqual(p0, p1)); \
 } while (0)
+
+#define AssertIdenticalPoints(p0, p1) do {\
+XCTAssertEqual(p0.x, p1.x);\
+XCTAssertEqual(p0.y, p1.y);\
+} while (0)
+
+#define AssertIdenticalPoints2(p0, p1) do {\
+AssertIdenticalPoints(p0.points[0], p1.points[0]);\
+AssertIdenticalPoints(p0.points[1], p1.points[1]);\
+} while (0)
+
+#define AssertIdenticalPoints3(p0, p1) do {\
+AssertIdenticalPoints(p0.points[0], p1.points[0]);\
+AssertIdenticalPoints(p0.points[1], p1.points[1]);\
+AssertIdenticalPoints(p0.points[2], p1.points[2]);\
+} while (0)

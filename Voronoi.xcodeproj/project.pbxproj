@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8407B1CE2180B93B006AEDF0 /* VOIPointTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */; };
+		8407B1DA21823D09006AEDF0 /* NSValue+VOIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 8407B1D821823D09006AEDF0 /* NSValue+VOIPoint.h */; };
+		8407B1DB21823D09006AEDF0 /* NSValue+VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1D921823D09006AEDF0 /* NSValue+VOIPoint.m */; };
 		842C20322171356E009B8E2D /* VOIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C20302171356E009B8E2D /* VOIPoint.h */; };
 		842C20332171356E009B8E2D /* VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C20312171356E009B8E2D /* VOIPoint.m */; };
 		842C203E217829F9009B8E2D /* VOITriangleNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C203C217829F9009B8E2D /* VOITriangleNet.h */; };
@@ -108,6 +110,8 @@
 
 /* Begin PBXFileReference section */
 		8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPointTester.m; sourceTree = "<group>"; };
+		8407B1D821823D09006AEDF0 /* NSValue+VOIPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSValue+VOIPoint.h"; sourceTree = "<group>"; };
+		8407B1D921823D09006AEDF0 /* NSValue+VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSValue+VOIPoint.m"; sourceTree = "<group>"; };
 		842C20302171356E009B8E2D /* VOIPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPoint.h; sourceTree = "<group>"; };
 		842C20312171356E009B8E2D /* VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPoint.m; sourceTree = "<group>"; };
 		842C203C217829F9009B8E2D /* VOITriangleNet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOITriangleNet.h; sourceTree = "<group>"; };
@@ -254,6 +258,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8407B1CF21821A40006AEDF0 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				8444AD57217A7350003E374F /* NSObject+Equivalence.h */,
+				8444AD58217A7350003E374F /* NSObject+Equivalence.m */,
+				8407B1D821823D09006AEDF0 /* NSValue+VOIPoint.h */,
+				8407B1D921823D09006AEDF0 /* NSValue+VOIPoint.m */,
+			);
+			name = Foundation;
+			sourceTree = "<group>";
+		};
 		847F31C316497C120068A102 = {
 			isa = PBXGroup;
 			children = (
@@ -393,8 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				84D3FAF316642B3500A05727 /* BAFoundation */,
-				8444AD57217A7350003E374F /* NSObject+Equivalence.h */,
-				8444AD58217A7350003E374F /* NSObject+Equivalence.m */,
+				8407B1CF21821A40006AEDF0 /* Foundation */,
 				848097232167398E00912E79 /* Original */,
 				84AD32F4164C3DBE00E37EDE /* Supporting Files */,
 				8444AD4F2179307D003E374F /* VOIAdjacency.h */,
@@ -443,13 +457,13 @@
 				8480973B21696B6D00912E79 /* VOIBoxTester.m */,
 				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
+				8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */,
 				84D905B42166700F00EA72FC /* VOISegmentListTester.m */,
 				848097352167A85600912E79 /* VOISegmentTester.m */,
 				84D905BB2166A18F00EA72FC /* VOITriangleListTester.m */,
 				8444AD53217938DE003E374F /* VOITriangleNetTester.m */,
 				8480973D2169717500912E79 /* VOITriangleTester.m */,
 				8480973F2169AADD00912E79 /* VOITriangulatorTester.m */,
-				8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */,
 			);
 			path = voronoiTests;
 			sourceTree = "<group>";
@@ -523,6 +537,7 @@
 				8444AD59217A7350003E374F /* NSObject+Equivalence.h in Headers */,
 				84AD3334164C3E8100E37EDE /* DSegment.h in Headers */,
 				84D9058121653D4200EA72FC /* VOIMesh.h in Headers */,
+				8407B1DA21823D09006AEDF0 /* NSValue+VOIPoint.h in Headers */,
 				842C20322171356E009B8E2D /* VOIPoint.h in Headers */,
 				84AD3336164C3E8100E37EDE /* DTriad.h in Headers */,
 				8444AD512179307D003E374F /* VOIAdjacency.h in Headers */,
@@ -679,6 +694,7 @@
 				84D905B3216664AC00EA72FC /* VOISegmentList.m in Sources */,
 				84AD3333164C3E8100E37EDE /* DRegion.m in Sources */,
 				84AD3335164C3E8100E37EDE /* DSegment.m in Sources */,
+				8407B1DB21823D09006AEDF0 /* NSValue+VOIPoint.m in Sources */,
 				84D905B921667E3100EA72FC /* VOIPath.m in Sources */,
 				842C20332171356E009B8E2D /* VOIPoint.m in Sources */,
 				84D905AF2166641100EA72FC /* VOISegment.m in Sources */,

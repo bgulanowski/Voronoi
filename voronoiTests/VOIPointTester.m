@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "VOIPoint.h"
+#import "NSValue+VOIPoint.h"
 
 typedef void(^FibonacciBlock)(double f);
 
@@ -73,6 +74,34 @@ static void IterateFibonacci(NSUInteger count, FibonacciBlock block) {
     XCTAssertEqual(NSOrderedDescending, VOIComparePoints(p1, p0));
     XCTAssertEqual(NSOrderedDescending, VOIComparePoints(p1, p2));
     XCTAssertEqual(NSOrderedAscending, VOIComparePoints(p1, p3));
+}
+
+- (void)testPointToValue {
+    VOIPoint p = vector2(-1.5, 7.9);
+    NSValue *value = [NSValue valueWithPoint:p];
+    VOIPoint a = value.point;
+    AssertIdenticalPoints(p, a);
+}
+
+- (void)testPoints2ToValue {
+    VOIPoints2 p2 = {
+        vector2(11.324, -0.02),
+        vector2(-16.90, 133.889)
+    };
+    NSValue *value = [NSValue valueWithPoints2:p2];
+    VOIPoints2 a = value.points2;
+    AssertIdenticalPoints2(p2, a);
+}
+
+- (void)testPoints3ToValue {
+    VOIPoints3 p3 = {
+        vector2(-100.001, 1.1),
+        vector2(99.99, 99.99),
+        vector2(12.34, -79833.8)
+    };
+    NSValue *value = [NSValue valueWithPoints3:p3];
+    VOIPoints3 a = value.points3;
+    AssertIdenticalPoints3(p3, a);
 }
 
 @end
