@@ -80,3 +80,5 @@ extern NSString *VOIPointToString(VOIPoint p);
 extern VOIPoint VOIPointFromString(NSString *s);
 
 extern VOIPoint VOICentrePoint(VOIPoint points[3]);
+
+extern NSUInteger VOIPointHash(VOIPoint *points, NSUInteger count);

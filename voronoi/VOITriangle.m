@@ -55,6 +55,7 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 @implementation VOITriangle {
     VOIPoint _points[3];
     vector_double3 _normal;
+    NSUInteger _hash;
 }
 
 @synthesize centre=_centre;
@@ -121,6 +122,10 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
     return _points[0].x < _points[1].x && _points[0].x < _points[2].x;
 }
 
+- (id<NSCopying>)hashKey {
+    return @(self.hash);
+}
+
 - (VOISegment *)s0 {
     return [self segmentAt:0];
 }
@@ -154,6 +159,10 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
             VOIPointToString(_points[1]),
             VOIPointToString(_points[2])
             ];
+}
+
+- (NSUInteger)hash {
+    return _hash ?: [self calculateHash];
 }
 
 - (BOOL)isEqual:(id)object {
@@ -316,6 +325,17 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
 
 - (double)calculateRadius {
     return (_radius = simd_distance(_points[0], self.centre));
+}
+
+- (NSUInteger)calculateHash {
+    static NSMutableData *data;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        data = [NSMutableData dataWithLength:sizeof(VOIPoint) * 3];
+    });
+    memcpy(data.mutableBytes, _points, sizeof(VOIPoint) * 3);
+    return data.hash;
+//    return (_hash = VOIPointHash(_points, 3));
 }
 
 @end

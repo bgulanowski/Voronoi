@@ -8,8 +8,13 @@
 
 #import <XCTest/XCTest.h>
 
+#import "VOIBox.h"
 #import "VOISegment.h"
 #import "VOITriangle.h"
+
+@interface VOIBox (VOTriangleTests)
+- (VOITriangle *)randomTriangle;
+@end
 
 @interface VOITriangleTester : XCTestCase
 @property VOITriangle *triangle;
@@ -164,6 +169,33 @@ static VOIPoint points[4];
     AssertEqualPoints(self.triangle.p2, t.p2);
 }
 
+- (void)_testHashKey {
+    // Using the hash value as the hash key (NSNumber) results in around a 2.5% collision rate :P
+    __block NSUInteger collisionCount = 0;
+    __block NSUInteger runCount = 0;
+    const NSUInteger trials = 1 << 20;
+    VOIBox *box = [[VOIBox alloc] initWithOrigin:vector2(0.0, 0.0) size:vector2(32.0, 32.0)];
+    NSMutableDictionary *triangles = [NSMutableDictionary dictionary];
+    [self measureBlock:^{
+        ++runCount;
+        [triangles removeAllObjects];
+        for (NSUInteger i = 0; i < trials; ++i) {
+            VOITriangle *t = [box randomTriangle];
+            id<NSCopying> h = t.hashKey;
+            VOITriangle *e = triangles[h];
+            if (e) {
+                ++collisionCount;
+            }
+//            XCTAssertNil(e, @"hash collistion: %@", h);
+            triangles[h] = t;
+        }
+    }];
+//    XCTAssertLessThan(collisionCount, 100);
+    NSUInteger averageCollisions = collisionCount / runCount;
+    
+    NSLog(@"Random hash key collisions: %td in %td runs (%td trials per run)", averageCollisions, runCount, trials);
+}
+
 - (void)testSegments {
     VOISegment *e = [[VOISegment alloc] initWithPoint:points[1] otherPoint:points[2]];
     XCTAssertEqualObjects(e, self.triangle.s0);
@@ -234,6 +266,19 @@ static VOIPoint points[4];
     };
     VOITriangle *a = [[[VOITriangle alloc] initWithPoints:irregular] standardize];
     XCTAssertEqualObjects(e, a);
+}
+
+@end
+
+@implementation VOIBox (VOITriangleTester)
+
+- (VOITriangle *)randomTriangle {
+    VOIPoint points[3] = {
+        [self randomPoint],
+        [self randomPoint],
+        [self randomPoint]
+    };
+    return [[VOITriangle alloc] initWithPoints:points];
 }
 
 @end

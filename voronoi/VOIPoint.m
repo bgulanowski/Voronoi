@@ -32,3 +32,7 @@ VOIPoint VOIPointFromString(NSString *s) {
     [scanner scanDouble:&elements[1]];
     return vector2(elements[0], elements[1]);
 }
+
+NSUInteger VOIPointHash(VOIPoint *points, NSUInteger count) {
+    return [[NSData dataWithBytesNoCopy:points length:count * sizeof(VOIPoint) freeWhenDone:NO] hash];
+}

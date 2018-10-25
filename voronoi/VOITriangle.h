@@ -31,6 +31,8 @@
 @property (readonly, getter=isOrdered) BOOL ordered; // point with smallest x is at p0
 @property (readonly, getter=isStandard) BOOL standard; // ordered && leftHanded
 
+@property (readonly) id<NSCopying> hashKey;
+
 // Segments are opposite their similarly named point
 @property (readonly) VOISegment *s0;
 @property (readonly) VOISegment *s1;
@@ -45,6 +47,7 @@
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithPoints:(const VOIPoint *)points standardize:(BOOL)standardize NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPoints:(const VOIPoint *)points;
+
 - (BOOL)isEqualToTriangle:(VOITriangle *)other;
 // Will check standardized versions of both
 - (BOOL)isEquivalentToTriangle:(VOITriangle *)other;

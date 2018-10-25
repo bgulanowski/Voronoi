@@ -10,10 +10,16 @@
 
 #import "VOIPointList.h"
 
-@implementation VOIBox
+@implementation VOIBox {
+    NSUInteger _hash;
+}
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@: [%@ : %@]", [self className], VOIPointToString(_origin), VOIPointToString(_size)];
+}
+
+- (NSUInteger)hash {
+    return _hash ?: [self calculateHash];
 }
 
 - (BOOL)isEqual:(id)object {
@@ -118,6 +124,11 @@
         _origin + vector2(_size.x, 0.0)
     };
     return [[VOIPointList alloc] initWithPoints:points count:4];
+}
+
+- (NSUInteger)calculateHash {
+    VOIPoint p[2] = { _origin, _size };
+    return (_hash = VOIPointHash(p, 2));
 }
 
 @end

@@ -10,7 +10,9 @@
 
 #import "VOIBox.h"
 
-@implementation VOISegment
+@implementation VOISegment {
+    NSUInteger _hash;
+}
 
 - (VOIPoint)midpoint {
     return simd_mix(_a, _b, vector2(0.5, 0.5));
@@ -22,6 +24,10 @@
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@: [%@ -> %@]", [self className], VOIPointToString(_a), VOIPointToString(_b)];
+}
+
+- (NSUInteger)hash {
+    return _hash ?: [self calculateHash];
 }
 
 - (BOOL)isEqual:(id)object {
@@ -135,6 +141,11 @@
     else {
         return (_b.x > x) ? VOILeftward : ((_b.x < x) ? VOIRightward : VOIVerticalUpon);
     }
+}
+
+- (NSUInteger)calculateHash {
+    VOIPoint p[2] = { _a, _b };
+    return (_hash = VOIPointHash(p, 2));
 }
 
 @end
