@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class VOITriangle;
 @class VOIAdjacency;
+@class VOITriangle;
+@class VOISegment;
 
 @interface VOITriangleNet : NSObject
 
@@ -38,6 +39,8 @@
 @property (readonly) BOOL minimized;
 
 - (VOITriangleNet *)netAtIndex:(NSUInteger)index;
+- (VOITriangleNet *)netForSegment:(VOISegment *)segment;
+
 - (void)addAdjacentNet:(VOITriangleNet *)net;
 - (void)addAdjacentNets:(NSArray<VOITriangleNet *> *)nets;
 

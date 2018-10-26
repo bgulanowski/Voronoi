@@ -158,6 +158,11 @@
     return NSNotFound;
 }
 
+- (VOITriangleNet *)netForSegment:(VOISegment *)segment {
+    NSUInteger index = [self.triangle indexForSegment:segment];
+    return [self netAtIndex:index];
+}
+
 - (void)removeAllAdjacentNets {
     _n0 = nil;
     _n1 = nil;
