@@ -14,6 +14,11 @@
 #import "VOITriangleList.h"
 #import "VOITriangulator.h"
 
+#import "DPoint.h"
+#import "DRange.h"
+#import "DTriad.h"
+#import "Voronoi.h"
+
 @interface VOITriangulatorTester : XCTestCase
 @property VOITriangulator *triangulator;
 @end
@@ -22,6 +27,11 @@
 
 static VOIPoint t_points[COUNT];
 static VOIPointList *randomPointsList;
+static Voronoi *voronoi;
+
+@interface Voronoi (TriangulatorTest)
+- (NSArray<VOITriangle *> *)triangles;
+@end
 
 @implementation VOITriangulatorTester
 
@@ -42,6 +52,7 @@ static VOIPointList *randomPointsList;
     NSAssert(i == COUNT, @"Inconsistent start data");
     
     randomPointsList = [self randomPoints];
+    voronoi = [self voronoi];
 }
 
 + (VOIPointList *)randomPoints {
@@ -56,6 +67,20 @@ static VOIPointList *randomPointsList;
     VOIPointList *result = [[VOIPointList alloc] initWithPoints:points count:pCount];
     free(points);
     return result;
+}
+
++ (Voronoi *)voronoi {
+    NSMutableArray *dPoints = [NSMutableArray array];
+    [randomPointsList iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+        DPoint *dp = [DPoint pointWithX:p->x y:p->y];
+        [dPoints addObject:dp];
+        return NO;
+    }];
+    
+    DPoint *ll = [DPoint pointWithX:-64.0 y:-64.0];
+    DPoint *ur = [DPoint pointWithX:64.0 y:64.0];
+    DRange *r = [DRange rangeWithPoint:ll point:ur];
+    return [Voronoi voronoiWithPoints:dPoints range:r];
 }
 
 - (void)setUp {
@@ -99,12 +124,45 @@ static VOIPointList *randomPointsList;
     VOITriangulator *triangulator = [[VOITriangulator alloc] initWithPointList:randomPointsList];
     XCTAssertNoThrow([triangulator triangulate]);
     XCTAssertTrue(triangulator.minimized);
+    
+    NSArray *triangles = [[[[triangulator triangulate] allTriangles] valueForKey:@"standardize"] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray *e = [voronoi triangles];
+    
+    XCTAssertEqualObjects(e, triangles);
 }
 
-- (void)testPerformanceExample {
+- (void)testTriangulationPerformance {
+    VOITriangulator *t = [[VOITriangulator alloc] initWithPointList:randomPointsList];
     [self measureBlock:^{
-        [[[VOITriangulator alloc] initWithPointList:randomPointsList] triangulate];
+        [t triangulate];
     }];
+}
+
+@end
+
+@implementation Voronoi (VOTriangleTester)
+
+- (NSArray<VOITriangle *> *)triangles {
+    
+    NSArray<DPoint *> *dPoints = [self points];
+
+    NSMutableArray *triangles = [NSMutableArray array];
+    for (DTriad *triad in [self triads]) {
+        DPoint *a = dPoints[triad.a];
+        DPoint *b = dPoints[triad.b];
+        DPoint *c = dPoints[triad.c];
+        VOIPoint tp[3] = {
+            vector2(a.x, a.y),
+            vector2(b.x, b.y),
+            vector2(c.x, c.y)
+        };
+        VOITriangle *t = [[VOITriangle alloc] initWithPoints:tp standardize:YES];
+        [triangles addObject:t];
+    }
+
+    [triangles sortUsingSelector:@selector(compare:)];
+    
+    return triangles;
 }
 
 @end
