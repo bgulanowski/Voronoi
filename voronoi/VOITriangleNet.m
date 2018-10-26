@@ -122,11 +122,22 @@
     [self setAdjacency:nil atIndex:index];
 }
 
+- (void)removeAdjacentNet:(VOITriangleNet *)net {
+    NSUInteger index = [self indexOf:net];
+    if (index != NSNotFound) {
+        [self setNet:nil atIndex:index];
+    }
+}
+
 - (void)addAdjacentNet:(VOITriangleNet *)net {
+    if (net == self) {
+        return;
+    }
     VOIAdjacency *a = [self adjacencyForNet:net];
     if (!a.empty) {
         [self setNet:net atIndex:a.t0Index];
         [self setAdjacency:a atIndex:a.t0Index];
+        [net removeAdjacentNet:self];
         [net setNet:self atIndex:a.t1Index];
         [net setAdjacency:a atIndex:a.t1Index];
     }
