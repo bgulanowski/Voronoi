@@ -293,7 +293,7 @@
 
 - (NSRange)rangeVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex {
     if (!_closed || [self pointInside:point]) {
-        return NSMakeRange(0, 0);
+        return NSMakeRange(NSNotFound, 0);
     }
     
     // point must be on the same side of all segments
@@ -318,7 +318,7 @@
     }
     
     if (pIndex) {
-        *pIndex = closest;
+        *pIndex = (closest % self.count);
     }
     
     return NSMakeRange(first % self.count, last - first + 1);
@@ -326,7 +326,13 @@
 
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex {
     NSRange range = [self rangeVisibleToPoint:point closestSegmentIndex:pIndex];
-    return range.length > 0 ? [[self selectRange:range] asPath] : nil;
+    if (range.location == NSNotFound) {
+        return nil;
+    }
+    else {
+        range.length++;
+        return range.length > 0 ? [[self selectRange:range] asPath] : nil;
+    }
 }
 
 - (VOIPath *)substitutePoint:(VOIPoint)point forSegmentsInRange:(NSRange)range {
