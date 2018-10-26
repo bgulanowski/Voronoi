@@ -274,7 +274,7 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     if (!_closed) {
         return NO;
     }
-    __block NSUInteger count = 0;
+    __block NSInteger count = 0;
     // Calculate the winding number by counting the number of times
     // segments cross a horizontal line through provided point
     // 0 means outside, otherwise inside.
