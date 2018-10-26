@@ -338,17 +338,13 @@
     }
     
     NSRange range = [self rangeVisibleToPoint:point closestSegmentIndex:NULL];
-    if (range.length > 0) {
-        if (pTriangles) {
-            *pTriangles = [self triangleFanWithCentre:point range:range];
-        }
-        if (index) {
-            *index = range.location;
-        }
-        return [self substitutePoint:point forSegmentsInRange:range];
+    if (pTriangles) {
+        *pTriangles = [self triangleFanWithCentre:point range:range];
     }
-    
-    return self;
+    if (index) {
+        *index = range.location;
+    }
+    return [self substitutePoint:point forSegmentsInRange:range];
 }
 
 #pragma mark - Private
