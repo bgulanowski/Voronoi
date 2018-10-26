@@ -144,10 +144,11 @@
 }
 
 - (VOISegment *)closestSegmentToPoint:(VOIPoint)point index:(NSUInteger *)pIndex {
+    const NSUInteger count = self.count;
     NSUInteger index;
     [self pointClosestToPoint:point index:&index];
     
-    VOISegment *s0 = [self segmentAt:index - 1];
+    VOISegment *s0 = [self segmentAt:index + count - 1];
     VOISegment *s1 = [self segmentAt:index];
     
     // Which segment is right?
@@ -179,7 +180,7 @@
     }
     
     if(pIndex) {
-        *pIndex = index;
+        *pIndex = (index + count) % count;
     }
     return result;
 }
@@ -255,7 +256,7 @@
 }
 
 - (VOITriangleList *)triangleFanWithCentre:(VOIPoint)point range:(NSRange)range {
-    NSUInteger triCount = (range.length - 1);
+    NSUInteger triCount = range.length;
     NSMutableData *data = [NSMutableData dataWithLength:sizeof(VOIPoint) * triCount * 3];
     VOIPoint *points = data.mutableBytes;
     for (NSUInteger i = 0; i < triCount; ++i) {
@@ -300,6 +301,7 @@
     NSUInteger closest;
     VOISegment *segment = [self closestSegmentToPoint:point index:&closest];
 
+    closest += self.count; // see if this fixes range weirdness
     NSUInteger first = closest;
     VOILineSide side = [segment sideForPoint:point];
     segment = [self segmentAt:first - 1];
@@ -307,8 +309,9 @@
         first--;
         segment = [self segmentAt:first - 1];
     }
-    NSUInteger last = closest + 1;
-    segment = [self segmentAt:last];
+    
+    NSUInteger last = closest;
+    segment = [self segmentAt:last + 1];
     while([segment sideForPoint: point] == side) {
         last++;
         segment = [self segmentAt:last + 1];
@@ -318,7 +321,7 @@
         *pIndex = closest;
     }
     
-    return NSMakeRange(first, last - first + 1);
+    return NSMakeRange(first % self.count, last - first + 1);
 }
 
 - (VOIPath *)pathVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex {
@@ -328,7 +331,7 @@
 
 - (VOIPath *)substitutePoint:(VOIPoint)point forSegmentsInRange:(NSRange)range {
     VOIPointList *list = [[VOIPointList alloc] initWithPoints:&point count:1];
-    NSRange pointRange = NSMakeRange(range.location + 1, range.length - 2);
+    NSRange pointRange = NSMakeRange((range.location + 1) % self.count, range.length - 1);
     return [self substitutePoints:list inRange:pointRange];
 }
 
