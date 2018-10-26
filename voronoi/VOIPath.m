@@ -16,8 +16,6 @@
     BOOL _convex;
 }
 
-@synthesize boundingBox=_boundingBox;
-
 #pragma mark - Properties
 
 - (NSUInteger)count {
