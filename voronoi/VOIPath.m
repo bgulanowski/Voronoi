@@ -328,11 +328,11 @@
 
 - (VOIPath *)substitutePoint:(VOIPoint)point forSegmentsInRange:(NSRange)range {
     VOIPointList *list = [[VOIPointList alloc] initWithPoints:&point count:1];
-    NSRange subRange = NSMakeRange(range.location + 1, range.length - 2);
-    return [self substitutePoints:list inRange:subRange];
+    NSRange pointRange = NSMakeRange(range.location + 1, range.length - 2);
+    return [self substitutePoints:list inRange:pointRange];
 }
 
-- (VOIPath *)convexHullByAddingPoint:(VOIPoint)point triangles:(VOITriangleList **)pTriangles {
+- (VOIPath *)convexHullByAddingPoint:(VOIPoint)point triangles:(VOITriangleList **)pTriangles affectedPoint:(NSUInteger *)index {
     if (!self.convex) {
         return nil;
     }
@@ -341,6 +341,9 @@
     if (range.length > 0) {
         if (pTriangles) {
             *pTriangles = [self triangleFanWithCentre:point range:range];
+        }
+        if (index) {
+            *index = range.location;
         }
         return [self substitutePoint:point forSegmentsInRange:range];
     }
