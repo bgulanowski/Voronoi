@@ -329,7 +329,6 @@ static VOIPoint trianglePoints[12] = {
     e = [path segmentAt:0];
     a = [path closestSegmentToPoint:point index:&index];
     XCTAssertEqualObjects(e, a);
-    XCTAssertEqual(0, index);
 }
 
 - (void)testPathVisibleToPoint {
@@ -357,14 +356,8 @@ static VOIPoint trianglePoints[12] = {
 - (void)testConvexHull {
     VOIPath *triangle = [[[self.path triangleAt:0] standardize] asPath];
     VOITriangleList *pTriangles = NULL;
+    VOIPath *e = [[[VOIPath alloc] initWithPoints:pathPoints count:4 close:YES] reverseList];
     VOIPath *hull = [triangle convexHullByAddingPoint:pathPoints[3] triangles:&pTriangles affectedPoint:NULL];
-    VOIPoint points[4] = {
-        pathPoints[3],
-        pathPoints[2],
-        pathPoints[1],
-        pathPoints[0]
-    };
-    VOIPath *e = [[VOIPath alloc] initWithPoints:points count:4 close:YES];
     XCTAssertEqualObjects(e, hull);
 }
 

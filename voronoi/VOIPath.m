@@ -11,6 +11,8 @@
 #import "VOIPointListPrivate.h"
 #import "VOISegment.h"
 
+NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
+
 @implementation VOIPath {
     BOOL _checkedConvex;
     BOOL _convex;
@@ -145,8 +147,9 @@
     const NSUInteger count = self.count;
     NSUInteger index;
     [self pointClosestToPoint:point index:&index];
+    index += count;
     
-    VOISegment *s0 = [self segmentAt:index + count - 1];
+    VOISegment *s0 = [self segmentAt:index - 1];
     VOISegment *s1 = [self segmentAt:index];
     
     // Which segment is right?
@@ -178,7 +181,7 @@
     }
     
     if(pIndex) {
-        *pIndex = (index + count) % count;
+        *pIndex = index % count;
     }
     return result;
 }
@@ -291,7 +294,7 @@
 
 - (NSRange)rangeVisibleToPoint:(VOIPoint)point closestSegmentIndex:(NSUInteger *)pIndex {
     if (!_closed || [self pointInside:point]) {
-        return NSMakeRange(NSNotFound, 0);
+        return VOINullRange;
     }
     
     // point must be on the same side of all segments
@@ -345,6 +348,9 @@
     }
     
     NSRange range = [self rangeVisibleToPoint:point closestSegmentIndex:NULL];
+    if (VOIRangeInvalid(range)) {
+        return nil;
+    }
     if (pTriangles) {
         *pTriangles = [self triangleFanWithCentre:point range:range];
     }

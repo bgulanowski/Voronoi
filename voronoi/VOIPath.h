@@ -13,6 +13,12 @@
 #import "VOITriangle.h"
 #import "VOITriangleList.h"
 
+extern NSRange VOINullRange;
+
+NS_INLINE BOOL VOIRangeInvalid(NSRange range) {
+    return range.location == NSNotFound || range.length == 0;
+}
+
 @interface VOIPath : VOIPointList<NSCopying>
 
 @property (readonly) BOOL closed;
