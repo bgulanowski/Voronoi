@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "VOIBox.h"
 #import "VOIPointList.h"
 #import "VOITriangle.h"
 #import "VOITriangleList.h"
@@ -75,6 +76,21 @@ static VOIPoint t_points[COUNT];
     NSArray *a = [[aList allTriangles] sortedArrayUsingSelector:@selector(compare:)];
     
     XCTAssertEqualObjects(e, a);
+}
+
+- (void)testTriangulateRandom16 {
+#define pCount 16
+    srand(31415);
+    VOIBox *boundary = [[VOIBox alloc] initWithOrigin:vector2(-64.0, -64.0) size:vector2(64.0, 64.0)];
+    VOIPoint *points = malloc(pCount * sizeof(VOIPoint));
+    for (NSUInteger i = 0; i < 16; ++i) {
+        points[i] = round([boundary randomPoint]);
+    }
+    
+    VOIPointList *list = [[VOIPointList alloc] initWithPoints:points count:pCount];
+    VOITriangulator *triangulator = [[VOITriangulator alloc] initWithPointList:list];
+    XCTAssertNoThrow([triangulator triangulate]);
+    XCTAssertTrue(triangulator.minimized);
 }
 
 //- (void)testPerformanceExample {
