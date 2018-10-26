@@ -140,26 +140,26 @@
 }
 
 - (VOIVerticalPosition)verticalPosition:(double)y {
-    if (_a.y > y) {
+    if (_a.y == y && _b.y == y) {
+        return VOIHorizontalUpon;
+    }
+    else if (_a.y > y) {
         return (_b.y <= y) ? VOIDownward : VOIAbove;
     }
-    else if (_a.y < y) {
-        return (_b.y >= y) ? VOIUpward : VOIBelow;
-    }
     else {
-        return (_b.y > y) ? VOIUpward : ((_b.y < y) ? VOIDownward : VOIHorizontalUpon);
+        return (_b.y > y) ? VOIUpward : VOIBelow;
     }
 }
 
 - (VOIHorizontalPosition)horizontalPosition:(double)x {
-    if (_a.x > x) {
+    if (_a.x == x && _b.x == x) {
+        return VOIVerticalUpon;
+    }
+    else if (_a.x > x) {
         return (_b.x <= x) ? VOILeftward : VOIRight;
     }
-    else if (_a.x < x) {
-        return (_b.x >= x) ? VOIRightward : VOILeft;
-    }
     else {
-        return (_b.x > x) ? VOILeftward : ((_b.x < x) ? VOIRightward : VOIVerticalUpon);
+        return (_b.x > x) ? VOIRightward : VOILeft;
     }
 }
 

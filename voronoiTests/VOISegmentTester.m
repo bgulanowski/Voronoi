@@ -144,20 +144,30 @@
 }
 
 - (void)testVerticalPosition {
-    XCTAssertEqual(VOIUpward, [self.s1 verticalPosition:2.0]);
-    XCTAssertEqual(VOIDownward, [self.s2 verticalPosition:2.0]);
-    XCTAssertEqual(VOIUpward, [self.s1 verticalPosition:0.0]);
-    XCTAssertEqual(VOIDownward, [self.s2 verticalPosition:0.0]);
-    XCTAssertEqual(VOIUpward, [self.s1 verticalPosition:1.0]);
-    XCTAssertEqual(VOIDownward, [self.s2 verticalPosition:1.0]);
-    XCTAssertEqual(VOIAbove, [self.s1 verticalPosition:-1.0]);
-    XCTAssertEqual(VOIAbove, [self.s2 verticalPosition:-1.0]);
-    XCTAssertEqual(VOIBelow, [self.s1 verticalPosition:3.0]);
-    XCTAssertEqual(VOIBelow, [self.s2 verticalPosition:3.0]);
+    
+    // a point on the vertical counts as below the line
+    const double a = -1.0, b = 0.0, c = 1.0, d = 2.0, e = 3.0;
+    
+    // s1 moves from (0,0) diagonally up to the right (2,2)
+    XCTAssertEqual( VOIAbove, [self.s1 verticalPosition:a]); // starts above, ends above
+    XCTAssertEqual(VOIUpward, [self.s1 verticalPosition:b]); // starts on, ends above
+    XCTAssertEqual(VOIUpward, [self.s1 verticalPosition:c]); // starts below, ends above
+    XCTAssertEqual( VOIBelow, [self.s1 verticalPosition:d]); // starts below, ends on
+    XCTAssertEqual( VOIBelow, [self.s1 verticalPosition:e]); // starts below, ends below
 
-    VOIPoint horiz[2] = { vector2(0.0, 0.0), vector2(2.0, 0.0) };
-    VOISegment *horizontal = [[VOISegment alloc] initWithPoints:horiz];
+    // s2 moves from (2,2) diagonally down to the right (4,0)
+    XCTAssertEqual(   VOIAbove, [self.s2 verticalPosition:a]); // starts above, ends above
+    XCTAssertEqual(VOIDownward, [self.s2 verticalPosition:b]); // starts above, ends on
+    XCTAssertEqual(VOIDownward, [self.s2 verticalPosition:c]); // starts above, ends below
+    XCTAssertEqual(   VOIBelow, [self.s2 verticalPosition:d]); // starts on, ends below
+    XCTAssertEqual(   VOIBelow, [self.s2 verticalPosition:e]); // starts below, ends below
+
+    VOIPoint h1[2] = { vector2(0.0, 0.0), vector2(2.0, 0.0) };
+    VOISegment *horizontal = [[VOISegment alloc] initWithPoints:h1];
+    
     XCTAssertEqual(VOIHorizontalUpon, [horizontal verticalPosition:0.0]);
+    XCTAssertEqual(VOIAbove, [horizontal verticalPosition:-1.0]);
+    XCTAssertEqual(VOIBelow, [horizontal verticalPosition:1.0]);
 }
 
 - (void)testHorizontalPosition {
