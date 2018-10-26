@@ -14,6 +14,7 @@
 @interface VOITriangulator : NSObject
 
 @property (readonly) VOIPointList *pointList;
+@property (readonly) BOOL minimized; // only valid if triangulation done
 
 - (instancetype)initWithPointList:(VOIPointList *)pointList;
 

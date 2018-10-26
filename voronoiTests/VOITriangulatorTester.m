@@ -66,6 +66,8 @@ static VOIPoint t_points[COUNT];
     VOITriangleList *eList = [[VOITriangleList alloc] initWithPoints:&triangles[0][0] count:TRI_COUNT];
     VOITriangleList *aList = [self.triangulator triangulate];
     
+    XCTAssertTrue(self.triangulator.minimized);
+    
     // The first triangle we find is the second triangle in the expected list
     // This is undoubtedly (but I didn't check) caused by starting with a different seed point
     NSArray *e = [[[eList allTriangles] valueForKey:@"standardize"] sortedArrayUsingSelector:@selector(compare:)];

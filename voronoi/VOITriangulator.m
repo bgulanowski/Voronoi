@@ -28,6 +28,10 @@
 
 @implementation VOITriangulator
 
+- (BOOL)minimized {
+    return [_nets count] > 0 && ![[NSSet setWithArray:[_nets valueForKey:@"minimized"]] containsObject:@NO];
+}
+
 - (instancetype)initWithPointList:(VOIPointList *)pointList {
     self = [super init];
     if (self) {
