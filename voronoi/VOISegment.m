@@ -14,6 +14,7 @@
 
 @implementation VOISegment {
     NSUInteger _hash;
+    BOOL _standard;
 }
 
 - (VOIPoint)midpoint {
@@ -28,12 +29,16 @@
 #if FAST_HASH
     return @(self.hash);
 #else
-    return [NSValue valueWithPoints2:self.points];
+    return [NSValue valueWithPoints2:self.standardizedPoints];
 #endif
 }
 
 - (VOIPoints2)points {
     return (VOIPoints2) { _a, _b };
+}
+
+- (VOIPoints2)standardizedPoints {
+    return _standard ? (VOIPoints2){ _a, _b } : (VOIPoints2){ _b, _a };
 }
 
 - (NSString *)description {
@@ -61,6 +66,7 @@
     if (self) {
         _a = point;
         _b = other;
+        _standard = VOIComparePoints(_a, _b) != NSOrderedDescending;
     }
     return self;
 }
