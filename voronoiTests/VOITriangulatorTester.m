@@ -21,6 +21,7 @@
 #define COUNT 9
 
 static VOIPoint t_points[COUNT];
+static VOIPointList *randomPointsList;
 
 @implementation VOITriangulatorTester
 
@@ -39,6 +40,22 @@ static VOIPoint t_points[COUNT];
     t_points[i++] = vector2(  69.0,  86.0);
     t_points[i++] = vector2( 436.0, 175.0);
     NSAssert(i == COUNT, @"Inconsistent start data");
+    
+    randomPointsList = [self randomPoints];
+}
+
++ (VOIPointList *)randomPoints {
+#define pCount 16
+    srand(31415);
+    VOIBox *boundary = [[VOIBox alloc] initWithOrigin:vector2(-64.0, -64.0) size:vector2(64.0, 64.0)];
+    VOIPoint *points = malloc(pCount * sizeof(VOIPoint));
+    for (NSUInteger i = 0; i < 16; ++i) {
+        points[i] = round([boundary randomPoint]);
+    }
+    
+    VOIPointList *result = [[VOIPointList alloc] initWithPoints:points count:pCount];
+    free(points);
+    return result;
 }
 
 - (void)setUp {
@@ -79,22 +96,15 @@ static VOIPoint t_points[COUNT];
 }
 
 - (void)testTriangulateRandom16 {
-#define pCount 16
-    srand(31415);
-    VOIBox *boundary = [[VOIBox alloc] initWithOrigin:vector2(-64.0, -64.0) size:vector2(64.0, 64.0)];
-    VOIPoint *points = malloc(pCount * sizeof(VOIPoint));
-    for (NSUInteger i = 0; i < 16; ++i) {
-        points[i] = round([boundary randomPoint]);
-    }
-    
-    VOIPointList *list = [[VOIPointList alloc] initWithPoints:points count:pCount];
-    VOITriangulator *triangulator = [[VOITriangulator alloc] initWithPointList:list];
+    VOITriangulator *triangulator = [[VOITriangulator alloc] initWithPointList:randomPointsList];
     XCTAssertNoThrow([triangulator triangulate]);
     XCTAssertTrue(triangulator.minimized);
 }
 
-//- (void)testPerformanceExample {
-//    [self measureBlock:^{}];
-//}
+- (void)testPerformanceExample {
+    [self measureBlock:^{
+        [[[VOITriangulator alloc] initWithPointList:randomPointsList] triangulate];
+    }];
+}
 
 @end
