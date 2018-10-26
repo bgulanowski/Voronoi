@@ -43,7 +43,7 @@
 }
 
 - (VOITriangleList *)triangulate {
-    return _triangulation ? _triangulation : [self generateTriangulation];
+    return _triangulation ?: [self generateTriangulation];
 }
 
 - (VOITriangleList *)generateTriangulation {
