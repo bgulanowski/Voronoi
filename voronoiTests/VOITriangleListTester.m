@@ -105,4 +105,22 @@ static VOIPoint trianglePoints[9];
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testPointListAsTriangleFan {
+    VOIPoint tPoints[3][3] = {
+        { trianglePoints[0], trianglePoints[1], trianglePoints[2] },
+        { trianglePoints[0], trianglePoints[2], trianglePoints[7] },
+        { trianglePoints[0], trianglePoints[7], trianglePoints[6] }
+    };
+    VOITriangleList *e = [[VOITriangleList alloc] initWithPoints:(const VOIPoint *)tPoints count:3];
+    VOIPoint fPoints[5] = {
+        trianglePoints[0],
+        trianglePoints[1],
+        trianglePoints[2],
+        trianglePoints[7],
+        trianglePoints[6]
+    };
+    VOITriangleList *a = [[[VOIPointList alloc] initWithPoints:fPoints count:5] asTriangleFan];
+    XCTAssertEqualObjects(e, a);
+}
+
 @end

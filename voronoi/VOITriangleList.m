@@ -116,4 +116,21 @@ const NSUInteger PPT = 3;
     return [[VOITriangleList alloc] _initWithData:data];
 }
 
+- (VOITriangleList *)asTriangleFan {
+    if (self.count < 3) {
+        return nil;
+    }
+    const NSUInteger triCount = self.count - 2;
+    NSMutableData *data = [NSMutableData dataWithLength:3 * triCount * sizeof(VOIPoint)];
+    VOIPoint *points = data.mutableBytes;
+    VOIPoint p0 = [self pointAtIndex:0];
+    [[self tail] iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+        points[i * 3] = p0;
+        points[(i * 3) + 1] = *p;
+        points[(i * 3) + 2] = *(p + 1);
+        return (BOOL)(i == triCount - 1);
+    }];
+    return [[VOITriangleList alloc] _initWithData:data];
+}
+
 @end

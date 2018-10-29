@@ -30,4 +30,5 @@ typedef BOOL (^VOITriangleIterator)(VOITriangle *t, NSUInteger i);
 @interface VOIPointList (VOITriangleList)
 - (VOITriangleList *)asTriangleList;
 - (VOITriangleList *)asTriangleStrip;
+- (VOITriangleList *)asTriangleFan;
 @end
