@@ -278,6 +278,7 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     // Calculate the winding number by counting the number of times
     // segments cross a horizontal line through provided point
     // 0 means outside, otherwise inside.
+    // http://www.geomalgorithms.com/a03-_inclusion.html
     [self iterateSegments:^BOOL(VOISegment *s, NSUInteger i) {
         VOIVerticalPosition pos = [s verticalPosition:point.y];
         VOILineSide side = [s sideForPoint:point];
