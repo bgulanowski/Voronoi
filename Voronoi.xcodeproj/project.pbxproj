@@ -10,6 +10,9 @@
 		8407B1CE2180B93B006AEDF0 /* VOIPointTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */; };
 		8407B1DA21823D09006AEDF0 /* NSValue+VOIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 8407B1D821823D09006AEDF0 /* NSValue+VOIPoint.h */; };
 		8407B1DB21823D09006AEDF0 /* NSValue+VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1D921823D09006AEDF0 /* NSValue+VOIPoint.m */; };
+		8407B1E2218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h in Headers */ = {isa = PBXBuildFile; fileRef = 8407B1E0218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h */; };
+		8407B1E3218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1E1218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m */; };
+		8407B1E52187572B006AEDF0 /* VOIIndexWrappingTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1E42187572B006AEDF0 /* VOIIndexWrappingTester.m */; };
 		842C20322171356E009B8E2D /* VOIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C20302171356E009B8E2D /* VOIPoint.h */; };
 		842C20332171356E009B8E2D /* VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C20312171356E009B8E2D /* VOIPoint.m */; };
 		842C203E217829F9009B8E2D /* VOITriangleNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C203C217829F9009B8E2D /* VOITriangleNet.h */; };
@@ -112,6 +115,9 @@
 		8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPointTester.m; sourceTree = "<group>"; };
 		8407B1D821823D09006AEDF0 /* NSValue+VOIPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSValue+VOIPoint.h"; sourceTree = "<group>"; };
 		8407B1D921823D09006AEDF0 /* NSValue+VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSValue+VOIPoint.m"; sourceTree = "<group>"; };
+		8407B1E0218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+IndexWrapping.h"; sourceTree = "<group>"; };
+		8407B1E1218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+IndexWrapping.m"; sourceTree = "<group>"; };
+		8407B1E42187572B006AEDF0 /* VOIIndexWrappingTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIIndexWrappingTester.m; sourceTree = "<group>"; };
 		842C20302171356E009B8E2D /* VOIPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPoint.h; sourceTree = "<group>"; };
 		842C20312171356E009B8E2D /* VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPoint.m; sourceTree = "<group>"; };
 		842C203C217829F9009B8E2D /* VOITriangleNet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOITriangleNet.h; sourceTree = "<group>"; };
@@ -261,6 +267,8 @@
 		8407B1CF21821A40006AEDF0 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				8407B1E0218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h */,
+				8407B1E1218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m */,
 				8444AD57217A7350003E374F /* NSObject+Equivalence.h */,
 				8444AD58217A7350003E374F /* NSObject+Equivalence.m */,
 				8407B1D821823D09006AEDF0 /* NSValue+VOIPoint.h */,
@@ -455,6 +463,7 @@
 				84D905C02167396100EA72FC /* Supporting Files */,
 				8444AD55217A6028003E374F /* VOIAdjacencyTester.m */,
 				8480973B21696B6D00912E79 /* VOIBoxTester.m */,
+				8407B1E42187572B006AEDF0 /* VOIIndexWrappingTester.m */,
 				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
 				8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */,
@@ -540,6 +549,7 @@
 				8407B1DA21823D09006AEDF0 /* NSValue+VOIPoint.h in Headers */,
 				842C20322171356E009B8E2D /* VOIPoint.h in Headers */,
 				84AD3336164C3E8100E37EDE /* DTriad.h in Headers */,
+				8407B1E2218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h in Headers */,
 				8444AD512179307D003E374F /* VOIAdjacency.h in Headers */,
 				84AD3338164C3E8100E37EDE /* NSArray+Voronoi.h in Headers */,
 				84D9058521653D8900EA72FC /* VOIPointList.h in Headers */,
@@ -684,6 +694,7 @@
 			files = (
 				8444AD522179307D003E374F /* VOIAdjacency.m in Sources */,
 				84AD332B164C3E8100E37EDE /* DCircle.m in Sources */,
+				8407B1E3218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m in Sources */,
 				84AD332D164C3E8100E37EDE /* DHull.m in Sources */,
 				8480973A2167B4AD00912E79 /* VOIBox.m in Sources */,
 				8480972721673B3300912E79 /* VOITriangulator.m in Sources */,
@@ -719,6 +730,7 @@
 				84D905A32166317600EA72FC /* CircleTester.m in Sources */,
 				8480973C21696B6D00912E79 /* VOIBoxTester.m in Sources */,
 				84D905A8216632BA00EA72FC /* TriangulationTester.m in Sources */,
+				8407B1E52187572B006AEDF0 /* VOIIndexWrappingTester.m in Sources */,
 				84D905A7216632BA00EA72FC /* SegmentTester.m in Sources */,
 				8444AD56217A6028003E374F /* VOIAdjacencyTester.m in Sources */,
 				84D905B52166700F00EA72FC /* VOISegmentListTester.m in Sources */,
