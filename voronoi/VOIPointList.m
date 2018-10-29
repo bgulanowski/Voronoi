@@ -284,6 +284,16 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return [self triangleForIndices:indices];
 }
 
+- (NSString *)tabDelimitedString {
+    NSMutableArray *lines = [NSMutableArray array];
+    [self iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+        [lines addObject:[NSString stringWithFormat:@"%.2f\t%.2f", p->x, p->y]];
+        return NO;
+    }];
+    [lines addObject:@""];
+    return [lines componentsJoinedByString:@"\n"];
+}
+
 #pragma mark - Private
 
 - (VOIBox *)calculateBoundingBox {

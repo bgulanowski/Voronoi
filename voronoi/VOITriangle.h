@@ -73,4 +73,6 @@
 // returns possibly new triangle with points in standard order
 - (VOITriangle *)standardize;
 
+@property (readonly) NSString *tabDelimitedString;
+
 @end

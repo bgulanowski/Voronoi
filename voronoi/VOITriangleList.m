@@ -21,6 +21,18 @@ const NSUInteger PPT = 3;
     return [super count] / PPT;
 }
 
+#pragma mark - VOIPointList
+
+- (NSString *)tabDelimitedString {
+    NSMutableArray *triangleStrings = [NSMutableArray array];
+    [self iterateTriangles:^(VOITriangle *t, NSUInteger i) {
+        [triangleStrings addObject:[t tabDelimitedString]];
+        return NO;
+    }];
+    [triangleStrings addObject:@"\n"];
+    return [triangleStrings componentsJoinedByString:@"\n"];
+}
+
 #pragma mark - VOITriangleList
 
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count {

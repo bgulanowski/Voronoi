@@ -60,4 +60,6 @@ typedef double (^VOIPointEvaluator)(VOIPoint *p);
 
 - (void)iteratePoints:(VOIPointIterator)iterator;
 
+@property (readonly) NSString *tabDelimitedString;
+
 @end

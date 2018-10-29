@@ -314,6 +314,14 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
     return t;
 }
 
+- (NSString *)tabDelimitedString {
+    return [NSString stringWithFormat:@"%.2f\t%.2f\n%.2f\t%.2f\n%.2f\t%.2f",
+            _points[0].x, _points[0].y,
+            _points[1].x, _points[1].y,
+            _points[2].x, _points[2].y
+            ];
+}
+
 #pragma mark - Private
 
 - (VOIPoint)calculateCentre {
