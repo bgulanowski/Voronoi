@@ -76,6 +76,63 @@ static Voronoi *voronoi;
     self.triangulator = [[VOITriangulator alloc] initWithPointList:pl];
 }
 
+//- (void)testTriangulate2 {}
+
+- (void)testTriangulate3 {
+    VOIPoint points[3] = {
+        vector2(0.0, 0.0),
+        vector2(3.0, 1.0),
+        vector2(4.0, 4.0)
+    };
+    NSArray *e = @[[[VOITriangle alloc] initWithPoints:points standardize:YES]];
+    VOIPointList *l = [[VOIPointList alloc] initWithPoints:points count:3];
+    VOITriangulator *t = [[VOITriangulator alloc] initWithPointList:l];
+    NSArray *a = [[t triangulate] allTriangles];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testTriangulate4 {
+    VOIPoint points[4] = {
+        vector2(0.0, 0.0),
+        vector2(3.0, 4.0),
+        vector2(3.0, 1.0),
+        vector2(4.0, 4.0)
+    };
+    VOIPointList *l = [[VOIPointList alloc] initWithPoints:points count:4];
+    VOITriangleList *tList = [l asTriangleStrip];
+    NSArray *e = [tList orderedTriangles];
+    VOITriangulator *t = [[VOITriangulator alloc] initWithPointList:l];
+    NSArray *a = [[t triangulate] orderedTriangles];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testTriangulate6 {
+    
+    VOIPoint points[6] = {
+        vector2(0.0, 0.0),
+        vector2(2.0, -2.0),
+        vector2(3.0, 2.0),
+        vector2(1.0, 4.0),
+        vector2(-2.0, -3.0),
+        vector2(3.0, -5.0)
+    };
+    const NSUInteger triCount = 6;
+    const VOIPoint triangles[triCount][3] = {
+        { points[0], points[1], points[2] },
+        { points[0], points[2], points[3] },
+        { points[0], points[3], points[4] },
+        { points[0], points[4], points[1] },
+        { points[1], points[4], points[5] },
+        { points[1], points[2], points[5] }
+    };
+    VOITriangleList *tList = [[VOITriangleList alloc] initWithPoints:(VOIPoint *)triangles count:triCount];
+    NSArray *e = [tList orderedTriangles];
+    VOIPointList *pList = [[VOIPointList alloc] initWithPoints:points count:6];
+    VOITriangulator *t = [[VOITriangulator alloc] initWithPointList:pList];
+    NSArray *a = [[t triangulate] orderedTriangles];
+    XCTAssertEqualObjects(e, a);
+}
+
 - (void)testTriangulate {
     
     VOITriangleList *aList = [self.triangulator triangulate];
