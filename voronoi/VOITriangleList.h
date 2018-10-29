@@ -22,6 +22,8 @@ typedef BOOL (^VOITriangleIterator)(VOITriangle *t, NSUInteger i);
 - (VOITriangle *)triangleAt:(NSUInteger)index;
 - (void)iterateTriangles:(VOITriangleIterator)iterator;
 - (NSArray<VOITriangle *> *)allTriangles;
+// standardize and sorted using -compare:
+- (NSArray<VOITriangle *> *)orderedTriangles;
 
 @end
 

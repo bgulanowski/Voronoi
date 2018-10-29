@@ -85,6 +85,10 @@ const NSUInteger PPT = 3;
     return triangles;
 }
 
+- (NSArray<VOITriangle *> *)orderedTriangles {
+    return [[[self allTriangles] valueForKey:@"standardize"] sortedArrayUsingSelector:@selector(compare:)];
+}
+
 @end
 
 @implementation VOIPointList (VOITriangleList)
