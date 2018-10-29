@@ -16,13 +16,15 @@
 #import "VOITriangleList.h"
 #import "VOITriangleNet.h"
 
+#import "NSMutableArray+IndexWrapping.h"
+
 @interface VOITriangulator ()
 
 @property VOITriangleList *triangulation;
 @property VOIPath *convexHull;
 @property NSMutableArray<VOITriangleNet *> *nets;
 // indexed by segment.hashKey
-@property NSMutableDictionary<id<NSCopying>, VOITriangleNet *> *borderNets;
+@property NSArray<VOITriangleNet *> *borderNets;
 
 @property NSUInteger fileNumber;
 
@@ -39,7 +41,6 @@
     if (self) {
         _pointList = pointList;
         _nets = [NSMutableArray array];
-        _borderNets = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -111,35 +112,23 @@
 }
 
 - (void)addPointToHull:(VOIPoint)point {
+    
     VOITriangleList *tList;
     NSUInteger index;
     VOIPath *newHull = [self.convexHull convexHullByAddingPoint:point triangles:&tList affectedPoint:&index];
+    
     __block VOITriangleNet *prev = nil;
     NSMutableArray *newNets = [NSMutableArray array];
+    NSUInteger borderLength = _borderNets.count;
     [tList iterateTriangles:^(VOITriangle *t, NSUInteger i) {
-        VOITriangleNet *old = [self removeBorderNetForHullIndex:index + i];
+        VOITriangleNet *old = self.borderNets[(index + i) % borderLength];
         NSArray *adjacent = prev ? @[prev, old] : @[old];
         VOITriangleNet *net = [[VOITriangleNet alloc] initWithTriangle:t adjacentNets:adjacent];
-//        [self registerBorderNet:new atHullIndex:index + i]; // impossible
         [newNets addObject:net];
         prev = net;
         return NO;
     }];
 
-    // There's a weird case when we add a new point at index 0
-    // but the index we get back is that of the last segment
-    // in that case, we may need to increment the index to ensure
-    // we add a net for the new segment at 0, instead of overwriting
-    // the second last one from the end
-    // Need to determine the correct criteria for noticing this situation
-    VOIPoint newp0 = [newHull pointAtIndex:0];
-    if (point.x == newp0.x && point.y == newp0.y && newHull.count > _convexHull.count) {
-        ++index;
-    }
-
-    self.convexHull = newHull;
-
-    [self registerBorderNet:[newNets firstObject] atHullIndex:index];
     VOITriangleNet *last = [newNets lastObject];
     for (VOITriangleNet *net in newNets) {
         [net minimize];
@@ -148,38 +137,26 @@
     if ([last.triangle indexForSegment:lastSegment] == NSNotFound) {
         last = [last netForSegment:lastSegment];
     }
-    [self registerBorderNet:last atHullIndex:index + 1];
     
+    [self replaceNetsInRange:NSMakeRange(index, tList.count) withNets:@[newNets.firstObject, newNets.lastObject]];
     NSAssert(_borderNets.count == newHull.count, @"inconsistent segments and border nets");
     
     [self.nets addObjectsFromArray:newNets];
+    self.convexHull = newHull;
 }
 
 - (void)registerSeedTriangle:(VOITriangle *)triangle {
     VOITriangleNet *net = [[VOITriangleNet alloc] initWithTriangle:triangle adjacentNets:nil];
     self.convexHull = [triangle asPath];
-    [self registerBorderNet:net atHullIndex:0];
-    [self registerBorderNet:net atHullIndex:1];
-    [self registerBorderNet:net atHullIndex:2];
+    self.borderNets = @[net, net, net];
     [_nets addObject:net];
 }
 
-- (VOITriangleNet *)borderNetForHullIndex:(NSUInteger)index {
-    id<NSCopying>key = [self.convexHull segmentAt:index].hashKey;
-    return _borderNets[key];
-}
-
-- (void)registerBorderNet:(VOITriangleNet *)borderNet atHullIndex:(NSUInteger)index {
-    id<NSCopying>key = [self.convexHull segmentAt:index].hashKey;
-    NSAssert(_borderNets[key] == nil, @"Overwriting borderNet at index %td", index);
-    _borderNets[key] = borderNet;
-}
-
-- (VOITriangleNet *)removeBorderNetForHullIndex:(NSUInteger)index {
-    id<NSCopying>key = [self.convexHull segmentAt:index].hashKey;
-    VOITriangleNet *net = _borderNets[key];
-    _borderNets[key] = nil;
-    return net;
+- (void)replaceNetsInRange:(NSRange)range withNets:(NSArray<VOITriangleNet *> *)nets {
+    // carefully handle range wrapping
+    NSMutableArray *newBorderNets = [self.borderNets mutableCopy];
+    [newBorderNets replaceObjectsInWrappingRange:range withObjects:nets];
+    self.borderNets = newBorderNets;
 }
 
 - (void)writeTriangles:(NSArray<VOITriangle *> *)triangles {
