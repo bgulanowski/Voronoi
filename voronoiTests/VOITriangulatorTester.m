@@ -57,7 +57,7 @@ static Voronoi *voronoi;
 
 + (VOIPointList *)randomPoints {
 #define pCount 16
-    srand(31415);
+    srandom(31415);
     VOIBox *boundary = [[VOIBox alloc] initWithOrigin:vector2(-64.0, -64.0) size:vector2(64.0, 64.0)];
     VOIPoint *points = malloc(pCount * sizeof(VOIPoint));
     for (NSUInteger i = 0; i < 16; ++i) {
