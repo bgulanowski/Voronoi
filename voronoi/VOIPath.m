@@ -171,7 +171,7 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     }
     else {
         // if s0.a is on the same side of s1 as point, then it's s0. otherwise, s1.
-        if ([s1 sideForPoint:s0.a] == side1) {
+        if ([s1 sideForPoint:s0.a] == side1 || side1 == VOILineSideOn) {
             result = s0;
             --index;
         }
