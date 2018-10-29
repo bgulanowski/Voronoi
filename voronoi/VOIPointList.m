@@ -232,6 +232,10 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return [[[self class] alloc] _initWithData:data];
 }
 
+- (instancetype)tail {
+    return [self selectRange:NSMakeRange(1, _count - 1)];
+}
+
 - (instancetype)substitutePoint:(VOIPoint)point atIndex:(NSUInteger)index {
     NSMutableData *data = [self.pointsData mutableCopy];
     VOIPoint *points = data.mutableBytes;

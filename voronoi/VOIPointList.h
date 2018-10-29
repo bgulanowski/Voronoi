@@ -47,6 +47,7 @@ typedef double (^VOIPointEvaluator)(VOIPoint *p);
 - (instancetype)deleteRange:(NSRange)range;
 - (instancetype)deleteIndex:(NSUInteger)index;
 - (instancetype)deleteIndices:(NSIndexSet *)indexSet;
+- (instancetype)tail;
 
 - (instancetype)substitutePoint:(VOIPoint)point atIndex:(NSUInteger)index;
 - (instancetype)substitutePoints:(VOIPointList *)points inRange:(NSRange)range;
