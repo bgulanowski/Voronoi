@@ -94,4 +94,15 @@ static VOIPoint trianglePoints[9];
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testPointListAsTriangleStrip {
+    NSArray *triangles = @[
+                           [[VOITriangle alloc] initWithPoints:&trianglePoints[0]],
+                           [[VOITriangle alloc] initWithPoints:&trianglePoints[1]],
+                           [[VOITriangle alloc] initWithPoints:&trianglePoints[2]],
+                           ];
+    VOITriangleList *e = [[VOITriangleList alloc] initWithTriangles:triangles];
+    VOITriangleList *a = [[[VOIPointList alloc] initWithPoints:trianglePoints count:5] asTriangleStrip];
+    XCTAssertEqualObjects(e, a);
+}
+
 @end

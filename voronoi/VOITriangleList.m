@@ -93,4 +93,17 @@ const NSUInteger PPT = 3;
     return [[VOITriangleList alloc] _initWithData:self.pointsData];
 }
 
+- (VOITriangleList *)asTriangleStrip {
+    const NSUInteger triCount = (self.count - 2);
+    NSMutableData *data = [NSMutableData dataWithLength:3 * triCount * sizeof(VOIPoint)];
+    VOIPoint *points = data.mutableBytes;
+    [self iteratePoints:^BOOL(const VOIPoint *p, const NSUInteger i) {
+        points[i * 3] = *p;
+        points[(i * 3) + 1] = *(p+1);
+        points[(i * 3) + 2] = *(p+2);
+        return (BOOL)(i == triCount - 1);
+    }];
+    return [[VOITriangleList alloc] _initWithData:data];
+}
+
 @end
