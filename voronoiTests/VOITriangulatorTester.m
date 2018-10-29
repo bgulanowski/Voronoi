@@ -30,6 +30,7 @@ static VOIPointList *randomPointsList;
 static Voronoi *voronoi;
 
 @interface Voronoi (TriangulatorTest)
++ (instancetype)voronoiWithPointList:(VOIPointList *)pList;
 - (NSArray<VOITriangle *> *)triangles;
 @end
 
@@ -52,7 +53,7 @@ static Voronoi *voronoi;
     NSAssert(i == COUNT, @"Inconsistent start data");
     
     randomPointsList = [self randomPoints];
-    voronoi = [self voronoi];
+    voronoi = [Voronoi voronoiWithPointList:randomPointsList];
 }
 
 + (VOIPointList *)randomPoints {
@@ -67,20 +68,6 @@ static Voronoi *voronoi;
     VOIPointList *result = [[VOIPointList alloc] initWithPoints:points count:pCount];
     free(points);
     return result;
-}
-
-+ (Voronoi *)voronoi {
-    NSMutableArray *dPoints = [NSMutableArray array];
-    [randomPointsList iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
-        DPoint *dp = [DPoint pointWithX:p->x y:p->y];
-        [dPoints addObject:dp];
-        return NO;
-    }];
-    
-    DPoint *ll = [DPoint pointWithX:-64.0 y:-64.0];
-    DPoint *ur = [DPoint pointWithX:64.0 y:64.0];
-    DRange *r = [DRange rangeWithPoint:ll point:ur];
-    return [Voronoi voronoiWithPoints:dPoints range:r];
 }
 
 - (void)setUp {
@@ -141,6 +128,24 @@ static Voronoi *voronoi;
 @end
 
 @implementation Voronoi (VOTriangleTester)
+
++ (instancetype)voronoiWithPointList:(VOIPointList *)pList {
+    
+    NSMutableArray *dPoints = [NSMutableArray array];
+    [pList iteratePoints:^(const VOIPoint *p, const NSUInteger i) {
+        DPoint *dp = [DPoint pointWithX:p->x y:p->y];
+        [dPoints addObject:dp];
+        return NO;
+    }];
+    
+    VOIBox *box = pList.boundingBox;
+    
+    DPoint *ll = [DPoint pointWithX:box.minX y:box.minY];
+    DPoint *ur = [DPoint pointWithX:box.maxX y:box.maxY];
+    DRange *r = [DRange rangeWithPoint:ll point:ur];
+    
+    return [Voronoi voronoiWithPoints:dPoints range:r];
+}
 
 - (NSArray<VOITriangle *> *)triangles {
     
