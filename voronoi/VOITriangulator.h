@@ -16,6 +16,8 @@
 @property (readonly) VOIPointList *pointList;
 @property (readonly) BOOL minimized; // only valid if triangulation done
 
+@property BOOL exportTriangles;
+
 - (instancetype)initWithPointList:(VOIPointList *)pointList;
 
 - (VOITriangleList *)triangulate;

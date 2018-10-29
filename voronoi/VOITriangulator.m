@@ -24,6 +24,8 @@
 // indexed by segment.hashKey
 @property NSMutableDictionary<id<NSCopying>, VOITriangleNet *> *borderNets;
 
+@property NSUInteger fileNumber;
+
 @end
 
 @implementation VOITriangulator
@@ -99,6 +101,11 @@
 - (void)addTrianglesFromPoints:(VOIPointList *)points {
     [points iteratePoints:^BOOL(const VOIPoint *p, const NSUInteger i) {
         [self addPointToHull:*p];
+        
+        if (self.exportTriangles) {
+            [self writeTriangles:[self.nets valueForKey:@"triangle"]];
+        }
+
         return NO;
     }];
 }
@@ -173,6 +180,23 @@
     VOITriangleNet *net = _borderNets[key];
     _borderNets[key] = nil;
     return net;
+}
+
+- (void)writeTriangles:(NSArray<VOITriangle *> *)triangles {
+    VOITriangleList *list = [[VOITriangleList alloc] initWithTriangles:triangles];
+    NSString *string = [list tabDelimitedString];
+    NSError *error = nil;
+    NSURL *url = [self nextFilePath];
+    if (![string writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:&error]) {
+        NSLog(@"Couldn't write to path '%@'. Error: '%@'", url, error);
+    }
+}
+
+- (NSURL *)nextFilePath {
+    NSString *name = [NSString stringWithFormat:@"Triangles %td.txt", self.fileNumber++];
+    NSString *dir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSURL *url = [NSURL fileURLWithPath:dir isDirectory:YES];
+    return [NSURL fileURLWithPath:name relativeToURL:url];
 }
 
 @end
