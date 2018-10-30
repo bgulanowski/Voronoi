@@ -49,7 +49,8 @@
 // divide the combined quad along the alternate axis
 // replace existing triangles with two new triangles
 // update the adjacent nets to match
-- (void)flipWith:(NSUInteger)netIndex;
+// return the net at netIndex
+- (VOITriangleNet *)flipWith:(NSUInteger)netIndex;
 
 - (BOOL)isMinimizedAt:(NSUInteger)index;
 - (void)minimizeRecurse:(BOOL)recurse;

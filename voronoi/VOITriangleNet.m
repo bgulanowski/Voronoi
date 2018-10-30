@@ -201,7 +201,7 @@
     }
 }
 
-- (void)flipWith:(NSUInteger)netIndex {
+- (VOITriangleNet *)flipWith:(NSUInteger)netIndex {
     VOIAdjacency *adjacency = [self adjacencyAtIndex:netIndex];
     if (!adjacency.empty) {
         VOITriangleNet *net = [self netAtIndex:netIndex];
@@ -211,7 +211,9 @@
         else {
             [self flipAdjacency:adjacency withNet:net];
         }
+        return net;
     }
+    return nil;
 }
 
 - (BOOL)isMinimizedAt:(NSUInteger)index {
