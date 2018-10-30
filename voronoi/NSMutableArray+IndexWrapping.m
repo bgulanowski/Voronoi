@@ -24,8 +24,9 @@
     else if (last > count) {
         NSRange frontRange = NSMakeRange(0, last - count);
         NSRange endRange = NSMakeRange(range.location, count - range.location);
-        [self replaceObjectsInRange:endRange withObjectsFromArray:objects];
-        [self removeObjectsInRange:frontRange];
+        [self replaceObjectsInRange:endRange withObjectsFromArray:objects range:frontRange];
+        NSRange srcEndRange = NSMakeRange(frontRange.length, objects.count - frontRange.length);
+        [self replaceObjectsInRange:frontRange withObjectsFromArray:objects range:srcEndRange];
     }
     else {
         [self replaceObjectsInRange:range withObjectsFromArray:objects];

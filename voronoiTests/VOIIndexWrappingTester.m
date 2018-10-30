@@ -38,7 +38,7 @@
 }
 
 - (void)testMaxGTCount {
-    NSArray *e = @[@2, @3, @4, @5, @8, @9];
+    NSArray *e = @[@9, @2, @3, @4, @5, @8];
     NSMutableArray *a = [self.array mutableCopy];
     [a replaceObjectsInWrappingRange:NSMakeRange(5, 2) withObjects:@[@8, @9]];
     XCTAssertEqualObjects(e, a);
