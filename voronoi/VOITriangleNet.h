@@ -45,6 +45,7 @@
 - (void)addAdjacentNets:(NSArray<VOITriangleNet *> *)nets;
 
 - (VOIAdjacency *)adjacencyAtIndex:(NSUInteger)index;
+- (VOIAdjacency *)adjacencyForNet:(VOITriangleNet *)net;
 
 // divide the combined quad along the alternate axis
 // replace existing triangles with two new triangles
