@@ -221,29 +221,29 @@
     return adj.empty || adj.minimized;
 }
 
-- (void)minimizeRecurse:(BOOL)recurse {
+- (VOITriangleNet *)minimizeRecurse:(BOOL)recurse {
     if (_minimizing) {
-        return;
+        return self;
     }
     
-    BOOL flipped = NO;
+    VOITriangleNet *net = self;
     for (NSUInteger i = 0; i < 3; ++i) {
         if (![self isMinimizedAt:i]) {
-            [self flipWith:i];
-            flipped = YES;
+            net = [self flipWith:i];
             break;
         }
     }
-    if (recurse && flipped) {
+    if (recurse && net != self) {
         for (NSUInteger i = 0; i < 3; ++i) {
             [[self netAtIndex:i] minimizeRecurse:YES];
         }
     }
     _minimizing = NO;
+    return net;
 }
 
-- (void)minimize {
-    [self minimizeRecurse:YES];
+- (VOITriangleNet *)minimize {
+    return [self minimizeRecurse:YES];
 }
 
 #pragma mark - Private

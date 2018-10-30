@@ -54,7 +54,7 @@
 - (VOITriangleNet *)flipWith:(NSUInteger)netIndex;
 
 - (BOOL)isMinimizedAt:(NSUInteger)index;
-- (void)minimizeRecurse:(BOOL)recurse;
-- (void)minimize;
+- (VOITriangleNet *)minimizeRecurse:(BOOL)recurse;
+- (VOITriangleNet *)minimize;
 
 @end
