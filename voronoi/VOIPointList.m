@@ -244,10 +244,18 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 }
 
 - (instancetype)substitutePoints:(VOIPointList *)points inRange:(NSRange)range {
+    if (range.location > _count) {
+        range.location %= _count;
+    }
     NSRange bytesRange = NSMakeRange(range.location * sizeof(VOIPoint), range.length * sizeof(VOIPoint));
     NSMutableData *data = [self.pointsData mutableCopy];
     NSMutableData *replacement = points.pointsData;
-    [data replaceBytesInRange:bytesRange withBytes:replacement.bytes length:replacement.length];
+    if (bytesRange.location == data.length) {
+        [data appendData:replacement];
+    }
+    else {
+        [data replaceBytesInRange:bytesRange withBytes:replacement.bytes length:replacement.length];
+    }
     return [[[self class] alloc] _initWithData:data];
 }
 

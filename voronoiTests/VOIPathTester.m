@@ -354,9 +354,9 @@ static VOIPoint trianglePoints[12] = {
 }
 
 - (void)testConvexHull {
-    VOIPath *triangle = [[[self.path triangleAt:0] standardize] asPath];
+    VOIPath *triangle = [[self.path triangleAt:0] asPath];
     VOITriangleList *pTriangles = NULL;
-    VOIPath *e = [[[VOIPath alloc] initWithPoints:pathPoints count:4 close:YES] reverseList];
+    VOIPath *e = [[VOIPath alloc] initWithPoints:pathPoints count:4 close:YES];
     VOIPath *hull = [triangle convexHullByAddingPoint:pathPoints[3] triangles:&pTriangles affectedPoint:NULL];
     XCTAssertEqualObjects(e, hull);
 }

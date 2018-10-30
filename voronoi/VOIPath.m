@@ -339,7 +339,7 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
 
 - (VOIPath *)substitutePoint:(VOIPoint)point forSegmentsInRange:(NSRange)range {
     VOIPointList *list = [[VOIPointList alloc] initWithPoints:&point count:1];
-    NSRange pointRange = NSMakeRange((range.location + 1) % self.count, range.length - 1);
+    NSRange pointRange = NSMakeRange(range.location + 1, range.length - 1);
     return [self substitutePoints:list inRange:pointRange];
 }
 
