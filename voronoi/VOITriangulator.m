@@ -68,9 +68,14 @@
     VOIPoint points[3];
     NSUInteger index = NSNotFound;
     
+#if 1
+    points[0] = [_pointList pointAtIndex:0];
+    [indices addIndex: 0];
+#else
     // The first point is arbitrary. Chose the closest to centre for aesthetic reasons.
     points[0] = [_pointList pointClosestToPoint:_pointList.centre index:&index ignoreIfEqual:NO];
     [indices addIndex:index];
+#endif
     // The second point is the closest to the first point
     points[1] = [_pointList pointClosestToPoint:points[0] index:&index];
     [indices addIndex:index];
@@ -124,21 +129,32 @@
         VOITriangleNet *old = self.borderNets[(index + i) % borderLength];
         NSArray *adjacent = prev ? @[prev, old] : @[old];
         VOITriangleNet *net = [[VOITriangleNet alloc] initWithTriangle:t adjacentNets:adjacent];
+        [net minimize];
         [newNets addObject:net];
         prev = net;
         return NO;
     }];
-
-    VOITriangleNet *last = [newNets lastObject];
-    for (VOITriangleNet *net in newNets) {
-        [net minimize];
-    }
-    VOISegment *lastSegment = [newHull segmentAt:index + 1];
-    if ([last.triangle indexForSegment:lastSegment] == NSNotFound) {
-        last = [last netForSegment:lastSegment];
+    
+    // This hack is back in a new form.
+    // index is relative to the old hull, but now we need to use it
+    // to find segments in the new hull, which may be shifted.
+    // The new hull is always 1 segment longer if there's only 1 new triangle.
+    if (tList.count == 1 && index == _convexHull.count - 1) {
+        ++index;
     }
     
-    [self replaceNetsInRange:NSMakeRange(index, tList.count) withNets:@[newNets.firstObject, newNets.lastObject]];
+    VOITriangleNet *border0 = newNets.firstObject;
+    VOISegment *segment0 = [newHull segmentAt:index];
+    if ([border0.triangle indexForSegment:segment0] == NSNotFound) {
+        border0 = [border0 netForSegment:segment0];
+    }
+    VOITriangleNet *border1 = newNets.lastObject;
+    VOISegment *segment1 = [newHull segmentAt:index + 1];
+    if ([border1.triangle indexForSegment:segment1] == NSNotFound) {
+        border1 = [border1 netForSegment:segment1];
+    }
+
+    [self replaceBorderNetsInRange:NSMakeRange(index, tList.count) withNets:@[border0, border1]];
     NSAssert(_borderNets.count == newHull.count, @"inconsistent segments and border nets");
     
     [self.nets addObjectsFromArray:newNets];
@@ -152,7 +168,7 @@
     [_nets addObject:net];
 }
 
-- (void)replaceNetsInRange:(NSRange)range withNets:(NSArray<VOITriangleNet *> *)nets {
+- (void)replaceBorderNetsInRange:(NSRange)range withNets:(NSArray<VOITriangleNet *> *)nets {
     // carefully handle range wrapping
     NSMutableArray *newBorderNets = [self.borderNets mutableCopy];
     [newBorderNets replaceObjectsInWrappingRange:range withObjects:nets];
