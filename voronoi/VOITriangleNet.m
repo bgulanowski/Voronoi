@@ -216,7 +216,7 @@
 
 - (BOOL)isMinimizedAt:(NSUInteger)index {
     VOIAdjacency *adj = [self adjacencyAtIndex:index];
-    return !adj.empty ? adj.minimized : YES;
+    return adj.empty || adj.minimized;
 }
 
 - (void)minimizeRecurse:(BOOL)recurse {
