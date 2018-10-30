@@ -22,7 +22,7 @@
 
 @property VOITriangleList *triangulation;
 @property VOIPath *convexHull;
-@property NSMutableArray<VOITriangleNet *> *nets;
+@property NSMutableSet<VOITriangleNet *> *nets;
 // indexed by segment.hashKey
 @property NSArray<VOITriangleNet *> *borderNets;
 
@@ -33,14 +33,14 @@
 @implementation VOITriangulator
 
 - (BOOL)minimized {
-    return [_nets count] > 0 && ![[NSSet setWithArray:[_nets valueForKey:@"minimized"]] containsObject:@NO];
+    return [_nets count] > 0 && ![[_nets valueForKey:@"minimized"] containsObject:@NO];
 }
 
 - (instancetype)initWithPointList:(VOIPointList *)pointList {
     self = [super init];
     if (self) {
         _pointList = pointList;
-        _nets = [NSMutableArray array];
+        _nets = [NSMutableSet set];
     }
     return self;
 }
@@ -123,7 +123,7 @@
     VOIPath *newHull = [self.convexHull convexHullByAddingPoint:point triangles:&tList affectedPoint:&index];
     
     __block VOITriangleNet *prev = nil;
-    NSMutableArray *newNets = [NSMutableArray array];
+    NSMutableOrderedSet *newNets = [NSMutableOrderedSet orderedSet];
     NSUInteger borderLength = _borderNets.count;
     [tList iterateTriangles:^(VOITriangle *t, NSUInteger i) {
         VOITriangleNet *old = self.borderNets[(index + i) % borderLength];
@@ -157,7 +157,7 @@
     [self replaceBorderNetsInRange:NSMakeRange(index, tList.count) withNets:@[border0, border1]];
     NSAssert(_borderNets.count == newHull.count, @"inconsistent segments and border nets");
     
-    [self.nets addObjectsFromArray:newNets];
+    [self.nets unionSet:[newNets set]];
     self.convexHull = newHull;
 }
 
