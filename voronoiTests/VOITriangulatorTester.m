@@ -168,9 +168,9 @@ static Voronoi *voronoi;
 
         VOITriangulator *t = [[VOITriangulator alloc] initWithPointList:pl];
         XCTAssertNoThrow([t triangulate]);
-
-        NSArray *triangles = [[t triangulate] orderedTriangles];
+        XCTAssertTrue(t.minimized);
         
+        NSArray *triangles = [[t triangulate] orderedTriangles];
 //        XCTAssertEqualObjects(e, triangles);
         if (![triangles isEqualToArray:e]) {
             NSLog(@"Failed at %td", i);
