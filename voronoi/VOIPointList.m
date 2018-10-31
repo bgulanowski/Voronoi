@@ -9,6 +9,7 @@
 #import "VOIPointList.h"
 
 #import "VOIBox.h"
+#import "VOIRange.h"
 #import "VOITriangle.h"
 
 static VOIPointComparator length = ^(const VOIPoint *p0, const VOIPoint *p1) {
@@ -244,21 +245,9 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 }
 
 - (instancetype)substitutePoints:(VOIPointList *)points inRange:(NSRange)range {
-    if (range.location == _count && range.length > 0) {
-        range.location = 0;
-    }
-    else if (range.location > _count) {
-        range.location %= _count;
-    }
+    NSMutableData *data = [_pointsData mutableCopy];
     NSRange bytesRange = NSMakeRange(range.location * sizeof(VOIPoint), range.length * sizeof(VOIPoint));
-    NSMutableData *data = [self.pointsData mutableCopy];
-    NSMutableData *replacement = points.pointsData;
-    if (bytesRange.location == data.length) {
-        [data appendData:replacement];
-    }
-    else {
-        [data replaceBytesInRange:bytesRange withBytes:replacement.bytes length:replacement.length];
-    }
+    [data substitute:points.pointsData inRange:bytesRange];
     return [[[self class] alloc] _initWithData:data];
 }
 

@@ -51,6 +51,20 @@
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testInsert {
+    NSArray *e = @[@1, @2, @3, @4, @8, @9, @5, @6];
+    NSMutableArray *a = [self.array mutableCopy];
+    [a substitute:@[@8, @9] inRange:NSMakeRange(4, 0)];
+    XCTAssertEqualObjects(e, a);
+}
+
+- (void)testAppend {
+    NSArray *e = @[@1, @2, @3, @4, @5, @6, @8, @9];
+    NSMutableArray *a = [self.array mutableCopy];
+    [a substitute:@[@8, @9] inRange:NSMakeRange(6, 0)];
+    XCTAssertEqualObjects(e, a);
+}
+
 - (void)testLengthEqualsCount {
     NSArray *e = @[@9, @8];
     NSMutableArray *a = [self.array mutableCopy];

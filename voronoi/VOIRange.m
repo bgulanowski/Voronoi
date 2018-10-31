@@ -29,7 +29,12 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
 }
 
 - (instancetype)rangeWithLimit:(NSUInteger)limit {
-    return [[[self class] alloc] initWithLocation:_location % limit length:MIN(_length, limit)];
+    NSUInteger length = MIN(_length, limit);
+    NSUInteger location = _location;
+    if (location > limit || length > 0) {
+        location %= limit;
+    }
+    return [[[self class] alloc] initWithLocation:location length:length];
 }
 
 - (instancetype)initWithLocation:(NSInteger)location length:(NSInteger)length {
