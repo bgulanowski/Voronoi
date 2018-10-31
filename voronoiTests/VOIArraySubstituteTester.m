@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "NSMutableArray+IndexWrapping.h"
+#import "VOIRange.h"
 
 @interface VOIArraySubstituteTester : XCTestCase
 
@@ -26,49 +26,49 @@
 - (void)testEmptyRangeEmptyInsert {
     NSArray *e = self.array;
     NSMutableArray *a = [e mutableCopy];
-    [a replaceObjectsInWrappingRange:NSMakeRange(0, 0) withObjects:@[]];
+    [a substitute:@[] inRange:NSMakeRange(0, 0)];
     XCTAssertEqualObjects(e, a);
 }
 
 - (void)testEmptyRange {
     NSArray *e = @[@9, @10, @1, @2, @3, @4, @5, @6];
     NSMutableArray *a = [self.array mutableCopy];
-    [a replaceObjectsInWrappingRange:NSMakeRange(0, 0) withObjects:@[@9, @10]];
+    [a substitute:@[@9, @10] inRange:NSMakeRange(0, 0)];
     XCTAssertEqualObjects(e, a);
 }
 
 - (void)testMaxGTCount {
     NSArray *e = @[@9, @2, @3, @4, @5, @8];
     NSMutableArray *a = [self.array mutableCopy];
-    [a replaceObjectsInWrappingRange:NSMakeRange(5, 2) withObjects:@[@8, @9]];
+    [a substitute:@[@8, @9] inRange:NSMakeRange(5, 2)];
     XCTAssertEqualObjects(e, a);
 }
 
 - (void)testLocationEqualsCount {
     NSArray *e = @[@8, @9, @3, @4, @5, @6];
     NSMutableArray *a = [self.array mutableCopy];
-    [a replaceObjectsInWrappingRange:NSMakeRange(6, 2) withObjects:@[@8, @9]];
+    [a substitute:@[@8, @9] inRange:NSMakeRange(6, 2)];
     XCTAssertEqualObjects(e, a);
 }
 
 - (void)testLengthEqualsCount {
     NSArray *e = @[@9, @8];
     NSMutableArray *a = [self.array mutableCopy];
-    [a replaceObjectsInWrappingRange:NSMakeRange(1, 6) withObjects:@[@8, @9]];
+    [a substitute:@[@8, @9] inRange:NSMakeRange(1, 6)];
     XCTAssertEqualObjects(e, a);
 }
 
 - (void)testLocationGTCount {
     NSArray *e = @[@1, @8, @9, @4, @5, @6];
     NSMutableArray *a = [self.array mutableCopy];
-    [a replaceObjectsInWrappingRange:NSMakeRange(7, 2) withObjects:@[@8, @9]];
+    [a substitute:@[@8, @9] inRange:NSMakeRange(7, 2)];
     XCTAssertEqualObjects(e, a);
 }
 
 - (void)testLengthGTCount {
     NSArray *e = @[@8, @9];
     NSMutableArray *a = [self.array mutableCopy];
-    [a replaceObjectsInWrappingRange:NSMakeRange(3, 7) withObjects:@[@8, @9]];
+    [a substitute:@[@8, @9] inRange:NSMakeRange(3, 7)];
     XCTAssertEqualObjects(e, a);
 }
 
