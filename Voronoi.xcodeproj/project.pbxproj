@@ -12,7 +12,7 @@
 		8407B1DB21823D09006AEDF0 /* NSValue+VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1D921823D09006AEDF0 /* NSValue+VOIPoint.m */; };
 		8407B1E2218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h in Headers */ = {isa = PBXBuildFile; fileRef = 8407B1E0218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h */; };
 		8407B1E3218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1E1218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m */; };
-		8407B1E52187572B006AEDF0 /* VOIIndexWrappingTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1E42187572B006AEDF0 /* VOIIndexWrappingTester.m */; };
+		8407B1E52187572B006AEDF0 /* VOIArraySubstituteTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1E42187572B006AEDF0 /* VOIArraySubstituteTester.m */; };
 		8407B1EC2189ED6A006AEDF0 /* VOIRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 8407B1EA2189ED6A006AEDF0 /* VOIRange.h */; };
 		8407B1ED2189ED6A006AEDF0 /* VOIRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1EB2189ED6A006AEDF0 /* VOIRange.m */; };
 		8407B1EF2189F6D5006AEDF0 /* VOIRangeTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1EE2189F6D5006AEDF0 /* VOIRangeTester.m */; };
@@ -120,7 +120,7 @@
 		8407B1D921823D09006AEDF0 /* NSValue+VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSValue+VOIPoint.m"; sourceTree = "<group>"; };
 		8407B1E0218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+IndexWrapping.h"; sourceTree = "<group>"; };
 		8407B1E1218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+IndexWrapping.m"; sourceTree = "<group>"; };
-		8407B1E42187572B006AEDF0 /* VOIIndexWrappingTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIIndexWrappingTester.m; sourceTree = "<group>"; };
+		8407B1E42187572B006AEDF0 /* VOIArraySubstituteTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIArraySubstituteTester.m; sourceTree = "<group>"; };
 		8407B1EA2189ED6A006AEDF0 /* VOIRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIRange.h; sourceTree = "<group>"; };
 		8407B1EB2189ED6A006AEDF0 /* VOIRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIRange.m; sourceTree = "<group>"; };
 		8407B1EE2189F6D5006AEDF0 /* VOIRangeTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIRangeTester.m; sourceTree = "<group>"; };
@@ -471,7 +471,7 @@
 				84D905C02167396100EA72FC /* Supporting Files */,
 				8444AD55217A6028003E374F /* VOIAdjacencyTester.m */,
 				8480973B21696B6D00912E79 /* VOIBoxTester.m */,
-				8407B1E42187572B006AEDF0 /* VOIIndexWrappingTester.m */,
+				8407B1E42187572B006AEDF0 /* VOIArraySubstituteTester.m */,
 				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
 				8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */,
@@ -742,7 +742,7 @@
 				8407B1EF2189F6D5006AEDF0 /* VOIRangeTester.m in Sources */,
 				8480973C21696B6D00912E79 /* VOIBoxTester.m in Sources */,
 				84D905A8216632BA00EA72FC /* TriangulationTester.m in Sources */,
-				8407B1E52187572B006AEDF0 /* VOIIndexWrappingTester.m in Sources */,
+				8407B1E52187572B006AEDF0 /* VOIArraySubstituteTester.m in Sources */,
 				84D905A7216632BA00EA72FC /* SegmentTester.m in Sources */,
 				8444AD56217A6028003E374F /* VOIAdjacencyTester.m in Sources */,
 				84D905B52166700F00EA72FC /* VOISegmentListTester.m in Sources */,

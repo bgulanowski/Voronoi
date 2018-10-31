@@ -1,5 +1,5 @@
 //
-//  VOIIndexWrappingTester.m
+//  VOIArraySubstituteTester.m
 //  voronoiTests
 //
 //  Created by Brent Gulanowski on 2018-10-29.
@@ -10,13 +10,13 @@
 
 #import "NSMutableArray+IndexWrapping.h"
 
-@interface VOIIndexWrappingTester : XCTestCase
+@interface VOIArraySubstituteTester : XCTestCase
 
 @property NSArray *array;
 
 @end
 
-@implementation VOIIndexWrappingTester
+@implementation VOIArraySubstituteTester
 
 - (void)setUp {
     [super setUp];
