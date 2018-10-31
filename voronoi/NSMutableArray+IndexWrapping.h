@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+NS_INLINE NSRange ClampedRange(NSInteger location, NSInteger length) {
+    return NSMakeRange(MAX(-1, location), MAX(0, length));
+}
+
 @interface NSMutableArray (IndexWrapping)
 
 - (void)replaceObjectsInWrappingRange:(NSRange)range withObjects:(NSArray *)objects;

@@ -12,24 +12,34 @@
 
 - (void)replaceObjectsInWrappingRange:(NSRange)range withObjects:(NSArray *)objects {
 
-    const NSUInteger count = self.count;
-    if (range.location >= count) {
-        range.location %= count;
+    if (range.location > self.count) {
+        range.location %= self.count;
     }
     
-    NSUInteger last = NSMaxRange(range);
-    if (range.length > count) {
-        [self replaceObjectsInRange:NSMakeRange(0, count) withObjectsFromArray:objects];
-    }
-    else if (last > count) {
-        NSRange frontRange = NSMakeRange(0, last - count);
-        NSRange endRange = NSMakeRange(range.location, count - range.location);
-        [self replaceObjectsInRange:endRange withObjectsFromArray:objects range:frontRange];
-        NSRange srcEndRange = NSMakeRange(frontRange.length, objects.count - frontRange.length);
-        [self replaceObjectsInRange:frontRange withObjectsFromArray:objects range:srcEndRange];
+    if (self.count >= NSMaxRange(range)) {
+        // No wrapping; fallback to standard behaviour
+        [self replaceObjectsInRange:range withObjectsFromArray:objects];
     }
     else {
-        [self replaceObjectsInRange:range withObjectsFromArray:objects];
+        // The range wraps around.
+
+        // How many objects are being replaced?
+        const NSInteger overflow = (NSInteger)NSMaxRange(range) - (NSInteger)self.count;
+        const NSInteger startCount = MAX(0, MIN((NSInteger)self.count, overflow));
+
+        // How many objects are replacing them?
+        const NSInteger lastCount = MIN(startCount, objects.count);
+        const NSInteger firstCount = objects.count - lastCount;
+        
+        // Replace the end of the current array with objects[first]
+        NSRange end = ClampedRange(range.location, self.count - range.location);
+        NSRange first = ClampedRange(0, firstCount);
+        [self replaceObjectsInRange:end withObjectsFromArray:objects range:first];
+        
+        // Replace the start of the current array with objects[last]
+        NSRange start = NSMakeRange(0, MIN(startCount, self.count));
+        NSRange last = ClampedRange(firstCount, lastCount);
+        [self replaceObjectsInRange:start withObjectsFromArray:objects range:last];
     }
 }
 

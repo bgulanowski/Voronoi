@@ -51,6 +51,13 @@
     XCTAssertEqualObjects(e, a);
 }
 
+- (void)testLengthEqualsCount {
+    NSArray *e = @[@9, @8];
+    NSMutableArray *a = [self.array mutableCopy];
+    [a replaceObjectsInWrappingRange:NSMakeRange(1, 6) withObjects:@[@8, @9]];
+    XCTAssertEqualObjects(e, a);
+}
+
 - (void)testLocationGTCount {
     NSArray *e = @[@1, @8, @9, @4, @5, @6];
     NSMutableArray *a = [self.array mutableCopy];
