@@ -28,6 +28,10 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     return NSMakeRange(self.min < 0 ? NSNotFound : self.min, MAX(0, self.absoluteLength));
 }
 
+- (instancetype)rangeWithLimit:(NSUInteger)limit {
+    return [[[self class] alloc] initWithLocation:_location % limit length:MIN(_length, limit)];
+}
+
 - (instancetype)initWithLocation:(NSInteger)location length:(NSInteger)length {
     self = [super init];
     if (self) {
@@ -61,40 +65,50 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     return self.wraps ? VOINullRange : _range.NSRange;
 }
 
-- (BOOL)isTailEmpty {
-    return (
-            VOINSRangeEmpty(self.destTail) &&
-            VOINSRangeEmpty(self.sourceHead)
-            );
-}
-
 - (BOOL)isTailInvalid {
     return (
-            VOINSRangeValid(self.destTail) ||
-            VOINSRangeValid(self.sourceHead)
+            VOINSRangeInvalid(self.destTail) ||
+            VOINSRangeInvalid(self.sourceHead)
             );
 }
 
 - (BOOL)isTailNOOP {
-    return [self isTailEmpty] || [self isTailInvalid];
-}
-
-- (BOOL)isHeadEmpty {
-    return (
-            VOINSRangeEmpty(self.destHead) &&
-            VOINSRangeEmpty(self.sourceTail)
-            );
+    return VOINSRangeEmpty(self.destTail) || [self isTailInvalid];
 }
 
 - (BOOL)isHeadInvalid {
     return (
-            VOINSRangeValid(self.destHead) ||
-            VOINSRangeValid(self.sourceTail)
+            VOINSRangeInvalid(self.destHead) ||
+            VOINSRangeInvalid(self.sourceTail)
             );
 }
 
 - (BOOL)isHeadNOOP {
-    return [self isHeadEmpty] || [self isHeadInvalid];
+    return VOINSRangeEmpty(self.destHead) || [self isHeadInvalid];
+}
+
+- (VOIReplacementType)headType {
+    if ([self isHeadNOOP]) {
+        return VOIReplacementNone;
+    }
+    else if (VOINSRangeEmpty(self.sourceTail)) {
+        return VOIReplacementRemove;
+    }
+    else {
+        return VOIReplacementReplace;
+    }
+}
+
+- (VOIReplacementType)tailType {
+    if ([self isTailNOOP]) {
+        return VOIReplacementNone;
+    }
+    else if (VOINSRangeEmpty(self.sourceHead)) {
+        return VOIReplacementRemove;
+    }
+    else {
+        return VOIReplacementReplace;
+    }
 }
 
 - (BOOL)wraps {
@@ -106,7 +120,7 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     if (self) {
         _limit = limit;
         _size = size;
-        _range = range;
+        _range = [range rangeWithLimit:limit];
         if (self.wraps) {
             [self calculateWrapping];
         }
@@ -151,31 +165,69 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
 
 @implementation NSMutableArray (VOIRange)
 
-- (void)replace:(NSArray *)objects inRange:(NSRange)range {
+- (void)substitute:(NSArray *)objects inRange:(NSRange)range {
     VOIRange *voirange = [VOIRange rangeWithNSRange:range];
     VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:self.count
                                                                    size:objects.count
                                                                   range:voirange];
-    [self replaceObjectsInRange:vr.destTail withObjectsFromArray:objects range:vr.sourceHead];
-    [self replaceObjectsInRange:vr.destHead withObjectsFromArray:objects range:vr.sourceTail];
+    if (vr.wraps) {
+        switch (vr.tailType) {
+            case VOIReplacementReplace:
+                [self replaceObjectsInRange:vr.destTail withObjectsFromArray:objects range:vr.sourceHead];
+                break;
+            case VOIReplacementRemove:
+                [self removeObjectsInRange:vr.destTail];
+                break;
+            case VOIReplacementNone:
+            default:
+                break;
+        }
+        switch (vr.headType) {
+            case VOIReplacementReplace:
+                [self replaceObjectsInRange:vr.destHead withObjectsFromArray:objects range:vr.sourceTail];
+                break;
+            case VOIReplacementRemove:
+                [self removeObjectsInRange:vr.destHead];
+            case VOIReplacementNone:
+            default:
+                break;
+        }
+    }
+    else {
+        if (objects.count) {
+            [self replaceObjectsInRange:vr.destination withObjectsFromArray:objects range:vr.source];
+        }
+        else {
+            [self removeObjectsInRange:vr.destination];
+        }
+    }
 }
 
 @end
 
 @implementation NSMutableData (VOIRange)
 
--(void)replace:(NSData *)data inRange:(NSRange)range {
+-(void)substitute:(NSData *)data inRange:(NSRange)range {
     VOIRange *voirange = [VOIRange rangeWithNSRange:range];
     VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:self.length
                                                                    size:data.length
                                                                   range:voirange];
     const void *bytes = data.bytes;
-    [self replaceBytesInRange:vr.destTail
-                    withBytes:bytes
-                       length:vr.sourceHead.length];
-    [self replaceBytesInRange:vr.destHead
-                    withBytes:&bytes[vr.sourceTail.location]
-                       length:vr.destTail.length];
+    if (vr.wraps) {
+        if (vr.tailType != VOIReplacementNone) {
+            [self replaceBytesInRange:vr.destTail
+                            withBytes:bytes
+                               length:vr.sourceHead.length];
+        }
+        if (vr.headType != VOIReplacementNone) {
+                [self replaceBytesInRange:vr.destHead
+                                withBytes:&bytes[vr.sourceTail.location]
+                                   length:vr.destTail.length];
+        }
+    }
+    else {
+        [self replaceBytesInRange:vr.destination withBytes:bytes length:data.length];
+    }
 }
 
 @end

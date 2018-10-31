@@ -37,9 +37,17 @@ NS_INLINE BOOL VOINSRangeNull(NSRange range) {
 
 @property (readonly) NSRange NSRange;
 
+- (instancetype)rangeWithLimit:(NSUInteger)limit;
+
 - (instancetype)initWithLocation:(NSInteger)location length:(NSInteger)length;
 
 @end
+
+typedef enum {
+    VOIReplacementNone,
+    VOIReplacementReplace,
+    VOIReplacementRemove
+} VOIReplacementType;
 
 @interface VOIReplacementRange : NSObject
 
@@ -55,13 +63,13 @@ NS_INLINE BOOL VOINSRangeNull(NSRange range) {
 // otherwise, *(Head|Tail) properties are Null
 @property (readonly) BOOL wraps;
 
-@property (readonly, getter=isTailEmpty) BOOL tailEmpty;
 @property (readonly, getter=isTailInvalid) BOOL tailInvalid;
 @property (readonly, getter=isTailNOOP) BOOL tailNOOP;
 
-@property (readonly, getter=isHeadEmpty) BOOL headEmpty;
 @property (readonly, getter=isHeadInvalid) BOOL headInvalid;
 @property (readonly, getter=isHeadNOOP) BOOL headNOOP;
+@property (readonly) VOIReplacementType headType;
+@property (readonly) VOIReplacementType tailType;
 
 - (instancetype)initWithLimit:(NSUInteger)limit size:(NSUInteger)size range:(VOIRange *)range;
 + (instancetype)replacementWithLimit:(NSUInteger)limit size:(NSUInteger)size range:(VOIRange *)range;
@@ -69,9 +77,9 @@ NS_INLINE BOOL VOINSRangeNull(NSRange range) {
 @end
 
 @interface NSMutableArray (VOIRange)
-- (void)replace:(NSArray *)objects inRange:(NSRange)range;
+- (void)substitute:(NSArray *)objects inRange:(NSRange)range;
 @end
 
 @interface NSMutableData (VOIRange)
-- (void)replace:(NSData *)data inRange:(NSRange)range;
+- (void)substitute:(NSData *)data inRange:(NSRange)range;
 @end
