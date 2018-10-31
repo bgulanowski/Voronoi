@@ -16,6 +16,7 @@
 		8407B1EC2189ED6A006AEDF0 /* VOIRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 8407B1EA2189ED6A006AEDF0 /* VOIRange.h */; };
 		8407B1ED2189ED6A006AEDF0 /* VOIRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1EB2189ED6A006AEDF0 /* VOIRange.m */; };
 		8407B1EF2189F6D5006AEDF0 /* VOIRangeTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1EE2189F6D5006AEDF0 /* VOIRangeTester.m */; };
+		8407B1F1218A2F15006AEDF0 /* VOIDataSubstituteTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1F0218A2F15006AEDF0 /* VOIDataSubstituteTester.m */; };
 		842C20322171356E009B8E2D /* VOIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C20302171356E009B8E2D /* VOIPoint.h */; };
 		842C20332171356E009B8E2D /* VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C20312171356E009B8E2D /* VOIPoint.m */; };
 		842C203E217829F9009B8E2D /* VOITriangleNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C203C217829F9009B8E2D /* VOITriangleNet.h */; };
@@ -124,6 +125,7 @@
 		8407B1EA2189ED6A006AEDF0 /* VOIRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIRange.h; sourceTree = "<group>"; };
 		8407B1EB2189ED6A006AEDF0 /* VOIRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIRange.m; sourceTree = "<group>"; };
 		8407B1EE2189F6D5006AEDF0 /* VOIRangeTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIRangeTester.m; sourceTree = "<group>"; };
+		8407B1F0218A2F15006AEDF0 /* VOIDataSubstituteTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIDataSubstituteTester.m; sourceTree = "<group>"; };
 		842C20302171356E009B8E2D /* VOIPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPoint.h; sourceTree = "<group>"; };
 		842C20312171356E009B8E2D /* VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPoint.m; sourceTree = "<group>"; };
 		842C203C217829F9009B8E2D /* VOITriangleNet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOITriangleNet.h; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 				8444AD55217A6028003E374F /* VOIAdjacencyTester.m */,
 				8407B1E42187572B006AEDF0 /* VOIArraySubstituteTester.m */,
 				8480973B21696B6D00912E79 /* VOIBoxTester.m */,
+				8407B1F0218A2F15006AEDF0 /* VOIDataSubstituteTester.m */,
 				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
 				8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */,
@@ -751,6 +754,7 @@
 				848097362167A85600912E79 /* VOISegmentTester.m in Sources */,
 				8444AD54217938DE003E374F /* VOITriangleNetTester.m in Sources */,
 				84D905BC2166A18F00EA72FC /* VOITriangleListTester.m in Sources */,
+				8407B1F1218A2F15006AEDF0 /* VOIDataSubstituteTester.m in Sources */,
 				84D905A5216632BA00EA72FC /* PointTester.m in Sources */,
 				84D905A9216632BA00EA72FC /* VoronoiTester.m in Sources */,
 				8480973E2169717500912E79 /* VOITriangleTester.m in Sources */,

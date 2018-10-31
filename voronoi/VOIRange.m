@@ -222,7 +222,7 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
         if (vr.headType != VOIReplacementNone) {
                 [self replaceBytesInRange:vr.destHead
                                 withBytes:&bytes[vr.sourceTail.location]
-                                   length:vr.destTail.length];
+                                   length:vr.sourceTail.length];
         }
     }
     else {
