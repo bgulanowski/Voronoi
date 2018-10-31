@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define DEEP_VERIFY YES
+
 @class VOIPointList;
 @class VOITriangleList;
 
