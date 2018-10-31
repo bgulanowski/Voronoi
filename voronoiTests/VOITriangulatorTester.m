@@ -161,8 +161,8 @@ static Voronoi *voronoi;
 
 - (void)testTriangulateRandom16 {
     
-#if 1
-    for (NSUInteger i = 10; i < 16; ++i) {
+#if 0
+    for (NSUInteger i = 3; i < 16; ++i) {
         VOIPointList *pl = [randomPointsList selectRange:NSMakeRange(0, i)];
         NSArray *e = [[Voronoi voronoiWithPointList:pl] triangles];
 
@@ -171,11 +171,7 @@ static Voronoi *voronoi;
         XCTAssertTrue(t.minimized);
         
         NSArray *triangles = [[t triangulate] orderedTriangles];
-//        XCTAssertEqualObjects(e, triangles);
-        if (![triangles isEqualToArray:e]) {
-            NSLog(@"Failed at %td", i);
-            break;
-        }
+        XCTAssertEqualObjects(e, triangles);
     }
     
 #else
@@ -187,8 +183,6 @@ static Voronoi *voronoi;
     NSArray *e = [[Voronoi voronoiWithPointList:randomPointsList] triangles];
     
     XCTAssertEqualObjects(e, triangles);
-    NSLog(@"expected triangles: %@", e);
-    NSLog(@"actual triangles: %@", triangles);
 #endif
 }
 
