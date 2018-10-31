@@ -13,6 +13,9 @@
 		8407B1E2218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h in Headers */ = {isa = PBXBuildFile; fileRef = 8407B1E0218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h */; };
 		8407B1E3218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1E1218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m */; };
 		8407B1E52187572B006AEDF0 /* VOIIndexWrappingTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1E42187572B006AEDF0 /* VOIIndexWrappingTester.m */; };
+		8407B1EC2189ED6A006AEDF0 /* VOIRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 8407B1EA2189ED6A006AEDF0 /* VOIRange.h */; };
+		8407B1ED2189ED6A006AEDF0 /* VOIRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1EB2189ED6A006AEDF0 /* VOIRange.m */; };
+		8407B1EF2189F6D5006AEDF0 /* VOIRangeTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8407B1EE2189F6D5006AEDF0 /* VOIRangeTester.m */; };
 		842C20322171356E009B8E2D /* VOIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C20302171356E009B8E2D /* VOIPoint.h */; };
 		842C20332171356E009B8E2D /* VOIPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C20312171356E009B8E2D /* VOIPoint.m */; };
 		842C203E217829F9009B8E2D /* VOITriangleNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 842C203C217829F9009B8E2D /* VOITriangleNet.h */; };
@@ -118,6 +121,9 @@
 		8407B1E0218754AF006AEDF0 /* NSMutableArray+IndexWrapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+IndexWrapping.h"; sourceTree = "<group>"; };
 		8407B1E1218754AF006AEDF0 /* NSMutableArray+IndexWrapping.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+IndexWrapping.m"; sourceTree = "<group>"; };
 		8407B1E42187572B006AEDF0 /* VOIIndexWrappingTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIIndexWrappingTester.m; sourceTree = "<group>"; };
+		8407B1EA2189ED6A006AEDF0 /* VOIRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIRange.h; sourceTree = "<group>"; };
+		8407B1EB2189ED6A006AEDF0 /* VOIRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIRange.m; sourceTree = "<group>"; };
+		8407B1EE2189F6D5006AEDF0 /* VOIRangeTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIRangeTester.m; sourceTree = "<group>"; };
 		842C20302171356E009B8E2D /* VOIPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOIPoint.h; sourceTree = "<group>"; };
 		842C20312171356E009B8E2D /* VOIPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOIPoint.m; sourceTree = "<group>"; };
 		842C203C217829F9009B8E2D /* VOITriangleNet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOITriangleNet.h; sourceTree = "<group>"; };
@@ -432,6 +438,8 @@
 				84D9058321653D8900EA72FC /* VOIPointList.h */,
 				84D9058421653D8900EA72FC /* VOIPointList.m */,
 				84D905BA216682E300EA72FC /* VOIPointListPrivate.h */,
+				8407B1EA2189ED6A006AEDF0 /* VOIRange.h */,
+				8407B1EB2189ED6A006AEDF0 /* VOIRange.m */,
 				84D905AC2166641100EA72FC /* VOISegment.h */,
 				84D905AD2166641100EA72FC /* VOISegment.m */,
 				84D905B0216664AC00EA72FC /* VOISegmentList.h */,
@@ -467,6 +475,7 @@
 				84D905BD2166A5EE00EA72FC /* VOIPathTester.m */,
 				84D905AA216659F300EA72FC /* VOIPointListTester.m */,
 				8407B1CD2180B93B006AEDF0 /* VOIPointTester.m */,
+				8407B1EE2189F6D5006AEDF0 /* VOIRangeTester.m */,
 				84D905B42166700F00EA72FC /* VOISegmentListTester.m */,
 				848097352167A85600912E79 /* VOISegmentTester.m */,
 				84D905BB2166A18F00EA72FC /* VOITriangleListTester.m */,
@@ -556,6 +565,7 @@
 				84AD333A164C3E8100E37EDE /* Voronoi.h in Headers */,
 				84D905B2216664AC00EA72FC /* VOISegmentList.h in Headers */,
 				84D9058D2165403C00EA72FC /* VOITriangleList.h in Headers */,
+				8407B1EC2189ED6A006AEDF0 /* VOIRange.h in Headers */,
 				848097392167B4AD00912E79 /* VOIBox.h in Headers */,
 				84AD3355164DB72A00E37EDE /* DBoundary.h in Headers */,
 				84D3FAF616642B3500A05727 /* BABitArray.h in Headers */,
@@ -715,6 +725,7 @@
 				84AD3339164C3E8100E37EDE /* NSArray+Voronoi.m in Sources */,
 				84AD333B164C3E8100E37EDE /* Voronoi.m in Sources */,
 				84D9058E2165403C00EA72FC /* VOITriangleList.m in Sources */,
+				8407B1ED2189ED6A006AEDF0 /* VOIRange.m in Sources */,
 				84AD3356164DB72A00E37EDE /* DBoundary.m in Sources */,
 				8444AD5A217A7350003E374F /* NSObject+Equivalence.m in Sources */,
 				84D3FAF716642B3500A05727 /* BABitArray.m in Sources */,
@@ -728,6 +739,7 @@
 				84D905A6216632BA00EA72FC /* RangeTester.m in Sources */,
 				84D905AB216659F300EA72FC /* VOIPointListTester.m in Sources */,
 				84D905A32166317600EA72FC /* CircleTester.m in Sources */,
+				8407B1EF2189F6D5006AEDF0 /* VOIRangeTester.m in Sources */,
 				8480973C21696B6D00912E79 /* VOIBoxTester.m in Sources */,
 				84D905A8216632BA00EA72FC /* TriangulationTester.m in Sources */,
 				8407B1E52187572B006AEDF0 /* VOIIndexWrappingTester.m in Sources */,

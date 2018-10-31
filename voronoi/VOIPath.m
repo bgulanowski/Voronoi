@@ -11,8 +11,6 @@
 #import "VOIPointListPrivate.h"
 #import "VOISegment.h"
 
-NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
-
 @implementation VOIPath {
     BOOL _checkedConvex;
     BOOL _convex;
@@ -349,7 +347,7 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     }
     
     NSRange range = [self rangeVisibleToPoint:point closestSegmentIndex:NULL];
-    if (VOIRangeInvalid(range)) {
+    if (VOINSRangeNull(range)) {
         return nil;
     }
     if (pTriangles) {
