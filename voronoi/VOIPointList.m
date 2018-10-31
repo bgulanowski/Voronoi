@@ -244,7 +244,10 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
 }
 
 - (instancetype)substitutePoints:(VOIPointList *)points inRange:(NSRange)range {
-    if (range.location > _count) {
+    if (range.location == _count && range.length > 0) {
+        range.location = 0;
+    }
+    else if (range.location > _count) {
         range.location %= _count;
     }
     NSRange bytesRange = NSMakeRange(range.location * sizeof(VOIPoint), range.length * sizeof(VOIPoint));
