@@ -90,6 +90,7 @@ XCTAssertEqual(a_.length, e_.length);\
     VOIRange *range = [[VOIRange alloc] initWithLocation:2 length:4];
     VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:8
                                                                    size:4
+                                                                   bias:VOIFavourHead
                                                                   range:range];
     
     NSRange a = vr.source;
@@ -117,6 +118,7 @@ XCTAssertEqual(a_.length, e_.length);\
     VOIRange *range = [[VOIRange alloc] initWithLocation:5 length:4];
     VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:8
                                                                    size:4
+                                                                   bias:VOIFavourHead
                                                                   range:range];
     
     NSRange a = vr.source;
@@ -140,6 +142,130 @@ XCTAssertEqual(a_.length, e_.length);\
     
     a = vr.sourceTail;
     e = NSMakeRange(3, 1);
+    AssertEqualRanges(a, e);
+}
+
+- (void)testReplacmentWrapShrink {
+    VOIRange *range = [[VOIRange alloc] initWithLocation:6 length:4];
+    VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:8
+                                                                   size:2
+                                                                   bias:VOIFavourHead
+                                                                  range:range];
+    
+    NSRange a = vr.source;
+    NSRange e = VOINullRange;
+    AssertEqualRanges(a, e);
+    
+    a = vr.destination;
+    AssertEqualRanges(a, e);
+    
+    a = vr.destTail;
+    e = NSMakeRange(6, 2);
+    AssertEqualRanges(a, e);
+    
+    a = vr.sourceHead;
+    e = NSMakeRange(0, 0);
+    AssertEqualRanges(a, e);
+    
+    a = vr.destHead;
+    e = NSMakeRange(0, 2);
+    AssertEqualRanges(a, e);
+    
+    a = vr.sourceTail;
+    e = NSMakeRange(0, 2);
+    AssertEqualRanges(a, e);
+}
+
+- (void)testReplacementShrinkEven {
+    VOIRange *range = [[VOIRange alloc] initWithLocation:6 length:4];
+    VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:8
+                                                                   size:2
+                                                                   bias:VOIBalanced
+                                                                  range:range];
+    
+    NSRange a = vr.source;
+    NSRange e = VOINullRange;
+    AssertEqualRanges(a, e);
+    
+    a = vr.destination;
+    AssertEqualRanges(a, e);
+    
+    a = vr.destTail;
+    e = NSMakeRange(6, 2);
+    AssertEqualRanges(a, e);
+    
+    a = vr.sourceHead;
+    e = NSMakeRange(0, 1);
+    AssertEqualRanges(a, e);
+    
+    a = vr.destHead;
+    e = NSMakeRange(0, 2);
+    AssertEqualRanges(a, e);
+    
+    a = vr.sourceTail;
+    e = NSMakeRange(1, 1);
+    AssertEqualRanges(a, e);
+}
+
+- (void)testReplacementShrinkTail {
+    VOIRange *range = [[VOIRange alloc] initWithLocation:6 length:4];
+    VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:8
+                                                                   size:2
+                                                                   bias:VOIFavourTail
+                                                                  range:range];
+    
+    NSRange a = vr.source;
+    NSRange e = VOINullRange;
+    AssertEqualRanges(a, e);
+    
+    a = vr.destination;
+    AssertEqualRanges(a, e);
+    
+    a = vr.destTail;
+    e = NSMakeRange(6, 2);
+    AssertEqualRanges(a, e);
+    
+    a = vr.sourceHead;
+    e = NSMakeRange(0, 2);
+    AssertEqualRanges(a, e);
+    
+    a = vr.destHead;
+    e = NSMakeRange(0, 2);
+    AssertEqualRanges(a, e);
+    
+    a = vr.sourceTail;
+    e = NSMakeRange(2, 0);
+    AssertEqualRanges(a, e);
+}
+
+- (void)testReplacementWrapGrow {
+    VOIRange *range = [[VOIRange alloc] initWithLocation:5 length:4];
+    VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:8
+                                                                   size:5
+                                                                   bias:VOIFavourTail
+                                                                  range:range];
+    
+    NSRange a = vr.source;
+    NSRange e = VOINullRange;
+    AssertEqualRanges(a, e);
+    
+    a = vr.destination;
+    AssertEqualRanges(a, e);
+    
+    a = vr.destTail;
+    e = NSMakeRange(5, 3);
+    AssertEqualRanges(a, e);
+    
+    a = vr.sourceHead;
+    e = NSMakeRange(0, 3);
+    AssertEqualRanges(a, e);
+    
+    a = vr.destHead;
+    e = NSMakeRange(0, 1);
+    AssertEqualRanges(a, e);
+    
+    a = vr.sourceTail;
+    e = NSMakeRange(3, 2);
     AssertEqualRanges(a, e);
 }
 

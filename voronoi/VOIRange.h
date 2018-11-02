@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+// Distribution Bias provides a hint for which end's size to preserve
+// By default, range calculators try to preserve the length of the head
+// of the destination container.
+// I.E.: 1) only the tail will grow. 2) the tail shrinks first.
+typedef enum {
+    VOIFavourHead,
+    VOIFavourTail,
+    VOIBalanced
+} VOIDistributionBias;
+
 NS_INLINE BOOL VOINSRangeInvalid(NSRange range) {
     return range.location == NSNotFound;
 }
@@ -71,15 +81,23 @@ typedef enum {
 @property (readonly) VOIReplacementType headType;
 @property (readonly) VOIReplacementType tailType;
 
-- (instancetype)initWithLimit:(NSUInteger)limit size:(NSUInteger)size range:(VOIRange *)range;
-+ (instancetype)replacementWithLimit:(NSUInteger)limit size:(NSUInteger)size range:(VOIRange *)range;
+- (instancetype)initWithLimit:(NSUInteger)limit
+                         size:(NSUInteger)size
+                         bias:(VOIDistributionBias)bias
+                        range:(VOIRange *)range;
++ (instancetype)replacementWithLimit:(NSUInteger)limit
+                                size:(NSUInteger)size
+                                bias:(VOIDistributionBias)bias
+                               range:(VOIRange *)range;
 
 @end
 
 @interface NSMutableArray (VOIRange)
+- (void)substitute:(NSArray *)objects inRange:(NSRange)range bias:(VOIDistributionBias)bias;
 - (void)substitute:(NSArray *)objects inRange:(NSRange)range;
 @end
 
 @interface NSMutableData (VOIRange)
+- (void)substitute:(NSData *)data inRange:(NSRange)range bias:(VOIDistributionBias)bias;
 - (void)substitute:(NSData *)data inRange:(NSRange)range;
 @end

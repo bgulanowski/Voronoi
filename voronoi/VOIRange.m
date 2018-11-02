@@ -59,6 +59,7 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
 @implementation VOIReplacementRange {
     NSInteger _limit;
     NSInteger _size;
+    VOIDistributionBias _bias;
     VOIRange *_range;
 }
 
@@ -120,11 +121,12 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     return _range.max > _limit;
 }
 
-- (instancetype)initWithLimit:(NSUInteger)limit size:(NSUInteger)size range:(VOIRange *)range {
+- (instancetype)initWithLimit:(NSUInteger)limit size:(NSUInteger)size bias:(VOIDistributionBias)bias range:(VOIRange *)range {
     self = [super init];
     if (self) {
         _limit = limit;
         _size = size;
+        _bias = bias;
         _range = [range rangeWithLimit:limit];
         if (self.wraps) {
             [self calculateWrapping];
@@ -149,9 +151,26 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     const NSInteger dtLen = limit - _range.location;
     
     // How many elements are replacing them?
-    const NSInteger stLen = MIN(dhLen, _size);
-    const NSInteger shLen = _size - stLen;
-
+    // When the destination shrinks, how should we distribute new elements?
+    // As evenly as possible? Biased to head or tail? Or some other rule?
+    NSInteger stLen;
+    NSInteger shLen;
+    switch (_bias) {
+        case VOIFavourHead:
+            stLen = MIN(dhLen, _size);
+            shLen = _size - stLen;
+            break;
+        case VOIFavourTail:
+            shLen = MIN(dtLen, _size);
+            stLen = _size - shLen;
+            break;
+        case VOIBalanced:
+            shLen = MIN(dtLen, _size/2);
+            stLen = _size - shLen;
+        default:
+            break;
+    }
+    
     _destTail = [VOIRange NSRangeWithLocation:_range.location length:dtLen];
     _sourceHead = [VOIRange NSRangeWithLocation:0 length:shLen];
     
@@ -162,18 +181,22 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     _sourceTail = [VOIRange NSRangeWithLocation:shLen length:stLen];
 }
 
-+ (instancetype)replacementWithLimit:(NSUInteger)limit size:(NSUInteger)size range:(VOIRange *)range {
-    return [[self alloc] initWithLimit:limit size:size range:range];
++ (instancetype)replacementWithLimit:(NSUInteger)limit
+                                size:(NSUInteger)size
+                                bias:(VOIDistributionBias)bias
+                               range:(VOIRange *)range {
+    return [[self alloc] initWithLimit:limit size:size bias:bias range:range];
 }
 
 @end
 
 @implementation NSMutableArray (VOIRange)
 
-- (void)substitute:(NSArray *)objects inRange:(NSRange)range {
+- (void)substitute:(NSArray *)objects inRange:(NSRange)range bias:(VOIDistributionBias)bias {
     VOIRange *voirange = [VOIRange rangeWithNSRange:range];
     VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:self.count
                                                                    size:objects.count
+                                                                   bias:bias
                                                                   range:voirange];
     if (vr.wraps) {
         switch (vr.tailType) {
@@ -208,14 +231,19 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     }
 }
 
+- (void)substitute:(NSArray *)objects inRange:(NSRange)range {
+    [self substitute:objects inRange:range bias:VOIFavourHead];
+}
+
 @end
 
 @implementation NSMutableData (VOIRange)
 
--(void)substitute:(NSData *)data inRange:(NSRange)range {
+-(void)substitute:(NSData *)data inRange:(NSRange)range bias:(VOIDistributionBias)bias {
     VOIRange *voirange = [VOIRange rangeWithNSRange:range];
     VOIReplacementRange *vr = [VOIReplacementRange replacementWithLimit:self.length
                                                                    size:data.length
+                                                                   bias:bias
                                                                   range:voirange];
     const void *bytes = data.bytes;
     if (vr.wraps) {
@@ -233,6 +261,10 @@ NSRange VOINullRange = { .location = NSNotFound, .length = 0 };
     else {
         [self replaceBytesInRange:vr.destination withBytes:bytes length:data.length];
     }
+}
+
+- (void)substitute:(NSData *)data inRange:(NSRange)range {
+    [self substitute:data inRange:range bias:VOIFavourHead];
 }
 
 @end
