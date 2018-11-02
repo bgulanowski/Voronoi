@@ -114,6 +114,15 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     return [self _initWithData:data];
 }
 
++ (instancetype)randomPointsInBox:(VOIBox *)box count:(NSUInteger)count {
+    NSMutableData *data = [NSMutableData dataWithLength:count * sizeof(VOIPoint)];
+    VOIPoint *points = data.mutableBytes;
+    for (NSUInteger i = 0; i < count; ++i) {
+        points[i] = [box randomPoint];
+    }
+    return [[self alloc] _initWithData:data];
+}
+
 - (BOOL)isEqualToPointList:(VOIPointList *)other {
     return (
             other != nil &&
