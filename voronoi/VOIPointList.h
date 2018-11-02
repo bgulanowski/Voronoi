@@ -28,7 +28,7 @@ typedef double (^VOIPointEvaluator)(VOIPoint *p);
 
 - (instancetype)initWithPoints:(const VOIPoint *)points count:(NSUInteger)count;
 
-+ (instancetype)randomPointsInBox:(VOIBox *)box count:(NSUInteger)count;
++ (instancetype)randomPointsInBox:(VOIBox *)box count:(NSUInteger)count integral:(BOOL)integral;
 
 - (BOOL)isEqualToPointList:(VOIPointList *)other;
 

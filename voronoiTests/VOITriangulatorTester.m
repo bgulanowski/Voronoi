@@ -23,9 +23,9 @@
 @property VOITriangulator *triangulator;
 @end
 
-#define COUNT 9
+const NSUInteger T_COUNT = 9;
 
-static VOIPoint t_points[COUNT];
+static VOIPoint t_points[T_COUNT];
 static VOIPointList *randomPointsList;
 static Voronoi *voronoi;
 
@@ -50,7 +50,7 @@ static Voronoi *voronoi;
     t_points[i++] = vector2( 811.0, 696.0);
     t_points[i++] = vector2(  69.0,  86.0);
     t_points[i++] = vector2( 436.0, 175.0);
-    NSAssert(i == COUNT, @"Inconsistent start data");
+    NSAssert(i == T_COUNT, @"Inconsistent start data");
     
     randomPointsList = [self randomPoints];
     voronoi = [Voronoi voronoiWithPointList:randomPointsList];
@@ -72,7 +72,7 @@ static Voronoi *voronoi;
 
 - (void)setUp {
     [super setUp];
-    VOIPointList *pl = [[VOIPointList alloc] initWithPoints:t_points count:COUNT];
+    VOIPointList *pl = [[VOIPointList alloc] initWithPoints:t_points count:T_COUNT];
     self.triangulator = [[VOITriangulator alloc] initWithPointList:pl];
 }
 
@@ -160,21 +160,6 @@ static Voronoi *voronoi;
 }
 
 - (void)testTriangulateRandom16 {
-    
-#if 0
-    for (NSUInteger i = 3; i < 16; ++i) {
-        VOIPointList *pl = [randomPointsList selectRange:NSMakeRange(0, i)];
-        NSArray *e = [[Voronoi voronoiWithPointList:pl] triangles];
-
-        VOITriangulator *t = [[VOITriangulator alloc] initWithPointList:pl];
-        XCTAssertNoThrow([t triangulate]);
-        XCTAssertTrue(t.minimized);
-        
-        NSArray *triangles = [[t triangulate] orderedTriangles];
-        XCTAssertEqualObjects(e, triangles);
-    }
-    
-#else
     VOITriangulator *triangulator = [[VOITriangulator alloc] initWithPointList:randomPointsList];
     XCTAssertNoThrow([triangulator triangulate]);
     XCTAssertTrue(triangulator.minimized);
@@ -183,12 +168,70 @@ static Voronoi *voronoi;
     NSArray *e = [[Voronoi voronoiWithPointList:randomPointsList] triangles];
     
     XCTAssertEqualObjects(e, triangles);
-#endif
 }
 
+- (void)_testTriangulateRandom16Loops {
+    
+    const NSUInteger Count = 16;
+    BOOL fail = NO;
+    VOIBox *box = [[VOIBox alloc] initWithOrigin:0.0 size:2.0 * Count];
+    for (NSUInteger n = 0; n < 8; ++n) {
+        VOIPointList *points = [VOIPointList randomPointsInBox:box count:Count integral:YES];
+        for (NSUInteger i = 11; i < Count; ++i) {
+            
+            VOIPointList *selection = [points selectRange:NSMakeRange(0, i)];
+            NSArray *e = [[Voronoi voronoiWithPointList:selection] triangles];
+            
+            VOITriangulator *t = [[VOITriangulator alloc] initWithPointList:selection];
+            XCTAssertNoThrow([t triangulate]);
+            XCTAssertTrue(t.minimized);
+            
+            NSArray *a = [[t triangulate] orderedTriangles];
+            NSEnumerator *iter = [e objectEnumerator];
+            for (VOITriangle *ta in a) {
+                VOITriangle *te = [iter nextObject];
+                if (![ta isEqualToTriangle:te]) {
+                    XCTFail(@"Discrepancy at %td: %@ vs %@", i, ta, te);
+                    fail = YES;
+                    break;
+                }
+            }
+            if (fail) break;
+            
+        }
+        if (fail) break;
+    }
+}
+
+- (void)_testTriangulateNext {
+    const NSUInteger Count = 16;
+    VOIBox *box = [[VOIBox alloc] initWithOrigin:0.0 size:2.0 * Count];
+    VOIPointList *pl = [VOIPointList randomPointsInBox:box count:Count integral:YES];
+    
+    VOITriangulator *triangulator = [[VOITriangulator alloc] initWithPointList:pl];
+    XCTAssertNoThrow([triangulator triangulate]);
+    XCTAssertTrue(triangulator.minimized);
+    
+    NSArray *a = [[triangulator triangulate] orderedTriangles];
+    NSArray *e = [[Voronoi voronoiWithPointList:pl] triangles];
+    
+//    XCTAssertEqualObjects(e, triangles);
+    for (NSUInteger i = 0; i < Count; ++i) {
+        VOITriangle *ta = a[i];
+        VOITriangle *te = e[i];
+        if (![ta isEqualToTriangle:te]) {
+            XCTFail(@"Discrepancy at %td: %@ vs %@", i, ta, te);
+            break;
+        }
+    }
+}
+
+// Disabled because not enough points working yet
 - (void)_testTriangulationPerformance {
+    VOIBox *box = [[VOIBox alloc] initWithOrigin:0.0 size:128.0];
+    VOIPointList *pl = [VOIPointList randomPointsInBox:box count:128 integral:YES];
     [self measureBlock:^{
-        VOITriangulator *t = [[VOITriangulator alloc] initWithPointList:randomPointsList];
+        VOITriangulator *t = [[VOITriangulator alloc] initWithPointList:pl];
         [t triangulate];
     }];
 }
