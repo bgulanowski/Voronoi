@@ -155,7 +155,7 @@
 - (void)replaceBorderNetsInRange:(NSRange)range withNets:(NSArray<VOITriangleNet *> *)nets {
     // carefully handle range wrapping
     NSMutableArray *newBorderNets = [self.borderNets mutableCopy];
-    [newBorderNets substitute:nets inRange:range];
+    [newBorderNets substitute:nets inRange:range bias:VOIBalanced];
     
 #if DEEP_VERIFY
     NSUInteger failed = [self verifyBorderNets:newBorderNets];
