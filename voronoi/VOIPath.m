@@ -186,10 +186,11 @@
 
 - (void)iterateSegments:(VOISegmentIterator)iterator {
     const NSUInteger last = self.pointCount - 1;
+    __block BOOL stopped = NO;
     [self iteratePoints:^(const VOIPoint *points, const NSUInteger i) {
-        return (BOOL)(i == last || iterator([[VOISegment alloc] initWithPoints:points], i));
+        return (BOOL)(i == last || (stopped = iterator([[VOISegment alloc] initWithPoints:points], i)));
     }];
-    if (self.closed) {
+    if (!stopped && self.closed) {
         iterator([self segmentAt:last], last);
     }
 }
