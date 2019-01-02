@@ -19,6 +19,10 @@
 #import "DTriad.h"
 #import "Voronoi.h"
 
+@interface VOIPointList (Testing)
+- (void)logPoints;
+@end
+
 @interface VOITriangulatorTester : XCTestCase
 @property VOITriangulator *triangulator;
 @end
@@ -279,6 +283,16 @@ static Voronoi *voronoi;
     [triangles sortUsingSelector:@selector(compare:)];
     
     return triangles;
+}
+
+@end
+
+@implementation VOIPointList (Testing)
+
+- (void)logPoints {
+    for (NSUInteger i = 0; i<self.count; ++i) {
+        NSLog(@"%@", VOIPointToString([self pointAtIndex:i]));
+    }
 }
 
 @end
