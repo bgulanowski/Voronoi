@@ -60,6 +60,7 @@
 
 - (VOISegment *)segmentAt:(NSUInteger)index;
 - (NSUInteger)indexForSegment:(VOISegment *)segment;
+- (BOOL)includesSegment:(VOISegment *)segment;
 
 // compare two triangles to see if they are adjacent, returning details
 - (double)lengthOfSegmentAt:(NSUInteger)index;

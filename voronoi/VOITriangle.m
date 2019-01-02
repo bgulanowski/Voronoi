@@ -253,6 +253,10 @@ static inline vector_double3 CalculateNormal(VOIPoint points[3]) {
     return index;
 }
 
+- (BOOL)includesSegment:(VOISegment *)segment {
+    return [self indexForSegment:segment] != NSNotFound;
+}
+
 - (double)lengthOfSegmentAt:(NSUInteger)index {
     VOIPoint a = [self pointAt:index + 1];
     VOIPoint b = [self pointAt:index + 2];

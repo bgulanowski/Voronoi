@@ -40,6 +40,7 @@
 
 - (VOITriangleNet *)netAtIndex:(NSUInteger)index;
 - (VOITriangleNet *)netForSegment:(VOISegment *)segment;
+- (BOOL)includesSegment:(VOISegment *)segment;
 
 - (void)addAdjacentNet:(VOITriangleNet *)net;
 - (void)addAdjacentNets:(NSArray<VOITriangleNet *> *)nets;

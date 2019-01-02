@@ -163,6 +163,10 @@
     return [self netAtIndex:index];
 }
 
+- (BOOL)includesSegment:(VOISegment *)segment {
+    return [self.triangle includesSegment:segment];
+}
+
 - (void)removeAllAdjacentNets {
     _n0 = nil;
     _n1 = nil;
