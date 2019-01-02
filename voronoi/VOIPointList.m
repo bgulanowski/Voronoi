@@ -202,7 +202,7 @@ static VOIPointComparator distanceFrom(const VOIPoint p) {
     
     range.location %= _count;
     
-    VOIPointList *result = [VOIPointList new];
+    VOIPointList *result = [[self class] new];
     NSUInteger count = MIN(range.length, _count - range.location);
     
     while (count) {
