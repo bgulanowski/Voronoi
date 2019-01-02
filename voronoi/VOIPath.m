@@ -342,7 +342,7 @@
     return [self substitutePoints:list inRange:pointRange];
 }
 
-- (VOIPath *)convexHullByAddingPoint:(VOIPoint)point triangles:(VOITriangleList **)pTriangles affectedPoint:(NSUInteger *)index {
+- (VOIPath *)convexHullByAddingPoint:(VOIPoint)point triangles:(VOITriangleList **)pTriangles segment:(NSUInteger *)index {
     if (!self.convex) {
         return nil;
     }

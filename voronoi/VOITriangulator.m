@@ -121,7 +121,7 @@
     
     VOITriangleList *tList;
     NSUInteger index;
-    VOIPath *newHull = [self.convexHull convexHullByAddingPoint:point triangles:&tList affectedPoint:&index];
+    VOIPath *newHull = [self.convexHull convexHullByAddingPoint:point triangles:&tList segment:&index];
     
     __block VOITriangleNet *prev = nil;
     NSMutableOrderedSet *newNets = [NSMutableOrderedSet orderedSet];
