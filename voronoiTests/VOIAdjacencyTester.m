@@ -115,4 +115,39 @@ static VOIPoint points[6] = {
     XCTAssertTrue([self.adjacency isEquivalentToAdjacency:a]);
 }
 
+- (void)testInvert {
+    VOIAdjacency *inverted = [self.adjacency invert];
+    XCTAssertEqual(self.t0, inverted.t1);
+    XCTAssertEqual(self.t1, inverted.t0);
+    XCTAssertEqual(2, inverted.t0Index);
+    XCTAssertEqual(0, inverted.t1Index);
+}
+
+- (void)testRotate {
+    
+    VOIPoint p0[3] = {
+        points[0],
+        points[1],
+        points[3]
+    };
+    VOIPoint p1[3] = {
+        points[2],
+        points[0],
+        points[3]
+    };
+    
+    VOITriangle *e0 = [[VOITriangle alloc] initWithPoints:p0];
+    VOITriangle *e1 = [[VOITriangle alloc] initWithPoints:p1];
+    
+    VOIAdjacency *rotated = [self.adjacency flip];
+    VOITriangle *t0 = rotated.t0;
+    VOITriangle *t1 = rotated.t1;
+    
+    XCTAssertEqualObjects(t0, e0);
+    XCTAssertEqualObjects(t1, e1);
+    
+    XCTAssertEqual(1, rotated.t0Index);
+    XCTAssertEqual(0, rotated.t1Index);
+}
+
 @end
