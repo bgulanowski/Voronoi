@@ -115,15 +115,21 @@ NS_INLINE BOOL EquivalentTriangles(VOIAdjacency *a, VOIAdjacency *b) {
 
 - (VOIAdjacency *)flip {
     
+    VOITriangle *t0 = [_t0 standardize];
+    VOITriangle *t1 = [_t1 standardize];
+    
+    NSUInteger indices[2];
+    [t0 segmentInCommonWith:t1 indices:indices];
+    
     VOIPoint points[4] = {
-        [_t0 pointAt:_t0Index + 1],
-        [_t0 pointAt:_t0Index],
-        [_t1 pointAt:_t1Index],
-        [_t1 pointAt:_t1Index + 1]
+        [t0 pointAt:indices[0] + 1],
+        [t0 pointAt:indices[0]],
+        [t1 pointAt:indices[1]],
+        [t1 pointAt:indices[1] + 1]
     };
     
-    VOITriangle *t0 = [[[VOITriangle alloc] initWithPoints:points] standardize];
-    VOITriangle *t1 = [[[VOITriangle alloc] initWithPoints:&points[1]] standardize];
+    t0 = [[[VOITriangle alloc] initWithPoints:points] standardize];
+    t1 = [[[VOITriangle alloc] initWithPoints:&points[1]] standardize];
 
     return [VOIAdjacency adjacencyWithTriangle:t0 triangle:t1];
 }
