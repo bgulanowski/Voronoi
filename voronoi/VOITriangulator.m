@@ -159,7 +159,7 @@
     
 #if DEEP_VERIFY
     NSUInteger failed = [self verifyBorderNets:newBorderNets];
-    NSAssert(failed != NSNotFound, @"border net at %td does not match convex hull.", failed);
+    NSAssert(failed == NSNotFound, @"border net at %td does not match convex hull.", failed);
 #else
     NSAssert(_convexHull.count == newBorderNets.count, @"Border nets out of sync");
 #endif
@@ -172,7 +172,7 @@
     __block NSUInteger index = NSNotFound;
     [_convexHull iterateSegments:^(VOISegment *s, NSUInteger i) {
         VOITriangle *t = [[iter nextObject] triangle];
-        if (t != nil && [t indexForSegment:s] != NSNotFound) {
+        if (t == nil || [t indexForSegment:s] == NSNotFound) {
             index = i;
             return YES;
         }
